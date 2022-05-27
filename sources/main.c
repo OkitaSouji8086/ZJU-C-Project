@@ -28,12 +28,6 @@
 /* 默认值定义 */
 //=============================================================================================================================================//
 
-/* 窗口宽度 */
-#define WindowX 1280
-
-/* 窗口高度 */
-#define WindowY 720
-
 
 
 //=============================================================================================================================================//
@@ -42,6 +36,8 @@
 
 void Main()
 {
+	SetWindowTitle("Program Creater");
+	SetWindowSize(WindowX/GetXResolution(), WindowY/GetYResolution()); 
 	InitGraphics();
 	InitConsole();
 
@@ -61,7 +57,10 @@ void display()
 
 void DrawMenu()
 {
-	if(button(GenUIID(0), GetWindowWidth()/2, GetWindowHeight()/2, MenuW, MenuH, "OK")){
+	double WindowW = WindowX/GetXResolution(), WindowH = WindowY/GetYResolution();
+	double ButtonW = 1.0, ButtonH = 0.4;
+	
+	if(button(GenUIID(0), WindowW/2, WindowH/2, ButtonW, ButtonH, "OK")){
 		printf("OK button clicked\n");
 	}
 
@@ -72,12 +71,18 @@ void DrawMenu()
 		"Exit   | Ctrl-E"};
 
 	int selection; /* 菜单选择条目 */
-	
-	double MenuH = GetFontHeight(0) * 1.5; /* 菜单控件高度 */
-	double MenuW = TextStringWidth(menuListHelp[0])*2; /* 菜单控件宽度 */
-	double wlist = TextStringWidth(menuListTool[3])*1.2;
 
-	selection = menuList(GenUIID(0), 0, GetWindowHeight() - MenuH, MenuW, wlist, MenuH, menuListFile, sizeof(menuListFile)/sizeof(menuListFile[0]));
+	double MenuH = GetFontHeight() * 1.5; /* 菜单控件高度 */
+	double MenuW = TextStringWidth(menuListFile[0])*2; /* 菜单控件宽度 */
+	double wlist = TextStringWidth(menuListFile[3])*1.2;
+	static char * selectedLabel = NULL;
+
+	drawMenuBar(0, WindowH-MenuH, WindowW, MenuH);
+
+	selection = menuList(GenUIID(0), 0, WindowH-MenuH, MenuW, wlist, MenuH, menuListFile, sizeof(menuListFile)/sizeof(menuListFile[0]));
+	if(selection > 0) selectedLabel = menuListFile[selection];
+	if(selection == 3)
+		printf("exit\n");
 }
 
 void KeyboardEventProcess(int key, int event)
