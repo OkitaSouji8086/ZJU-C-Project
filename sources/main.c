@@ -65,24 +65,109 @@ void DrawMenu()
 	}
 
 	static char * menuListFile[] = {
-		"File",  
-		"Open  | Ctrl-O",
-		"Close",
+		"File",
+		"New   | Ctrl-N",
+		"Open | Ctrl-O",
+		"Save | Ctrl-S",
 		"Exit   | Ctrl-E"};
 
-	int selection; /* 菜单选择条目 */
+	static char * menuListDraw[] = {
+		"Draw",
+		"1 | F1",
+		"2 | F2",
+		"3 | F3",
+		"4 | F4"};
 
-	double MenuH = GetFontHeight() * 1.5; /* 菜单控件高度 */
-	double MenuW = TextStringWidth(menuListFile[0])*2; /* 菜单控件宽度 */
-	double wlist = TextStringWidth(menuListFile[3])*1.2;
+	static char * menuListEdit[] = {
+		"Edit",
+		"Copy    | Ctrl-C",
+		"Paste   | Ctrl-V",
+		"Delete  | Del"};
+
+	static char * menuListHelp[] = {
+		"Help",
+		"About",
+		"Help"};
+
+	int selection; /* 菜单选中 */
 	static char * selectedLabel = NULL;
+
+	double MenuH = GetFontHeight() * 1.5; /* 菜单高度 */
+	double MenuW = TextStringWidth(menuListFile[0])*2; /* 菜单标题宽度 */
+	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* 菜单条目宽度 */
 
 	drawMenuBar(0, WindowH-MenuH, WindowW, MenuH);
 
 	selection = menuList(GenUIID(0), 0, WindowH-MenuH, MenuW, wlist, MenuH, menuListFile, sizeof(menuListFile)/sizeof(menuListFile[0]));
 	if(selection > 0) selectedLabel = menuListFile[selection];
-	if(selection == 3)
-		printf("exit\n");
+	switch (selection)
+	{
+	case 1:
+		printf("New clicked\n");
+		break;
+	case 2:
+		printf("Open clicked\n");
+		break;
+	case 3:
+		printf("Save clicked\n");
+		break;
+	case 4:
+		printf("Exit clicked\n");
+		break;
+	default:
+		break;
+	}
+
+	selection = menuList(GenUIID(0), MenuW, WindowH-MenuH, MenuW, wlist, MenuH, menuListDraw, sizeof(menuListDraw)/sizeof(menuListDraw[0]));
+	if(selection > 0) selectedLabel = menuListFile[selection];
+	switch (selection)
+	{
+	case 1:
+		printf("1 clicked\n");
+		break;
+	case 2:
+		printf("2 clicked\n");
+		break;
+	case 3:
+		printf("3 clicked\n");
+		break;
+	case 4:
+		printf("4 clicked\n");
+		break;
+	default:
+		break;
+	}
+
+	selection = menuList(GenUIID(0), MenuW*2, WindowH-MenuH, MenuW, wlist, MenuH, menuListEdit, sizeof(menuListEdit)/sizeof(menuListEdit[0]));
+	if(selection > 0) selectedLabel = menuListFile[selection];
+	switch (selection)
+	{
+	case 1:
+		printf("Copy clicked\n");
+		break;
+	case 2:
+		printf("Paste clicked\n");
+		break;
+	case 3:
+		printf("Delete clicked\n");
+		break;
+	default:
+		break;
+	}
+
+	selection = menuList(GenUIID(0), MenuW*3, WindowH-MenuH, MenuW, wlist, MenuH, menuListHelp, sizeof(menuListHelp)/sizeof(menuListHelp[0]));
+	if(selection > 0) selectedLabel = menuListFile[selection];
+	switch (selection)
+	{
+	case 1:
+		printf("About clicked\n");
+		break;
+	case 2:
+		printf("Help clicked\n");
+		break;
+	default:
+		break;
+	}
 }
 
 void KeyboardEventProcess(int key, int event)
