@@ -8,6 +8,9 @@
 /* 宏定义 */
 //=============================================================================================================================================//
 
+/* 调试模式 */
+#define _DEBUG_ 1
+
 /* 对象种类 */
 #define NLIST 4
 
@@ -79,6 +82,19 @@ typedef struct ProcedureBox
 	int TextID; /* 文本框编号 */
 	bool IsSelected; /* 是否选中 */
 } *ptr_ProcedureBox;
+
+
+/* 判断框 */
+typedef struct JudgeBox
+{
+	int ID; /* 唯一对象编号 */
+	double x, y; /* 中心坐标 */
+	double width, height; /* 长宽 */
+	int PenSize; /* 粗细 */
+	string Color; /* 颜色 */
+	int TextID; /* 文本框编号 */
+	bool IsSelected; /* 是否选中 */
+} *ptr_JudgeBox;
 
 
 /* 起始终止框 */

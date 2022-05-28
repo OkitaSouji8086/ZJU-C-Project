@@ -41,11 +41,16 @@ void Main()
 	InitGraphics();
 	InitConsole();
 
+	Randomize(); /* 随机函数初始化 */
 	registerKeyboardEvent(KeyboardEventProcess);
 	registerCharEvent(CharEventProcess);
 	registerMouseEvent(MouseEventProcess);
 
 	display();
+
+	#if _DEBUG_
+		test();
+	#endif
 }
 
 void display()
