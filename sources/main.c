@@ -25,13 +25,13 @@
 #include <winuser.h>
 
 //=============================================================================================================================================//
-/* Ä¬ÈÏÖµ¶¨Òå */
+/* é»˜è®¤å€¼å®šä¹‰ */
 //=============================================================================================================================================//
 
 
 
 //=============================================================================================================================================//
-/* º¯ÊıÊµÏÖ */
+/* å‡½æ•°å®ç° */
 //=============================================================================================================================================//
 
 void Main()
@@ -41,7 +41,7 @@ void Main()
 	InitGraphics();
 	InitConsole();
 
-	Randomize(); /* Ëæ»úº¯Êı³õÊ¼»¯ */
+	Randomize(); /* éšæœºå‡½æ•°åˆå§‹åŒ– */
 	registerKeyboardEvent(KeyboardEventProcess);
 	registerCharEvent(CharEventProcess);
 	registerMouseEvent(MouseEventProcess);
@@ -94,12 +94,12 @@ void DrawMenu()
 		"About",
 		"Help"};
 
-	int selection; /* ²Ëµ¥Ñ¡ÖĞ */
+	int selection; /* èœå•é€‰ä¸­ */
 	static char * selectedLabel = NULL;
 
-	double MenuH = GetFontHeight() * 1.5; /* ²Ëµ¥¸ß¶È */
-	double MenuW = TextStringWidth(menuListFile[0])*2; /* ²Ëµ¥±êÌâ¿í¶È */
-	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* ²Ëµ¥ÌõÄ¿¿í¶È */
+	double MenuH = GetFontHeight() * 1.5; /* èœå•é«˜åº¦ */
+	double MenuW = TextStringWidth(menuListFile[0])*2; /* èœå•æ ‡é¢˜å®½åº¦ */
+	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* èœå•æ¡ç›®å®½åº¦ */
 
 	drawMenuBar(0, WindowH-MenuH, WindowW, MenuH);
 
@@ -177,8 +177,66 @@ void DrawMenu()
 
 void KeyboardEventProcess(int key, int event)
 {
-	uiGetKeyboard(key, event);
+    uiGetKeyboard(key, event);
 	display();
+
+    ptr_Line line;
+    ptr_ProcedureBox ProcedureBox;
+    ptr_StartBox StartBox;
+	ptr_JudgeBox JudgeBox;
+    int flag=0;
+
+    switch (event) {
+        case KEY_DOWN:
+            switch (key) {
+                case VK_F1:/*F1: ç»˜åˆ¶éšæœºèµ·å§‹ç»ˆæ­¢æ¡†*/
+                    
+					StartBox = GetBlock(sizeof(*StartBox));
+					StartBox->PenSize = GetPenSize();
+					StartBox->Color = GetPenColor();
+					StartBox->IsSelected = FALSE;
+					DrawStartBox(StartBox);
+                    
+					break;
+
+                case VK_F2:/*F2: ç»˜åˆ¶éšæœºåˆ¤æ–­æ¡†*/
+                    
+					JudgeBox = GetBlock(sizeof(*JudgeBox));
+					JudgeBox->PenSize = GetPenSize();
+					JudgeBox->Color = GetPenColor();
+					JudgeBox->IsSelected = FALSE;
+					DrawJudgeBox(JudgeBox);
+					
+                    break;
+
+                case VK_F3:/*F3: ç»˜åˆ¶éšæœºæ‰§è¡Œæ¡† */
+                    
+					ProcedureBox = GetBlock(sizeof(*ProcedureBox));
+					ProcedureBox->PenSize = GetPenSize();
+					ProcedureBox->Color = GetPenColor();
+					ProcedureBox->IsSelected = FALSE;
+					DrawProcedureBox(ProcedureBox);
+					
+                    break;
+
+                case VK_F10:/*F4: é€€å‡ºç¨‹åº*/
+                    exit(1);
+                    break;
+        
+				case VK_BACK:/*BACKSP: åˆ é™¤å¯¹è±¡*/
+					DeleteObj(CURR_OBJ);
+					break;
+
+				case VK_ESCAPE:/*ESCAPE: é€€å‡ºå¯¹è±¡é€‰ä¸­çŠ¶æ€*/
+					CURR_OBJ=NULL;
+					break;
+                case VK_CONTROL:  
+					
+            		break;
+			}
+		case KEY_UP:
+            break;
+	}	 
 }
 
 void CharEventProcess(char c)
