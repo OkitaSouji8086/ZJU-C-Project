@@ -12,6 +12,7 @@
 #include "linkedlist.h"
 #include "imgui.h"
 #include "conio.h"
+#include "boolean.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -25,7 +26,7 @@
 #include <winuser.h>
 
 //=============================================================================================================================================//
-/* 默认值定义 */
+/* 默认值定�? */
 //=============================================================================================================================================//
 
 
@@ -41,7 +42,7 @@ void Main()
 	InitGraphics();
 	InitConsole();
 
-	Randomize(); /* 随机函数初始化 */
+	Randomize(); /* 随机函数初始�? */
 	registerKeyboardEvent(KeyboardEventProcess);
 	registerCharEvent(CharEventProcess);
 	registerMouseEvent(MouseEventProcess);
@@ -189,7 +190,7 @@ void KeyboardEventProcess(int key, int event)
     switch (event) {
         case KEY_DOWN:
             switch (key) {
-                case VK_F1:/*F1: 绘制随机起始终止框*/
+                case VK_F1:/*F1: 绘制随机起始终止�?*/
                     
 					StartBox = GetBlock(sizeof(*StartBox));
 					StartBox->PenSize = GetPenSize();
@@ -199,7 +200,7 @@ void KeyboardEventProcess(int key, int event)
                     
 					break;
 
-                case VK_F2:/*F2: 绘制随机判断框*/
+                case VK_F2:/*F2: 绘制随机判断�?*/
                     
 					JudgeBox = GetBlock(sizeof(*JudgeBox));
 					JudgeBox->PenSize = GetPenSize();
@@ -209,7 +210,7 @@ void KeyboardEventProcess(int key, int event)
 					
                     break;
 
-                case VK_F3:/*F3: 绘制随机执行框 */
+                case VK_F3:/*F3: 绘制随机执行�? */
                     
 					ProcedureBox = GetBlock(sizeof(*ProcedureBox));
 					ProcedureBox->PenSize = GetPenSize();
@@ -219,7 +220,7 @@ void KeyboardEventProcess(int key, int event)
 					
                     break;
 
-                case VK_F10:/*F4: 退出程序*/
+                case VK_F10:/*F4: 退出程�?*/
                     exit(1);
                     break;
         
@@ -227,7 +228,7 @@ void KeyboardEventProcess(int key, int event)
 					DeleteObj(CURR_OBJ);
 					break;
 
-				case VK_ESCAPE:/*ESCAPE: 退出对象选中状态*/
+				case VK_ESCAPE:/*ESCAPE: 退出对象选中状�?*/
 					CURR_OBJ=NULL;
 					break;
                 case VK_CONTROL:  

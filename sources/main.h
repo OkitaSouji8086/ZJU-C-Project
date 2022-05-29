@@ -3,6 +3,7 @@
 
 #include "linkedlist.h"
 #include "genlib.h"
+#include "boolean.h"
 
 //=============================================================================================================================================//
 /* 宏定义 */
@@ -108,6 +109,20 @@ typedef struct StartBox
 	int TextID; /* 文本框编号 */
 	bool IsSelected; /* 是否选中 */
 } *ptr_StartBox;
+
+
+/* 文本框 */
+typedef struct Text
+{
+	int ID; /* 唯一对象编号 */
+	string text; /* 文本指针 */
+	double x, y; /* 文本显示起始位置坐标 */
+	int PenSize; /* 粗细 */
+	string Color; /* 颜色 */
+	bool IsSelected; /* 是否选中 */
+	int curPos; /* 光标位置 */
+	bool isDisplayed; /*光标是否处于显示状态*/
+} *ptr_Text;
 
 
 
