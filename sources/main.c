@@ -12,6 +12,7 @@
 #include "linkedlist.h"
 #include "imgui.h"
 #include "conio.h"
+#include "boolean.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -25,13 +26,48 @@
 #include <winuser.h>
 
 //=============================================================================================================================================//
-/* Ĭ��ֵ���� */
+/* 链表定义 */
+//=============================================================================================================================================//
+
+
+/* 每个元素都是一个指向 直线/框链表 的指针 */
+linkedlistADT List[4] = {NULL, NULL, NULL, NULL};
+
+
+
+//=============================================================================================================================================//
+/* 全局变量定义 */
+//=============================================================================================================================================//
+
+/* 每种对象的个数 */
+int COUNT[3] = {0, 0, 0};
+
+
+/* 当前选中的元素,没有选中时为NULL */
+void* CURR_OBJ = NULL;
+/* 当前选中的元素种类,没有选中时为-1 */
+int CURR_OBJ_KIND = -1;
+
+
+/* 剪切板,指向上一个被复制的对象,没有则为NULL */
+void* TEMP = NULL;
+/* 剪切板中的对象种类,没有则为-1 */
+int TEMP_KIND = -1;
+
+
+/* 鼠标状态机 */
+int MOUSE_FSM;
+
+
+
+//=============================================================================================================================================//
+/* 默认值定义 */
 //=============================================================================================================================================//
 
 
 
 //=============================================================================================================================================//
-/* ����ʵ�� */
+/* 函数实现 */
 //=============================================================================================================================================//
 
 void Main()
@@ -41,7 +77,7 @@ void Main()
 	InitGraphics();
 	InitConsole();
 
-	Randomize(); /* ���������ʼ�� */
+	Randomize(); /* 随机函数初始化 */
 	registerKeyboardEvent(KeyboardEventProcess);
 	registerCharEvent(CharEventProcess);
 	registerMouseEvent(MouseEventProcess);
@@ -94,12 +130,12 @@ void DrawMenu()
 		"About",
 		"Help"};
 
-	int selection; /* �˵�ѡ�� */
+	int selection; /* 菜单选中 */
 	static char * selectedLabel = NULL;
 
-	double MenuH = GetFontHeight() * 1.5; /* �˵��߶� */
-	double MenuW = TextStringWidth(menuListFile[0])*2; /* �˵�������� */
-	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* �˵���Ŀ���� */
+	double MenuH = GetFontHeight() * 1.5; /* 菜单高度 */
+	double MenuW = TextStringWidth(menuListFile[0])*2; /* 菜单标题宽度 */
+	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* 菜单条目宽度 */
 
 	drawMenuBar(0, WindowH-MenuH, WindowW, MenuH);
 
@@ -177,10 +213,103 @@ void DrawMenu()
 
 void KeyboardEventProcess(int key, int event)
 {
-	uiGetKeyboard(key, event);
+    uiGetKeyboard(key, event);
 	display();
-}
 
+    ptr_Line line;
+    ptr_ProcedureBox ProcedureBox;
+    ptr_StartBox StartBox;
+	ptr_JudgeBox JudgeBox;
+    
+
+    switch (event) {
+        case KEY_DOWN:
+            switch (key) {
+                case VK_F1:/*F1: 绘制起始终止框*/
+                    
+					StartBox = GetBlock(sizeof(*StartBox));
+					StartBox->PenSize = GetPenSize();
+					StartBox->Color = GetPenColor();
+					StartBox->IsSelected = FALSE;
+					DrawStartBox(StartBox);
+					InsertNode(List[STARTBOX],NULL,StartBox);
+                    
+					break;
+
+                case VK_F2:/*F2: 绘制判断框*/
+                    
+					JudgeBox = GetBlock(sizeof(*JudgeBox));
+					JudgeBox->PenSize = GetPenSize();
+					JudgeBox->Color = GetPenColor();
+					JudgeBox->IsSelected = FALSE;
+					DrawJudgeBox(JudgeBox);
+					InsertNode(List[JUDGEBOX],NULL,JudgeBox);
+					
+					
+                    break;
+
+                case VK_F3:/*F3: 绘制执行框*/
+                    
+					ProcedureBox = GetBlock(sizeof(*ProcedureBox));
+					ProcedureBox->PenSize = GetPenSize();
+					ProcedureBox->Color = GetPenColor();
+					ProcedureBox->IsSelected = FALSE;
+					DrawProcedureBox(ProcedureBox);
+					InsertNode(List[PROCEDUREBOX],NULL,ProcedureBox);
+					
+                    break;
+
+                case VK_F10:/*F4: 退出程序*/
+                    exit(1);
+                    break;
+        
+				case VK_BACK:/*BACKSP: 删除对象*/
+					DeleteObj(CURR_OBJ);
+					break;
+
+				case VK_ESCAPE:/*ESCAPE: 退出对象选中状态*/
+					CURR_OBJ=NULL;
+
+					break;
+
+                case VK_CONTROL:  
+									
+					
+					break;
+
+				case 'S':/*Ctrl+S：保存到save.data*/
+					if(flag==1){
+						SaveAllObj();
+					}
+
+					break;
+
+				case 'O':/*Ctrl+O：从save.data读取*/
+					if(flag==1){
+						LoadAllObj();
+					}
+
+					break;
+
+				case 'C':/*Ctrl+C：复制选中对象*/
+					if(flag==1){
+						CopyObj();
+					}
+
+					break;
+
+				case 'V':/*Ctrl+V：粘贴对象*/
+					if(flag==1){
+						PasteObj(TEMP);
+					}
+
+					break;
+
+			}	
+		case KEY_UP:
+            break;
+
+	}
 void CharEventProcess(char c)
 {
 	uiGetChar(c);
@@ -192,5 +321,7 @@ void MouseEventProcess(int x, int y, int button, int event)
 	uiGetMouse(x, y, button, event);
 	display();
 }
+
+
 
 #endif

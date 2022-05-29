@@ -3,6 +3,7 @@
 
 #include "linkedlist.h"
 #include "genlib.h"
+#include "boolean.h"
 
 //=============================================================================================================================================//
 /* 宏定义 */
@@ -13,9 +14,15 @@
 
 /* 对象种类 */
 #define NLIST 4
+#define LINE 0
+#define PROCEDUREBOX 1
+#define JUDGEBOX 2
+#define STARTBOX 3
+#define TEXT 4
 
-/* 默认绘图颜色 */
+/* 默认绘图属性 */
 #define SYSCOLOR "Red"
+#define SYSPENSIZE 1
 
 /* 窗口宽度 */
 #define WindowX 1280
@@ -31,7 +38,7 @@
 
 
 /* 每个元素都是一个指向 直线/框链表 的指针 */
-linkedlistADT List[3];
+extern linkedlistADT List[4];
 
 
 
@@ -40,19 +47,23 @@ linkedlistADT List[3];
 //=============================================================================================================================================//
 
 /* 每种对象的个数 */
-int COUNT[2];
+extern int COUNT[3];
 
 
 /* 当前选中的元素,没有选中时为NULL */
-void* CURR_OBJ;
+extern void* CURR_OBJ;
+/* 当前选中的元素种类,没有选中时为-1 */
+extern int CURR_OBJ_KIND;
 
 
-/* 指向上一个被复制的对象,没有则为NULL */
-void* TEMP;
+/* 剪切板,指向上一个被复制的对象,没有则为NULL */
+extern void* TEMP;
+/* 剪切板中的对象种类,没有则为-1 */
+extern int TEMP_KIND;
 
 
 /* 鼠标状态机 */
-int MOUSE_FSM;
+extern int MOUSE_FSM;
 
 
 
@@ -108,6 +119,20 @@ typedef struct StartBox
 	int TextID; /* 文本框编号 */
 	bool IsSelected; /* 是否选中 */
 } *ptr_StartBox;
+
+
+/* 文本框 */
+typedef struct Text
+{
+	int ID; /* 唯一对象编号 */
+	string text; /* 文本指针 */
+	double x, y; /* 文本显示起始位置坐标 */
+	int PenSize; /* 粗细 */
+	string Color; /* 颜色 */
+	bool IsSelected; /* 是否选中 */
+	int curPos; /* 光标位置 */
+	bool isDisplayed; /*光标是否处于显示状态*/
+} *ptr_Text;
 
 
 
@@ -223,6 +248,15 @@ void DeleteObj(void* ptr_Obj);
  * 返回值:找到的对象指针
  */
 void* SearchObj(int ID);
+
+/* 功能:SearchObj辅助函数
+ * 参数1:待查找data指针
+ * 参数2:给定ID
+ * 返回值:是否相等,相等为TRUE
+ */
+bool equalfunptr_PBox(void *obj1, void *obj2);
+bool equalfunptr_JBox(void *obj1, void *obj2);
+bool equalfunptr_SBox(void *obj1, void *obj2);
 
 
 /* 功能:保存所有对象到save.data

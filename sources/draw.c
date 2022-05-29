@@ -30,4 +30,30 @@ void EnLargeStartBox(double Times,void* ptr_Obj)
     ptr_temp->height *= Times;
 }
 
+void CopyObj()
+{
+    if(CURR_OBJ == NULL) return;
+    TEMP = CURR_OBJ;
+    TEMP_KIND = CURR_OBJ_KIND;
+}
+
+void PasteObj()
+{
+    if(TEMP == NULL) return;
+    switch (TEMP_KIND)
+    {
+    case PROCEDUREBOX:
+        /* code */
+        break;
+    case JUDGEBOX:
+        //
+        break;
+    case STARTBOX:
+        //
+        break;
+    default:
+        break;
+    }
+}
+
 #endif
