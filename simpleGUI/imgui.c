@@ -47,6 +47,8 @@
 #define KMOD_CTRL  0x02
 
 
+int flag = 0;
+
 /* 鼠标和空间状态 */
 typedef struct {
 	double mousex;
