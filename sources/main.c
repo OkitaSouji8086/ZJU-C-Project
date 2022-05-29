@@ -310,6 +310,7 @@ void KeyboardEventProcess(int key, int event)
             break;
 
 	}
+}
 void CharEventProcess(char c)
 {
 	uiGetChar(c);
