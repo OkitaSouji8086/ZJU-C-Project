@@ -32,7 +32,7 @@
 
 
 /* 每个元素都是一个指向 直线/框链表 的指针 */
-linkedlistADT List[3];
+extern linkedlistADT List[3];
 
 
 
@@ -41,19 +41,23 @@ linkedlistADT List[3];
 //=============================================================================================================================================//
 
 /* 每种对象的个数 */
-int COUNT[2];
+extern int COUNT[3];
 
 
 /* 当前选中的元素,没有选中时为NULL */
-void* CURR_OBJ;
+extern void* CURR_OBJ;
+/* 当前选中的元素种类,没有选中时为-1 */
+extern int CURR_OBJ_KIND;
 
 
-/* 指向上一个被复制的对象,没有则为NULL */
-void* TEMP;
+/* 剪切板,指向上一个被复制的对象,没有则为NULL */
+extern void* TEMP;
+/* 剪切板中的对象种类,没有则为-1 */
+extern int TEMP_KIND;
 
 
 /* 鼠标状态机 */
-int MOUSE_FSM;
+extern int MOUSE_FSM;
 
 
 
