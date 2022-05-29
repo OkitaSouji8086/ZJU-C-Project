@@ -14,6 +14,10 @@
 
 /* 对象种类 */
 #define NLIST 4
+#define LINE 0
+#define PROCEDUREBOX 1
+#define JUDGEBOX 2
+#define STARTBOX 3
 
 /* 默认绘图颜色 */
 #define SYSCOLOR "Red"

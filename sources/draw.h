@@ -13,15 +13,29 @@
  */
 void EnLargeObj(double Times, void* ptr_Obj, void (*fptr_EnLargeObj)(double Times, void* ptr_Obj));
 
-
 /* 功能:EnLargeObj辅助函数
  * 参数1:缩放倍数
  * 参数2:对象指针
  * 返回值:无
  * 说明:缩放 给定指针指向的特定类型对象
  */
-void EnLargeProcedureBox(double Times, void* ptr_Obj); /* 放大 */
+void EnLargeProcedureBox(double Times, void* ptr_Obj);
 void EnLargeJudgeBox(double Times, void* ptr_Obj);
 void EnLargeStartBox(double Times, void* ptr_Obj);
+
+
+/* 功能:复制选中的对象
+ * 参数:无
+ * 返回值:无
+ * 说明:若有对象被选中且按下 Ctrl+C, 则令 TEMP 指向该对象
+ */
+void CopyObj();
+
+/* 功能:粘贴选中的对象
+ * 参数:无
+ * 返回值:无
+ * 说明:在当前鼠标位置生成一个新对象,除位置外其余参数与 TEMP 指向的对象相同
+ */
+void PasteObj();
 
 #endif
