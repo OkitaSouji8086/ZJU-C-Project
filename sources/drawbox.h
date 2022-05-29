@@ -24,4 +24,10 @@ void DrawJudgeBox(void *JudgeBox);
 void DrawJudgeBox(void *JudgeBox);
 void DrawStartBox(void *StartBox);
 
+/* 功能:遍历链表,找到给定 ID 对应的对象
+ * 参数:对象ID
+ * 返回值:找到的对象指针
+ */
+extern void* SearchObj(int ID);
+
 #endif

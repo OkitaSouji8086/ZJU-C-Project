@@ -18,9 +18,11 @@
 #define PROCEDUREBOX 1
 #define JUDGEBOX 2
 #define STARTBOX 3
+#define TEXT 4
 
-/* 默认绘图颜色 */
+/* 默认绘图属性 */
 #define SYSCOLOR "Red"
+#define SYSPENSIZE 1
 
 /* 窗口宽度 */
 #define WindowX 1280
@@ -36,7 +38,7 @@
 
 
 /* 每个元素都是一个指向 直线/框链表 的指针 */
-extern linkedlistADT List[3];
+extern linkedlistADT List[4];
 
 
 
@@ -246,6 +248,15 @@ void DeleteObj(void* ptr_Obj);
  * 返回值:找到的对象指针
  */
 void* SearchObj(int ID);
+
+/* 功能:SearchObj辅助函数
+ * 参数1:待查找data指针
+ * 参数2:给定ID
+ * 返回值:是否相等,相等为TRUE
+ */
+bool equalfunptr_PBox(void *obj1, void *obj2);
+bool equalfunptr_JBox(void *obj1, void *obj2);
+bool equalfunptr_SBox(void *obj1, void *obj2);
 
 
 /* 功能:保存所有对象到save.data

@@ -24,6 +24,7 @@ double MenuW = 1.0;
 int i = 0;
 
 
+
 //=============================================================================================================================================//
 /* 函数实现 */
 //=============================================================================================================================================//
@@ -32,31 +33,33 @@ int i = 0;
 /*画直线*/
 void LinkTwoObj(int ID1, int ID2)
 {
-	int IDlast=COUNT[0]+COUNT[1]+COUNT[2]-1;
+	// int IDlast=COUNT[0]+COUNT[1]+COUNT[2]-1;
 	
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
 
-    SetPenSize(box->PenSize);/*设置粗细*/
-	SetPenColor(box->Color);/*设置颜色*/
+    // // SetPenSize(SYSPENSIZE);/*设置粗细*/
+	// // SetPenColor(SYSCOLOR);/*设置颜色*/
 
-	/*判断框的类型*/
-	if(ID1!=0&&ID2!=0&&ID1!=IDlast&&ID2!=IDlast){
-		ptr_ProcedureBox curr1;
-		ptr_ProcedureBox curr2;
-	}else if(ID1==0&&ID2==IDlast||ID1==IDlast&&ID2==0){
-		ptr_StartBox curr1;
-		ptr_StartBox curr2;
-	}else if((ID1==0||ID1==IDlast)&&(ID2!=IDlast&&ID2!=0)){
-		ptr_StartBox curr1;
-		ptr_ProcedureBox curr2;
-	}else if((ID1!=0&&ID1!=IDlast)&&(ID2==0||ID2==IDlast)){
-		ptr_ProcedureBox curr1;
-		ptr_StartBox curr2;
-	}
+	// /*判断框的类型*/
+	// if(ID1!=0&&ID2!=0&&ID1!=IDlast&&ID2!=IDlast){
+	// 	ptr_ProcedureBox curr1;
+	// 	ptr_ProcedureBox curr2;
+	// }else if(ID1==0&&ID2==IDlast||ID1==IDlast&&ID2==0){
+	// 	ptr_StartBox curr1;
+	// 	ptr_StartBox curr2;
+	// }else if((ID1==0||ID1==IDlast)&&(ID2!=IDlast&&ID2!=0)){
+	// 	ptr_StartBox curr1;
+	// 	ptr_ProcedureBox curr2;
+	// }else if((ID1!=0&&ID1!=IDlast)&&(ID2==0||ID2==IDlast)){
+	// 	ptr_ProcedureBox curr1;
+	// 	ptr_StartBox curr2;
+	// }
 
-	curr1=SearchObj(ID1);
-	curr2=SearchObj(ID2);
+    ptr_ProcedureBox curr1 = NULL, curr2 = NULL;
+
+	curr1 = (ptr_ProcedureBox)SearchObj(ID1);
+	curr2 = (ptr_ProcedureBox)SearchObj(ID2);
 	int x1=curr1->x;
 	int x2=curr2->x;
 	int y1=curr1->y;

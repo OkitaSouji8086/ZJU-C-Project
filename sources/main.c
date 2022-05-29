@@ -31,7 +31,7 @@
 
 
 /* 每个元素都是一个指向 直线/框链表 的指针 */
-linkedlistADT List[3] = {NULL, NULL, NULL};
+linkedlistADT List[4] = {NULL, NULL, NULL, NULL};
 
 
 
@@ -286,5 +286,7 @@ void MouseEventProcess(int x, int y, int button, int event)
 	uiGetMouse(x, y, button, event);
 	display();
 }
+
+
 
 #endif
