@@ -1,23 +1,23 @@
 //===========================================================================
 //
-//  ç‰ˆæƒæ‰€æœ‰è€…ï¼š åˆ˜æ–°å›½ï¼Œæµ™æ±Ÿå¤§å­¦è®¡ç®—æœºç§‘å­¦ä¸æŠ€æœ¯å­¦é™¢
-//                       CAD&CGå›½å®¶é‡ç‚¹å®éªŒå®¤
+//  °æÈ¨ËùÓĞÕß£º ÁõĞÂ¹ú£¬Õã½­´óÑ§¼ÆËã»ú¿ÆÑ§Óë¼¼ÊõÑ§Ôº
+//                       CAD&CG¹ú¼ÒÖØµãÊµÑéÊÒ
 //               xgliu@cad.zju.edu.cn
-//  æœ€è¿‘ä¿®æ”¹ï¼š2021å¹´5æœˆ17æ—¥ by xdq
-//            ä¿®æ”¹textbox()å‡½æ•°ï¼Œæ”¯æŒæ±‰å­—çš„è¾“å…¥å’Œæ“¦é™¤ 
-//  æœ€è¿‘ä¿®æ”¹ï¼š2019å¹´5æœˆ22æ—¥ 
-//            æ·»åŠ èœå•å±•å¼€çš„çŸ©å½¢ï¼Œåœ¨èœå•å±•å¼€å’Œæ§ä»¶åŒºåŸŸé‡å æ˜¯ï¼Œä¼˜å…ˆå¤„ç†èœå•ã€‚
-//  æœ€è¿‘ä¿®æ”¹ï¼š2019å¹´2æœˆ28æ—¥ 
-//            æ·»åŠ äº†æ§ä»¶çš„é¢œè‰²å’Œå¡«å……çš„è®¾ç½®ï¼Œ
-//            ä»¥åŠè®¾ç½®é¢œè‰²çš„ä¾‹å­ï¼ˆåœ¨å‡½æ•°demoGuiALL.cçš„drawButtonså‡½æ•°é‡Œï¼‰
-//  æœ€è¿‘ä¿®æ”¹ï¼š2019å¹´2æœˆ26æ—¥ 
-//            æ·»åŠ äº†æ¼”ç¤ºæ–‡æœ¬ç¼–è¾‘æ¼”ç¤º
-//            æ·»åŠ äº†åŠ¨ç”»æ¼”ç¤º
-//            æ·»åŠ äº†textbox æ–‡æœ¬è¾“å…¥æ§ä»¶
-//            ç®€åŒ–äº†èœå•å¤„ç†
-//            æ”¹ uiGetInput ä¸º uiGetMouse,uiGetKey,uiGetKeyboard
-//  æœ€è¿‘ä¿®æ”¹ï¼š2019å¹´2æœˆ18æ—¥
-//  åˆæ¬¡åˆ›å»ºï¼š2018å¹´4æœˆï¼Œç”¨äº<<ç¨‹åºè®¾è®¡ä¸“é¢˜>>è¯¾ç¨‹æ•™å­¦
+//  ×î½üĞŞ¸Ä£º2021Äê5ÔÂ17ÈÕ by xdq
+//            ĞŞ¸Ätextbox()º¯Êı£¬Ö§³Öºº×ÖµÄÊäÈëºÍ²Á³ı 
+//  ×î½üĞŞ¸Ä£º2019Äê5ÔÂ22ÈÕ 
+//            Ìí¼Ó²Ëµ¥Õ¹¿ªµÄ¾ØĞÎ£¬ÔÚ²Ëµ¥Õ¹¿ªºÍ¿Ø¼şÇøÓòÖØµşÊÇ£¬ÓÅÏÈ´¦Àí²Ëµ¥¡£
+//  ×î½üĞŞ¸Ä£º2019Äê2ÔÂ28ÈÕ 
+//            Ìí¼ÓÁË¿Ø¼şµÄÑÕÉ«ºÍÌî³äµÄÉèÖÃ£¬
+//            ÒÔ¼°ÉèÖÃÑÕÉ«µÄÀı×Ó£¨ÔÚº¯ÊıdemoGuiALL.cµÄdrawButtonsº¯ÊıÀï£©
+//  ×î½üĞŞ¸Ä£º2019Äê2ÔÂ26ÈÕ 
+//            Ìí¼ÓÁËÑİÊ¾ÎÄ±¾±à¼­ÑİÊ¾
+//            Ìí¼ÓÁË¶¯»­ÑİÊ¾
+//            Ìí¼ÓÁËtextbox ÎÄ±¾ÊäÈë¿Ø¼ş
+//            ¼ò»¯ÁË²Ëµ¥´¦Àí
+//            ¸Ä uiGetInput Îª uiGetMouse,uiGetKey,uiGetKeyboard
+//  ×î½üĞŞ¸Ä£º2019Äê2ÔÂ18ÈÕ
+//  ³õ´Î´´½¨£º2018Äê4ÔÂ£¬ÓÃÓÚ<<³ÌĞòÉè¼Æ×¨Ìâ>>¿Î³Ì½ÌÑ§
 //
 //===========================================================================
 
@@ -49,7 +49,7 @@
 
 int flag = 0;
 
-/* é¼ æ ‡å’Œç©ºé—´çŠ¶æ€ */
+/* Êó±êºÍ¿Õ¼ä×´Ì¬ */
 typedef struct {
 	double mousex;
 	double mousey;
@@ -66,7 +66,7 @@ typedef struct {
 static UIState gs_UIState;
 static double  gs_menuRect[4];
 
-/* æµ‹è¯•ï¼šåæ ‡ç‚¹(x,y)æ˜¯å¦ä½äºåŒ…å›´å’Œ [x1,x2] X [y1,y2] å†…éƒ¨ */
+/* ²âÊÔ£º×ø±êµã(x,y)ÊÇ·ñÎ»ÓÚ°üÎ§ºÍ [x1,x2] X [y1,y2] ÄÚ²¿ */
 static bool inBox(double x, double y, double x1, double x2, double y1, double y2)
 {
 	return (x >= x1 && x <= x2 && y >= y1 && y <= y2);
@@ -92,7 +92,7 @@ void mySetPenColor(char *color)
 }
 
 /* 
- *  libgraphics é¢„å®šä¹‰çš„é¢œè‰²åç§°
+ *  libgraphics Ô¤¶¨ÒåµÄÑÕÉ«Ãû³Æ
  *
  *  DefineColor("Black", 0, 0, 0);
  *  DefineColor("Dark Gray", .35, .35, .35);
@@ -111,7 +111,7 @@ void mySetPenColor(char *color)
  */
 
 /* 
- *  èœå•é¢œè‰²
+ *  ²Ëµ¥ÑÕÉ«
  */
 static struct {
 	char frame[32];
@@ -122,23 +122,23 @@ static struct {
 } gs_predefined_colors[] = {
 	{"Blue",      "Blue",	"Red",	    "Red",   0 }, // 
 	{"Orange",    "Black", "Green",    "Blue",  0 }, // 
-	{"Orange",    "White", "Green",    "Blue",  1 }, // å¡«å……
+	{"Orange",    "White", "Green",    "Blue",  1 }, // Ìî³ä
 	{"Light Gray","Black",  "Dark Gray","Blue",0 },  // 
-	{"Light Gray","Black",  "Dark Gray","Yellow",1 },  // å¡«å……
+	{"Light Gray","Black",  "Dark Gray","Yellow",1 },  // Ìî³ä
 	{"Brown",     "Red",    "Orange",   "Blue",0 },
-	{"Brown",     "Red",    "Orange",   "White",1 }   // å¡«å……
+	{"Brown",     "Red",    "Orange",   "White",1 }   // Ìî³ä
 },
 
 gs_menu_color = {
-	"Blue",      "Blue",	"Red",	    "Red",   0 , // ä¸å¡«å……
+	"Blue",      "Blue",	"Red",	    "Red",   0 , // ²»Ìî³ä
 },
 
 gs_button_color = {
-	"Blue",      "Blue",	"Red",	    "Red",   0 , // ä¸å¡«å……
+	"Blue",      "Blue",	"Red",	    "Red",   0 , // ²»Ìî³ä
 },
 
 gs_textbox_color = {
-	"Blue",      "Blue",	"Red",	    "Red",   0 , // ä¸å¡«å……
+	"Blue",      "Blue",	"Red",	    "Red",   0 , // ²»Ìî³ä
 };
 
 void setButtonColors(char *frame, char*label, char *hotFrame, char *hotLabel, int fillflag)
@@ -191,18 +191,18 @@ void usePredefinedTexBoxColors(int k)
 	gs_textbox_color = gs_predefined_colors[k%N];
 }
 
-/* å‡½æ•°åï¼š	InitGUI
+/* º¯ÊıÃû£º	InitGUI
  *
- * åŠŸèƒ½ï¼šåˆå§‹åŒ–å·¥ä½œ
+ * ¹¦ÄÜ£º³õÊ¼»¯¹¤×÷
  *
- * ç”¨æ³•ï¼šåœ¨çª—å£åˆ›å»ºæˆ–å­—ä½“è®¾ç½®ä¹‹åè°ƒç”¨
+ * ÓÃ·¨£ºÔÚ´°¿Ú´´½¨»ò×ÖÌåÉèÖÃÖ®ºóµ÷ÓÃ
  */
 void InitGUI()
 {
 	memset(&gs_UIState, 0, sizeof(gs_UIState));
 }
 
-/* è°ƒç”¨è¯¥å‡½æ•°,å¾—åˆ°é¼ æ ‡çš„çŠ¶æ€ */
+/* µ÷ÓÃ¸Ãº¯Êı,µÃµ½Êó±êµÄ×´Ì¬ */
 void uiGetMouse(int x, int y, int button, int event)
 {
 	 gs_UIState.mousex = ScaleXInches(x);/*pixels --> inches*/
@@ -218,7 +218,7 @@ void uiGetMouse(int x, int y, int button, int event)
 	 }
 }
 
-/* è°ƒç”¨è¯¥å‡½æ•°,å¾—åˆ°é”®ç›˜çš„è¾“å…¥ */
+/* µ÷ÓÃ¸Ãº¯Êı,µÃµ½¼üÅÌµÄÊäÈë */
 void uiGetKeyboard(int key, int event)
 {
 	if( event==KEY_DOWN ) 
@@ -253,7 +253,7 @@ void uiGetKeyboard(int key, int event)
 	}
 }
 
-/* è°ƒç”¨è¯¥å‡½æ•°,å¾—åˆ°æ–‡æœ¬è¾“å…¥ */
+/* µ÷ÓÃ¸Ãº¯Êı,µÃµ½ÎÄ±¾ÊäÈë */
 void uiGetChar(int ch)
 {
 	gs_UIState.charInput = ch;
@@ -261,22 +261,22 @@ void uiGetChar(int ch)
 
 
 /* 
- * å‡½æ•°åï¼šbutton
+ * º¯ÊıÃû£ºbutton
  *
- * åŠŸèƒ½ï¼šæ˜¾ç¤ºä¸€ä¸ªæŒ‰é’®ï¼ˆbuttonï¼‰
+ * ¹¦ÄÜ£ºÏÔÊ¾Ò»¸ö°´Å¥£¨button£©
  *
- * ç”¨æ³•ï¼šif( button(GenUUID(0),x,y,w,h,label) ) {
- *           æ‰§è¡Œè¯­å¥ï¼Œå“åº”ç”¨æˆ·æŒ‰ä¸‹è¯¥æŒ‰é’®
+ * ÓÃ·¨£ºif( button(GenUUID(0),x,y,w,h,label) ) {
+ *           Ö´ĞĞÓï¾ä£¬ÏìÓ¦ÓÃ»§°´ÏÂ¸Ã°´Å¥
  *       }
  *
- *   id  - å”¯ä¸€å·
- *   x,y - ä½ç½®
- *   w,h - å®½åº¦å’Œé«˜åº¦
- *   label - æŒ‰é’®ä¸Šçš„æ–‡å­—æ ‡ç­¾
+ *   id  - Î¨Ò»ºÅ
+ *   x,y - Î»ÖÃ
+ *   w,h - ¿í¶ÈºÍ¸ß¶È
+ *   label - °´Å¥ÉÏµÄÎÄ×Ö±êÇ©
  *
- * è¿”å›å€¼
- *   0 - ç”¨æˆ·æ²¡æœ‰ç‚¹å‡»ï¼ˆæŒ‰ä¸‹å¹¶é‡Šæ”¾ï¼‰æŒ‰é’®  
- *   1 - ç‚¹å‡»äº†æŒ‰é’®
+ * ·µ»ØÖµ
+ *   0 - ÓÃ»§Ã»ÓĞµã»÷£¨°´ÏÂ²¢ÊÍ·Å£©°´Å¥  
+ *   1 - µã»÷ÁË°´Å¥
  */
 int button(int id, double x, double y, double w, double h, char *label)
 {
@@ -332,7 +332,7 @@ int button(int id, double x, double y, double w, double h, char *label)
 		drawRectangle(x+sinkx, y+sinky, w, h, 0);
 	}
 
-	// ç”»é”®ç›˜æç¤º, show a small ractangle frane
+	// »­¼üÅÌÌáÊ¾, show a small ractangle frane
 	if( gs_UIState.kbdItem == id ) {
 		mySetPenColor( labelColor );
 		drawRectangle(x+sinkx+shrink, y+sinky+shrink, w-2*shrink, h-2*shrink, 0);
@@ -350,15 +350,15 @@ int button(int id, double x, double y, double w, double h, char *label)
 }
 
 /* 
- * æ˜¾ç¤ºä¸€ä¸ªèœå•é¡¹
- *   id  - èœå•é¡¹çš„å”¯ä¸€å·
- *   x,y - èœå•é¡¹çš„ä½ç½®
- *   w,h - èœå•é¡¹çš„å¤§å°
- *   label - èœå•é¡¹çš„æ ‡ç­¾æ–‡å­—
+ * ÏÔÊ¾Ò»¸ö²Ëµ¥Ïî
+ *   id  - ²Ëµ¥ÏîµÄÎ¨Ò»ºÅ
+ *   x,y - ²Ëµ¥ÏîµÄÎ»ÖÃ
+ *   w,h - ²Ëµ¥ÏîµÄ´óĞ¡
+ *   label - ²Ëµ¥ÏîµÄ±êÇ©ÎÄ×Ö
  *
- * è¿”å›å€¼
- *   0 - ç”¨æˆ·æ²¡æœ‰ç‚¹å‡»ï¼ˆæŒ‰ä¸‹å¹¶é‡Šæ”¾ï¼‰æ­¤èœå•é¡¹  
- *   1 - ç‚¹å‡»äº†æ­¤èœå•é¡¹ 
+ * ·µ»ØÖµ
+ *   0 - ÓÃ»§Ã»ÓĞµã»÷£¨°´ÏÂ²¢ÊÍ·Å£©´Ë²Ëµ¥Ïî  
+ *   1 - µã»÷ÁË´Ë²Ëµ¥Ïî 
  */
 static int menuItem(int id, double x, double y, double w, double h, char *label)
 {
@@ -391,10 +391,10 @@ static int menuItem(int id, double x, double y, double w, double h, char *label)
 }
 
 /* 
- * å‡½æ•°åï¼šshortcutkey
+ * º¯ÊıÃû£ºshortcutkey
  *
- * åŠŸèƒ½ï¼šä»èœå•æ ‡ç­¾ä¸­æå–â€œå¿«æ·é”®â€å¤§å†™å­—æ¯
- *       è¦æ±‚å¿«æ·é”®æ ‡å¿— Ctrl-X ä½äºæ ‡ç­¾çš„ç»“å°¾éƒ¨åˆ†
+ * ¹¦ÄÜ£º´Ó²Ëµ¥±êÇ©ÖĞÌáÈ¡¡°¿ì½İ¼ü¡±´óĞ´×ÖÄ¸
+ *       ÒªÇó¿ì½İ¼ü±êÖ¾ Ctrl-X Î»ÓÚ±êÇ©µÄ½áÎ²²¿·Ö
  */
 static char ToUpperLetter(char c)
 {
@@ -414,21 +414,21 @@ static char shortcutkey(char *s)
 }
 
 /* 
- * å‡½æ•°åï¼šmenuList
+ * º¯ÊıÃû£ºmenuList
  *
- * åŠŸèƒ½ï¼šæ˜¾ç¤ºä¸€ä¸ªç»„èœå•
+ * ¹¦ÄÜ£ºÏÔÊ¾Ò»¸ö×é²Ëµ¥
  *
- * ç”¨æ³•ï¼šchoice = menuList(GenUUID(0),x,y,w,h,labels,n);
+ * ÓÃ·¨£ºchoice = menuList(GenUUID(0),x,y,w,h,labels,n);
  *
- *   id  - èœå•çš„å”¯ä¸€å·
- *   x,y,w,h - èœå•ç±»åˆ«çš„ä½ç½®å’Œå¤§å°
- *   wlist,h - èœå•åˆ—è¡¨çš„å®½åº¦å’Œé«˜åº¦
- *   labels[] - æ ‡ç­¾æ–‡å­—ï¼Œ[0]æ˜¯èœå•ç±»åˆ«ï¼Œ[1...n-1]æ˜¯èœå•åˆ—è¡¨
- *   n   - èœå•é¡¹çš„ä¸ªæ•°
+ *   id  - ²Ëµ¥µÄÎ¨Ò»ºÅ
+ *   x,y,w,h - ²Ëµ¥Àà±ğµÄÎ»ÖÃºÍ´óĞ¡
+ *   wlist,h - ²Ëµ¥ÁĞ±íµÄ¿í¶ÈºÍ¸ß¶È
+ *   labels[] - ±êÇ©ÎÄ×Ö£¬[0]ÊÇ²Ëµ¥Àà±ğ£¬[1...n-1]ÊÇ²Ëµ¥ÁĞ±í
+ *   n   - ²Ëµ¥ÏîµÄ¸öÊı
  *
- * è¿”å›å€¼
- *   -1    - ç”¨æˆ·æ²¡æœ‰ç‚¹å‡»ï¼ˆæŒ‰ä¸‹å¹¶é‡Šæ”¾ï¼‰æŒ‰é’®  
- *   >=0   - ç”¨æˆ·é€‰ä¸­çš„èœå•é¡¹ index ï¼ˆåœ¨labels[]ä¸­ï¼‰
+ * ·µ»ØÖµ
+ *   -1    - ÓÃ»§Ã»ÓĞµã»÷£¨°´ÏÂ²¢ÊÍ·Å£©°´Å¥  
+ *   >=0   - ÓÃ»§Ñ¡ÖĞµÄ²Ëµ¥Ïî index £¨ÔÚlabels[]ÖĞ£©
  *
  */
 int menuList(int id, double x, double y, double w, double wlist, double h, char *labels[], int n)
@@ -437,7 +437,7 @@ int menuList(int id, double x, double y, double w, double wlist, double h, char 
 	int result = 0;
 	int k = -1;
 
-	// å¤„ç†å¿«æ·é”®
+	// ´¦Àí¿ì½İ¼ü
 
 	if( gs_UIState.keyModifiers & KMOD_CTRL ) {
 		for( k=1; k<n; k++ ) {
@@ -450,12 +450,12 @@ int menuList(int id, double x, double y, double w, double wlist, double h, char 
 	}
 
 	if( k>0 && k<n ) 
-	{	// æˆåŠŸåŒ¹é…å¿«æ·é”®
+	{	// ³É¹¦Æ¥Åä¿ì½İ¼ü
 		unfoldMenu = 0;
 		return k; 
 	}
 
-	// å¤„ç†é¼ æ ‡
+	// ´¦ÀíÊó±ê
 
 	if( inBox(gs_UIState.mousex, gs_UIState.mousey, x, x + w, y, y + h) )
 		gs_UIState.actingMenu = id;
@@ -487,24 +487,24 @@ void drawMenuBar(double x, double y, double w, double h)
 
 
 /* 
- * å‡½æ•°åï¼štextbox
+ * º¯ÊıÃû£ºtextbox
  *
- * åŠŸèƒ½ï¼šæ˜¾ç¤ºä¸€ä¸ªæ–‡æœ¬ç¼–è¾‘æ¡†ï¼Œæ˜¾ç¤ºå’Œç¼–è¾‘æ–‡æœ¬å­—ç¬¦ä¸²
+ * ¹¦ÄÜ£ºÏÔÊ¾Ò»¸öÎÄ±¾±à¼­¿ò£¬ÏÔÊ¾ºÍ±à¼­ÎÄ±¾×Ö·û´®
  *
- * ç”¨æ³•ï¼štextbox(GenUUID(0),x,y,w,h,textbuf,buflen);
- *       æˆ–è€…
+ * ÓÃ·¨£ºtextbox(GenUUID(0),x,y,w,h,textbuf,buflen);
+ *       »òÕß
          if( textbox(GenUUID(0),x,y,w,h,textbuf,buflen) ) {
- *           æ–‡æœ¬å­—ç¬¦ä¸²è¢«ç¼–è¾‘ä¿®æ”¹äº†ï¼Œæ‰§è¡Œç›¸åº”è¯­å¥
+ *           ÎÄ±¾×Ö·û´®±»±à¼­ĞŞ¸ÄÁË£¬Ö´ĞĞÏàÓ¦Óï¾ä
  *       }
  *
- *   id  - å”¯ä¸€å·ï¼Œä¸€èˆ¬ç”¨GenUUID(0), æˆ–ç”¨GenUUIDï¼ˆk)ï¼ˆkæ˜¯å¾ªç¯å˜é‡ï¼‰
- *   x,y - æ–‡æœ¬æ¡†ä½ç½®
- *   w,h - æ–‡æœ¬æ¡†çš„å®½åº¦å’Œé«˜åº¦
- *   textbuf - è¢«ç¼–è¾‘çš„æ–‡æœ¬å­—ç¬¦ä¸²ï¼ˆä»¥\0ç»“å°¾ï¼‰
- *   buflen - å¯å­˜å‚¨çš„æ–‡æœ¬å­—ç¬¦ä¸²çš„æœ€å¤§é•¿åº¦
- * è¿”å›å€¼
- *   0 - æ–‡æœ¬æ²¡æœ‰è¢«ç¼–è¾‘
- *   1 - è¢«ç¼–è¾‘äº†
+ *   id  - Î¨Ò»ºÅ£¬Ò»°ãÓÃGenUUID(0), »òÓÃGenUUID£¨k)£¨kÊÇÑ­»·±äÁ¿£©
+ *   x,y - ÎÄ±¾¿òÎ»ÖÃ
+ *   w,h - ÎÄ±¾¿òµÄ¿í¶ÈºÍ¸ß¶È
+ *   textbuf - ±»±à¼­µÄÎÄ±¾×Ö·û´®£¨ÒÔ\0½áÎ²£©
+ *   buflen - ¿É´æ´¢µÄÎÄ±¾×Ö·û´®µÄ×î´ó³¤¶È
+ * ·µ»ØÖµ
+ *   0 - ÎÄ±¾Ã»ÓĞ±»±à¼­
+ *   1 - ±»±à¼­ÁË
  */
 int textbox(int id, double x, double y, double w, double h, char textbuf[], int buflen)
 {
@@ -565,14 +565,14 @@ int textbox(int id, double x, double y, double w, double h, char textbuf[], int 
 			break;
 		case VK_BACK:
 			if( len > 0 ) {
-				if (textbuf[len-1] < 0) --len; //æ±‰å­—å 2ä¸ªå­—èŠ‚ä¸”æ¯ä¸ªå­—èŠ‚æœ€é«˜ä½éƒ½ä¸º1 by xdq @20210517
-				textbuf[--len] = 0; //ASCIIå­—ç¬¦å›é€€ä¸€ä¸ªå­—èŠ‚ï¼Œæ±‰å­—å›é€€2ä¸ªå­—èŠ‚ by xdq @20210517 
+				if (textbuf[len-1] < 0) --len; //ºº×ÖÕ¼2¸ö×Ö½ÚÇÒÃ¿¸ö×Ö½Ú×î¸ßÎ»¶¼Îª1 by xdq @20210517
+				textbuf[--len] = 0; //ASCII×Ö·û»ØÍËÒ»¸ö×Ö½Ú£¬ºº×Ö»ØÍË2¸ö×Ö½Ú by xdq @20210517 
 				textChanged = 1;
 			}
 			gs_UIState.keyPress = 0;
 			break;
 		}
-		// char inputï¼šæ”¯æŒè¾“å…¥å¯è§ASCIIç å­—ç¬¦[32,127]ï¼Œå’Œè¾“å…¥æ±‰å­—ï¼ˆå 2ä¸ªå­—èŠ‚ä¸”æ¯ä¸ªå­—èŠ‚æœ€é«˜ä½éƒ½ä¸º1ï¼‰by xdq @20210517
+		// char input£ºÖ§³ÖÊäÈë¿É¼ûASCIIÂë×Ö·û[32,127]£¬ºÍÊäÈëºº×Ö£¨Õ¼2¸ö×Ö½ÚÇÒÃ¿¸ö×Ö½Ú×î¸ßÎ»¶¼Îª1£©by xdq @20210517
 		if ((gs_UIState.charInput >= 32 && gs_UIState.charInput < 127 || gs_UIState.charInput < 0) && len+1 < buflen ) {
 			textbuf[len] = gs_UIState.charInput;
 			textbuf[++len] = 0;
@@ -594,7 +594,7 @@ int textbox(int id, double x, double y, double w, double h, char textbuf[], int 
 }
 
 
-/* ç”»ä¸€ä¸ªçŸ©å½¢ */
+/* »­Ò»¸ö¾ØĞÎ */
 void drawRectangle(double x, double y, double w, double h, int fillflag)
 {
 	MovePen(x, y);
@@ -608,7 +608,7 @@ void drawRectangle(double x, double y, double w, double h, int fillflag)
 	if( fillflag ) EndFilledRegion();
 }
 
-/* ç”»ä¸€ä¸ªçŸ©å½¢ï¼Œå¹¶åœ¨å…¶å†…éƒ¨å±…ä¸­æ˜¾ç¤ºä¸€ä¸ªå­—ç¬¦ä¸²æ ‡ç­¾label */
+/* »­Ò»¸ö¾ØĞÎ£¬²¢ÔÚÆäÄÚ²¿¾ÓÖĞÏÔÊ¾Ò»¸ö×Ö·û´®±êÇ©label */
 void drawBox(double x, double y, double w, double h, int fillflag, char *label, char labelAlignment, char *labelColor)
 {
 	double fa = GetFontAscent();
@@ -627,7 +627,7 @@ void drawBox(double x, double y, double w, double h, int fillflag, char *label, 
 	}
 }
 
-/* æ˜¾ç¤ºå­—ç¬¦ä¸²æ ‡ç­¾ */
+/* ÏÔÊ¾×Ö·û´®±êÇ© */
 void drawLabel(double x, double y, char *label)
 {
 	if( label && strlen(label)>0 ) {
