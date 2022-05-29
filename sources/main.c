@@ -26,48 +26,48 @@
 #include <winuser.h>
 
 //=============================================================================================================================================//
-/* Á´±í¶¨Òå */
+/* é“¾è¡¨å®šä¹‰ */
 //=============================================================================================================================================//
 
 
-/* Ã¿¸öÔªËØ¶¼ÊÇÒ»¸öÖ¸Ïò Ö±Ïß/¿òÁ´±í µÄÖ¸Õë */
+/* æ¯ä¸ªå…ƒç´ éƒ½æ˜¯ä¸€ä¸ªæŒ‡å‘ ç›´çº¿/æ¡†é“¾è¡¨ çš„æŒ‡é’ˆ */
 linkedlistADT List[4] = {NULL, NULL, NULL, NULL};
 
 
 
 //=============================================================================================================================================//
-/* È«¾Ö±äÁ¿¶¨Òå */
+/* å…¨å±€å˜é‡å®šä¹‰ */
 //=============================================================================================================================================//
 
-/* Ã¿ÖÖ¶ÔÏóµÄ¸öÊı */
+/* æ¯ç§å¯¹è±¡çš„ä¸ªæ•° */
 int COUNT[3] = {0, 0, 0};
 
 
-/* µ±Ç°Ñ¡ÖĞµÄÔªËØ,Ã»ÓĞÑ¡ÖĞÊ±ÎªNULL */
+/* å½“å‰é€‰ä¸­çš„å…ƒç´ ,æ²¡æœ‰é€‰ä¸­æ—¶ä¸ºNULL */
 void* CURR_OBJ = NULL;
-/* µ±Ç°Ñ¡ÖĞµÄÔªËØÖÖÀà,Ã»ÓĞÑ¡ÖĞÊ±Îª-1 */
+/* å½“å‰é€‰ä¸­çš„å…ƒç´ ç§ç±»,æ²¡æœ‰é€‰ä¸­æ—¶ä¸º-1 */
 int CURR_OBJ_KIND = -1;
 
 
-/* ¼ôÇĞ°å,Ö¸ÏòÉÏÒ»¸ö±»¸´ÖÆµÄ¶ÔÏó,Ã»ÓĞÔòÎªNULL */
+/* å‰ªåˆ‡æ¿,æŒ‡å‘ä¸Šä¸€ä¸ªè¢«å¤åˆ¶çš„å¯¹è±¡,æ²¡æœ‰åˆ™ä¸ºNULL */
 void* TEMP = NULL;
-/* ¼ôÇĞ°åÖĞµÄ¶ÔÏóÖÖÀà,Ã»ÓĞÔòÎª-1 */
+/* å‰ªåˆ‡æ¿ä¸­çš„å¯¹è±¡ç§ç±»,æ²¡æœ‰åˆ™ä¸º-1 */
 int TEMP_KIND = -1;
 
 
-/* Êó±ê×´Ì¬»ú */
+/* é¼ æ ‡çŠ¶æ€æœº */
 int MOUSE_FSM;
 
 
 
 //=============================================================================================================================================//
-/* Ä¬ÈÏÖµ¶¨Òå */
+/* é»˜è®¤å€¼å®šä¹‰ */
 //=============================================================================================================================================//
 
 
 
 //=============================================================================================================================================//
-/* º¯ÊıÊµÏÖ */
+/* å‡½æ•°å®ç° */
 //=============================================================================================================================================//
 
 void Main()
@@ -77,7 +77,7 @@ void Main()
 	InitGraphics();
 	InitConsole();
 
-	Randomize(); /* Ëæ»úº¯Êı³õÊ¼»¯ */
+	Randomize(); /* éšæœºå‡½æ•°åˆå§‹åŒ– */
 	registerKeyboardEvent(KeyboardEventProcess);
 	registerCharEvent(CharEventProcess);
 	registerMouseEvent(MouseEventProcess);
@@ -130,12 +130,12 @@ void DrawMenu()
 		"About",
 		"Help"};
 
-	int selection; /* ²Ëµ¥Ñ¡ÖĞ */
+	int selection; /* èœå•é€‰ä¸­ */
 	static char * selectedLabel = NULL;
 
-	double MenuH = GetFontHeight() * 1.5; /* ²Ëµ¥¸ß¶È */
-	double MenuW = TextStringWidth(menuListFile[0])*2; /* ²Ëµ¥±êÌâ¿í¶È */
-	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* ²Ëµ¥ÌõÄ¿¿í¶È */
+	double MenuH = GetFontHeight() * 1.5; /* èœå•é«˜åº¦ */
+	double MenuW = TextStringWidth(menuListFile[0])*2; /* èœå•æ ‡é¢˜å®½åº¦ */
+	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* èœå•æ¡ç›®å®½åº¦ */
 
 	drawMenuBar(0, WindowH-MenuH, WindowW, MenuH);
 
@@ -220,61 +220,96 @@ void KeyboardEventProcess(int key, int event)
     ptr_ProcedureBox ProcedureBox;
     ptr_StartBox StartBox;
 	ptr_JudgeBox JudgeBox;
-    int flag=0;
+    
 
     switch (event) {
         case KEY_DOWN:
             switch (key) {
-                case VK_F1:/*F1: »æÖÆÆğÊ¼ÖÕÖ¹¿ò*/
+                case VK_F1:/*F1: ç»˜åˆ¶èµ·å§‹ç»ˆæ­¢æ¡†*/
                     
 					StartBox = GetBlock(sizeof(*StartBox));
 					StartBox->PenSize = GetPenSize();
 					StartBox->Color = GetPenColor();
 					StartBox->IsSelected = FALSE;
 					DrawStartBox(StartBox);
+					InsertNode(List[STARTBOX],NULL,StartBox);
                     
 					break;
 
-                case VK_F2:/*F2: »æÖÆËæ»úÅĞ¶Ï¿ò*/
+                case VK_F2:/*F2: ç»˜åˆ¶åˆ¤æ–­æ¡†*/
                     
 					JudgeBox = GetBlock(sizeof(*JudgeBox));
 					JudgeBox->PenSize = GetPenSize();
 					JudgeBox->Color = GetPenColor();
 					JudgeBox->IsSelected = FALSE;
 					DrawJudgeBox(JudgeBox);
+					InsertNode(List[JUDGEBOX],NULL,JudgeBox);
+					
 					
                     break;
 
-                case VK_F3:/*F3: »æÖÆËæ»úÖ´ĞĞ¿ò*/
+                case VK_F3:/*F3: ç»˜åˆ¶æ‰§è¡Œæ¡†*/
                     
 					ProcedureBox = GetBlock(sizeof(*ProcedureBox));
 					ProcedureBox->PenSize = GetPenSize();
 					ProcedureBox->Color = GetPenColor();
 					ProcedureBox->IsSelected = FALSE;
 					DrawProcedureBox(ProcedureBox);
+					InsertNode(List[PROCEDUREBOX],NULL,ProcedureBox);
 					
                     break;
 
-                case VK_F10:/*F4: ÍË³ö³ÌĞò*/
+                case VK_F10:/*F4: é€€å‡ºç¨‹åº*/
                     exit(1);
                     break;
         
-				case VK_BACK:/*BACKSP: É¾³ı¶ÔÏó*/
+				case VK_BACK:/*BACKSP: åˆ é™¤å¯¹è±¡*/
 					DeleteObj(CURR_OBJ);
 					break;
 
-				case VK_ESCAPE:/*ESCAPE: ÍË³ö¶ÔÏóÑ¡ÖĞ×´Ì¬*/
+				case VK_ESCAPE:/*ESCAPE: é€€å‡ºå¯¹è±¡é€‰ä¸­çŠ¶æ€*/
 					CURR_OBJ=NULL;
+
 					break;
+
                 case VK_CONTROL:  
+									
 					
-            		break;
-			}
+					break;
+
+				case 'S':/*Ctrl+Sï¼šä¿å­˜åˆ°save.data*/
+					if(flag==1){
+						SaveAllObj();
+					}
+
+					break;
+
+				case 'O':/*Ctrl+Oï¼šä»save.dataè¯»å–*/
+					if(flag==1){
+						LoadAllObj();
+					}
+
+					break;
+
+				case 'C':/*Ctrl+Cï¼šå¤åˆ¶é€‰ä¸­å¯¹è±¡*/
+					if(flag==1){
+						CopyObj();
+					}
+
+					break;
+
+				case 'V':/*Ctrl+Vï¼šç²˜è´´å¯¹è±¡*/
+					if(flag==1){
+						PasteObj(TEMP);
+					}
+
+					break;
+
+			}	
 		case KEY_UP:
             break;
-	}	 
-}
 
+	}
 void CharEventProcess(char c)
 {
 	uiGetChar(c);
