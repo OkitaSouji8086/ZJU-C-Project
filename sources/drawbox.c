@@ -5,47 +5,47 @@
 
 
 //=============================================================================================================================================//
-/* 默认值定义 */
+/* Ĭ��ֵ���� */
 //=============================================================================================================================================//
 
-/* 菜单控件高度 */
+/* �˵��ؼ��߶� */
 double MenuH = 0.4;
 
-/* 菜单控件宽度 */
+/* �˵��ؼ����� */
 double MenuW = 1.0;
 
-/* 窗口宽度 */
+/* ���ڿ��� */
 double WindowX = 1280;
 
-/* 窗口高度 */
+/* ���ڸ߶� */
 double WindowY = 720;
 
 
 //=============================================================================================================================================//
-/* 全局变量定义 */
+/* ȫ�ֱ������� */
 //=============================================================================================================================================//
 
-/*判断生成的框需要往右下偏移多少个单位*/
+/*�ж����ɵĿ���Ҫ������ƫ�ƶ��ٸ���λ*/
 int i = 0;
 
 
 //=============================================================================================================================================//
-/* 函数实现 */
+/* ����ʵ�� */
 //=============================================================================================================================================//
 
 
-/*画直线*/
+/*��ֱ��*/
 void LinkTwoObj(int ID1, int ID2)
 {
 	int IDlast=COUNT[0]+COUNT[1]+COUNT[2]-1;
 	
-    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
-	string color = GetPenColor();/*保存当前系统颜色*/
+    int pensize = GetPenSize();/*���浱ǰϵͳ�ʻ���ϸ*/
+	string color = GetPenColor();/*���浱ǰϵͳ��ɫ*/
 
-    SetPenSize(box->PenSize);/*设置粗细*/
-	SetPenColor(box->Color);/*设置颜色*/
+    SetPenSize(box->PenSize);/*���ô�ϸ*/
+	SetPenColor(box->Color);/*������ɫ*/
 
-	/*判断框的类型*/
+	/*�жϿ������*/
 	if(ID1!=0&&ID2!=0&&ID1!=IDlast&&ID2!=IDlast){
 		ptr_ProcedureBox curr1;
 		ptr_ProcedureBox curr2;
@@ -69,7 +69,7 @@ void LinkTwoObj(int ID1, int ID2)
 	int t;
 
 	if(y2>y1){
-		/*交换参数，使得x1和y1是位于上面的框的坐标参数*/
+		/*����������ʹ��x1��y1��λ������Ŀ���������*/
 		t=x1;
 		x1=x2;
 		x2=t;
@@ -79,27 +79,27 @@ void LinkTwoObj(int ID1, int ID2)
 		y2=t;
 	}
 	
-	/*先画横的线再画竖的线*/
+	/*�Ȼ�������ٻ�������*/
 	
-	/*往右画横线*/
+	/*���һ�����*/
 	if(x1<x2){
 		MovePen(x1+curr1->width/2,y1);
 		DrawLine(x2-x1-curr1->width/2,0);
 		DrawLine(0,-(y1-y2-curr2->height/2));
 	}
-	/*往左画横线*/
+	/*���󻭺���*/
 	else{
 		MovePen(x1-curr1->width/2,y1);
 		DrawLine(-(x1-x2-curr1->width/2),0);
 		DrawLine(0,-(y1-y2-curr2->height/2));
 	}
 	
-    SetPenSize(pensize); /*恢复粗细*/
-	SetPenColor(color);/*恢复颜色*/
+    SetPenSize(pensize); /*�ָ���ϸ*/
+	SetPenColor(color);/*�ָ���ɫ*/
 }
 
 
-/*画执行框*/
+/*��ִ�п�*/
 void DrawProcedureBox(void *ProcedureBox)
 {
     ptr_ProcedureBox box = (ptr_ProcedureBox)ProcedureBox;
@@ -108,38 +108,38 @@ void DrawProcedureBox(void *ProcedureBox)
     int x_mid=WindowX/2;
     int y_mid=WindowY/2;
 
-    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
-	string color = GetPenColor();/*保存当前系统颜色*/
+    int pensize = GetPenSize();/*���浱ǰϵͳ�ʻ���ϸ*/
+	string color = GetPenColor();/*���浱ǰϵͳ��ɫ*/
 
-    SetPenSize(box->PenSize);/*设置粗细*/
-	SetPenColor(box->Color);/*设置颜色*/
+    SetPenSize(box->PenSize);/*���ô�ϸ*/
+	SetPenColor(box->Color);/*������ɫ*/
     
-    /*定义偏移量，使得重复点击时生成的框会往右下偏移*/
+    /*����ƫ������ʹ���ظ����ʱ���ɵĿ��������ƫ��*/
     int x_offset=Width/10;
     int y_offset=Height/10;
     
         
-    /*画矩形执行框*/
+    /*������ִ�п�*/
     MovePen( x_mid - Width/2 + i*x_offset , y_mid + Height/2 - i*y_offset );
     DrawLine( Width , 0 );
     DrawLine( 0 , -Height );
     DrawLine( -Width , 0 );
     DrawLine( 0 , Height );
 
-    /*录入信息*/
+    /*¼����Ϣ*/
     box->x = x_mid + i*x_offset;
     box->y = y_mid - i*y_offset;
     box->ID = i;
 
-    SetPenSize(pensize); /*恢复粗细*/
-	SetPenColor(color);/*恢复颜色*/
+    SetPenSize(pensize); /*�ָ���ϸ*/
+	SetPenColor(color);/*�ָ���ɫ*/
     box->TextID = i;
 
     i++;
 }
 
 
-/*画条件判断框*/
+/*�������жϿ�*/
 void DrawJudgeBox(void *JudgeBox)
 {
     ptr_JudgeBox box = (ptr_JudgeBox)JudgeBox;
@@ -148,34 +148,34 @@ void DrawJudgeBox(void *JudgeBox)
     int x_mid=WindowX/2;
     int y_mid=WindowY/2;
 
-    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
-	string color = GetPenColor();/*保存当前系统颜色*/
+    int pensize = GetPenSize();/*���浱ǰϵͳ�ʻ���ϸ*/
+	string color = GetPenColor();/*���浱ǰϵͳ��ɫ*/
     
-    /*定义偏移量，使得重复点击时生成的框会往右下偏移*/
+    /*����ƫ������ʹ���ظ����ʱ���ɵĿ��������ƫ��*/
     int x_offset=Width/10;
     int y_offset=Height/10;
 
-    /*画菱形条件判断框*/
+    /*�����������жϿ�*/
     MovePen( x_mid - Width/2 + i*x_offset , y_mid - i*y_offset );
     DrawLine( Width/2 , Height/2 );
     DrawLine( Width/2 , -Height/2 );
     DrawLine( -Width/2 , -Height/2 );
     DrawLine( -Width/2 , Height/2 );
 
-    /*录入信息*/
+    /*¼����Ϣ*/
     box->x = x_mid + i*x_offset;
     box->y = y_mid - i*y_offset;
     box->ID = i;
     box->TextID = i;
 
-    SetPenSize(pensize); /*恢复粗细*/
-	SetPenColor(color);/*恢复颜色*/
+    SetPenSize(pensize); /*�ָ���ϸ*/
+	SetPenColor(color);/*�ָ���ɫ*/
 
     i++;
 }
 
 
-/*画起始终止框*/
+/*����ʼ��ֹ��*/
 void DrawStartBox(void *StartBox)
 {
     ptr_StartBox box = (ptr_StartBox)StartBox;
@@ -184,25 +184,25 @@ void DrawStartBox(void *StartBox)
     int x_mid=WindowX/2;
     int y_mid=WindowY/2;
 
-    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
-	string color = GetPenColor();/*保存当前系统颜色*/
+    int pensize = GetPenSize();/*���浱ǰϵͳ�ʻ���ϸ*/
+	string color = GetPenColor();/*���浱ǰϵͳ��ɫ*/
     
-    /*定义偏移量，使得重复点击时生成的框会往右下偏移*/
+    /*����ƫ������ʹ���ظ����ʱ���ɵĿ��������ƫ��*/
     int x_offset=Width/10;
     int y_offset=Height/10;
 
-    /*画椭圆起始终止框*/
+    /*����Բ��ʼ��ֹ��*/
     MovePen(x_mid + i*x_offset + box->width , y_mid - i*y_offset);
     DrawEllipticalArc(box->width , box->height, 0.0, 360.0);
 
-    /*录入信息*/
+    /*¼����Ϣ*/
     box->x = x_mid + i*x_offset;
     box->y = y_mid - i*y_offset;
     box->ID = i;
     box->TextID = i;
 
-    SetPenSize(pensize); /*恢复粗细*/
-	SetPenColor(color);/*恢复颜色*/
+    SetPenSize(pensize); /*�ָ���ϸ*/
+	SetPenColor(color);/*�ָ���ɫ*/
 
     i++;
 }
