@@ -2,6 +2,10 @@
 #define _SaveAndLoad_C_
 #include"SaveAndLoad.h"
 
+static char r = 'r';
+static char l = 'l';
+static char g = 'g';
+static char b = 'b';
 
 void SaveAllObj();//保存所有当前对象// 
 void DrawLineDSave(FILE *fp);  /*保存直线*/ 
@@ -33,13 +37,9 @@ void SaveAllObj()                        //保存的函数//
  } 
  void DrawLineDSave(FILE* fp) //线// 
  {
- 	char r = r;
-	char l = l;
-	char g = g;
-	char b = b;
 	
  	linkedlistADT nodeptr;
- 	unsigned int i = 0;
+ 	unsigned int i = LINE;
  	ptr_Line data;
  	
  	nodeptr = List[LINE]->next;
@@ -70,11 +70,6 @@ void SaveAllObj()                        //保存的函数//
  
  void DrawProcedureSave(FILE *fp)          //保存执行框// 
  {
- 		char r = r;
-	char l = l;
-	char g = g;
-	char b = b;
-	
  	linkedlistADT nodeptr;
  	unsigned int i = 1;
  	
@@ -109,12 +104,7 @@ void SaveAllObj()                        //保存的函数//
  
  void DrawJudgeSave(FILE *fp)
  {
- 	char r = r;
-	char l = l;
-	char g = g;
-	char b = b;
-	
- 	linkedlistADT nodeptr;
+	linkedlistADT nodeptr;
  	unsigned int i  = 2;
  	
  	ptr_JudgeBox data;
@@ -147,12 +137,7 @@ void SaveAllObj()                        //保存的函数//
  }
  
 void DrawStartSave(FILE *fp)
-{
-		char r = r;
-	char l = l;
-	char g = g;
-	char b = b;
-	
+{	
 	linkedlistADT nodeptr;
 	unsigned int i = 3;
 	
@@ -227,10 +212,6 @@ void LoadAllObj( )
 
 void DrawLineDLoad(FILE *fp)
 {
-	char r = r;
-	char l = l;
-	char g = g;
-	char b = b;
 	char mid;
 	ptr_Line data = (ptr_Line)malloc(sizeof(*data));
 
@@ -252,10 +233,7 @@ void DrawLineDLoad(FILE *fp)
 void DrawProcedureLoad(FILE *fp)
 {
 	char mid;
-	char r = r;
-	char l = l;
-	char g = g;
-	char b = b;
+
 	ptr_ProcedureBox data = (ptr_ProcedureBox)malloc(sizeof(*data));
 
 	fread(&data->ID, sizeof(int), 1, fp);
@@ -279,11 +257,9 @@ void DrawProcedureLoad(FILE *fp)
 	
 }
 void DrawJudgeLoad(FILE *fp)
-{   char mid;
-	char r = r;
-	char l = l;
-	char g = g;
-	char b = b;
+{  
+	char mid;
+
 	ptr_JudgeBox data = (ptr_JudgeBox)malloc(sizeof(*data));
 
 	fread(&data->ID, sizeof(int), 1, fp);
@@ -309,10 +285,6 @@ void DrawJudgeLoad(FILE *fp)
 
 void DrawStartLoad(FILE *fp)
 {
-	char r = r;
-	char l = l;
-	char g = g;
-	char b = b;
 	char mid;
 	
 	ptr_StartBox data = (ptr_StartBox)malloc(sizeof(*data));
@@ -344,10 +316,7 @@ void DrawTextSave(FILE *fp)
 	linkedlistADT nodeptr;
 	ptr_Text data;
 	unsigned int i = 4,s_len = 0;
-	char r = r;
-	char l = l;
-	char g = g;
-	char b = b;
+	
 	char mid;
 	
 	nodeptr = List[TEXT]->next;
