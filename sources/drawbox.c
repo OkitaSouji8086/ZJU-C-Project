@@ -8,12 +8,6 @@
 /* 默认值定义 */
 //=============================================================================================================================================//
 
-/* 菜单控件高度 */
-double MenuH = 0.4;
-
-/* 菜单控件宽度 */
-double MenuW = 1.0;
-
 
 
 //=============================================================================================================================================//
@@ -177,27 +171,22 @@ void DrawJudgeBox(void *JudgeBox)
 void DrawStartBox(void *StartBox)
 {
     ptr_StartBox box = (ptr_StartBox)StartBox;
-    int Height=(box->height);
-    int Width=(box->width);
-    int x_mid=WindowX/2;
-    int y_mid=WindowY/2;
+    int x_mid = box->x;
+    int y_mid = box->y;
 
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
     
-    /*定义偏移量，使得重复点击时生成的框会往右下偏移*/
-    int x_offset=Width/10;
-    int y_offset=Height/10;
 
     /*画椭圆起始终止框*/
-    MovePen(x_mid + i*x_offset + box->width , y_mid - i*y_offset);
+    MovePen(x_mid + box->width , y_mid);
     DrawEllipticalArc(box->width , box->height, 0.0, 360.0);
 
     /*录入信息*/
-    box->x = x_mid + i*x_offset;
-    box->y = y_mid - i*y_offset;
-    box->ID = i;
-    box->TextID = i;
+    // box->x = x_mid + i*x_offset;
+    // box->y = y_mid - i*y_offset;
+    // box->ID = i;
+    // box->TextID = i;
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/

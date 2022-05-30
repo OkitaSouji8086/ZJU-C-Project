@@ -20,9 +20,6 @@
 #define STARTBOX 3
 #define TEXT 4
 
-/* 默认绘图属性 */
-#define SYSCOLOR "Red"
-#define SYSPENSIZE 1
 
 /* 窗口宽度 */
 #define WindowX 1280
@@ -30,6 +27,10 @@
 /* 窗口高度 */
 #define WindowY 720
 
+
+/* 默认对象长宽 */
+#define OBJWIDTH 1.0
+#define OBJHEIGHT 0.4
 
 
 //=============================================================================================================================================//
@@ -61,9 +62,25 @@ extern void* TEMP;
 /* 剪切板中的对象种类,没有则为-1 */
 extern int TEMP_KIND;
 
+/* ID数组,每个对象唯一 */
+extern int ID[1000000];
+
+/* 当前编号到第几 */
+extern int CURR_ID;
+
+/* 当前中心点被占据的个数 */
+extern int CURR_OCCUPY;
 
 /* 鼠标状态机 */
 extern int MOUSE_FSM;
+
+//=============================================================================================================================================//
+/* 默认值定义 */
+//=============================================================================================================================================//
+
+/* 默认绘图属性 */
+extern string SYSCOLOR;
+extern int SYSPENSIZE;
 
 
 
@@ -165,6 +182,12 @@ void display();
  */
 void DrawMenu();
 
+/* 功能:绘制所有对象
+ * 参数:无
+ * 返回值:无
+ */
+void DrawAllObj();
+
 
 /* 功能:响应键盘事件
  * 参数1:按键名
@@ -186,6 +209,12 @@ void DrawMenu();
  * | ESCAPE |   退出对象选中状态   |       DeleteObj()       |
  */
 void KeyboardEventProcess(int key, int event);
+
+/* 功能:键盘回调函数辅助函数,处理F1事件
+ * 参数:无
+ * 说明:无
+ */
+void CaseF1Proccess();
 
 
 /* 功能:响应鼠标事件事件
@@ -271,5 +300,13 @@ void SaveAllObj();
  * 返回值:无
  */
 void LoadAllObj();
+
+
+
+/* 功能:绘制起始框
+ * 参数:起始框指针
+ * 返回值:无
+ */
+extern void DrawStartBox(void *StartBox);
 
 #endif

@@ -54,6 +54,16 @@ void* TEMP = NULL;
 /* 剪切板中的对象种类,没有则为-1 */
 int TEMP_KIND = -1;
 
+/* ID数组,每个对象唯一 */
+int ID[1000000];
+/* TEXT数组 */
+string TextID[1000000];
+
+/* 当前编号到第几 */
+int CURR_ID = 0;
+
+/* 当前中心点被占据的个数 */
+int CURR_OCCUPY = 0;
 
 /* 鼠标状态机 */
 int MOUSE_FSM;
@@ -64,6 +74,10 @@ int MOUSE_FSM;
 /* 默认值定义 */
 //=============================================================================================================================================//
 
+/* 默认绘图属性 */
+string SYSCOLOR = "Red";
+int SYSPENSIZE = 1;
+
 
 
 //=============================================================================================================================================//
@@ -72,6 +86,8 @@ int MOUSE_FSM;
 
 void Main()
 {
+	int i;
+
 	SetWindowTitle("Program Creater");
 	SetWindowSize(WindowX/GetXResolution(), WindowY/GetYResolution()); 
 	InitGraphics();
@@ -81,6 +97,12 @@ void Main()
 	registerKeyboardEvent(KeyboardEventProcess);
 	registerCharEvent(CharEventProcess);
 	registerMouseEvent(MouseEventProcess);
+
+	for (i = 0; i < NLIST; i++)
+	{
+		List[i] = NewLinkedList();
+	}
+	
 
 	display();
 
@@ -94,6 +116,8 @@ void display()
 	DisplayClear();
 
 	DrawMenu();
+
+	DrawAllObj();
 }
 
 void DrawMenu()
@@ -164,7 +188,7 @@ void DrawMenu()
 	switch (selection)
 	{
 	case 1:
-		printf("1 clicked\n");
+		CaseF1Proccess();
 		break;
 	case 2:
 		printf("2 clicked\n");
@@ -216,48 +240,39 @@ void KeyboardEventProcess(int key, int event)
     uiGetKeyboard(key, event);
 	display();
 
-    ptr_Line line;
-    ptr_ProcedureBox ProcedureBox;
-    ptr_StartBox StartBox;
-	ptr_JudgeBox JudgeBox;
-    
+	/* 屏幕中心点坐标 */
+	double MidX = WindowX/GetXResolution()/2;
+	double MidY = WindowY/GetYResolution()/2; 
 
     switch (event) {
         case KEY_DOWN:
             switch (key) {
                 case VK_F1:/*F1: 绘制起始终止框*/
-                    
-					StartBox = (ptr_StartBox)GetBlock(sizeof(*StartBox));
-					StartBox->PenSize = GetPenSize();
-					StartBox->Color = GetPenColor();
-					StartBox->IsSelected = FALSE;
-					DrawStartBox(StartBox);
-					InsertNode(List[STARTBOX],NULL,StartBox);
-                    
+					CaseF1Proccess();
 					break;
 
-                case VK_F2:/*F2: 绘制判断框*/
+                // case VK_F2:/*F2: 绘制判断框*/
                     
-					JudgeBox = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox));
-					JudgeBox->PenSize = GetPenSize();
-					JudgeBox->Color = GetPenColor();
-					JudgeBox->IsSelected = FALSE;
-					DrawJudgeBox(JudgeBox);
-					InsertNode(List[JUDGEBOX],NULL,JudgeBox);
+				// 	JudgeBox = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox));
+				// 	JudgeBox->PenSize = GetPenSize();
+				// 	JudgeBox->Color = GetPenColor();
+				// 	JudgeBox->IsSelected = FALSE;
+				// 	DrawJudgeBox(JudgeBox);
+				// 	InsertNode(List[JUDGEBOX],NULL,JudgeBox);
 					
 					
-                    break;
+                //     break;
 
-                case VK_F3:/*F3: 绘制执行框*/
+                // case VK_F3:/*F3: 绘制执行框*/
                     
-					ProcedureBox = (ptr_ProcedureBox)GetBlock(sizeof(*ProcedureBox));
-					ProcedureBox->PenSize = GetPenSize();
-					ProcedureBox->Color = GetPenColor();
-					ProcedureBox->IsSelected = FALSE;
-					DrawProcedureBox(ProcedureBox);
-					InsertNode(List[PROCEDUREBOX],NULL,ProcedureBox);
+				// 	ProcedureBox = (ptr_ProcedureBox)GetBlock(sizeof(*ProcedureBox));
+				// 	ProcedureBox->PenSize = GetPenSize();
+				// 	ProcedureBox->Color = GetPenColor();
+				// 	ProcedureBox->IsSelected = FALSE;
+				// 	DrawProcedureBox(ProcedureBox);
+				// 	InsertNode(List[PROCEDUREBOX],NULL,ProcedureBox);
 					
-                    break;
+                //     break;
 
                 case VK_F10:/*F4: 退出程序*/
                     exit(1);
@@ -324,5 +339,34 @@ void MouseEventProcess(int x, int y, int button, int event)
 }
 
 
+void CaseF1Proccess()
+{
+	/* 屏幕中心点坐标 */
+	double MidX = WindowX/GetXResolution()/2;
+	double MidY = WindowY/GetYResolution()/2; 
 
+    ptr_Line Line_Obj;
+    ptr_ProcedureBox ProcedureBox_Obj;
+    ptr_StartBox StartBox_Obj;
+	ptr_JudgeBox JudgeBox_Obj;
+
+	StartBox_Obj = (ptr_StartBox)GetBlock(sizeof(*StartBox_Obj));
+
+	StartBox_Obj->ID = CURR_ID;
+	CURR_ID ++;
+
+	StartBox_Obj->x = MidX + CURR_OCCUPY + OBJWIDTH/10;
+	StartBox_Obj->y = MidY + CURR_OCCUPY + OBJHEIGHT/10;
+	StartBox_Obj->width = OBJWIDTH;
+	StartBox_Obj->height = OBJHEIGHT;
+	StartBox_Obj->PenSize = SYSPENSIZE;
+	StartBox_Obj->Color = SYSCOLOR;
+	StartBox_Obj->TextID = -1;
+	StartBox_Obj->IsSelected = FALSE;
+
+	CURR_OCCUPY ++;
+
+	DrawStartBox(StartBox_Obj);
+	InsertNode(List[STARTBOX], NULL, StartBox_Obj);
+}
 #endif
