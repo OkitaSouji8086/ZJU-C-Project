@@ -5,37 +5,37 @@
 
 
 //=============================================================================================================================================//
-/* Ĭ��ֵ���� */
+/* 默认值定义 */
 //=============================================================================================================================================//
 
 
 
 //=============================================================================================================================================//
-/* ȫ�ֱ������� */
+/* 全局变量定义 */
 //=============================================================================================================================================//
 
-/*�ж����ɵĿ���Ҫ������ƫ�ƶ��ٸ���λ*/
+/*判断生成的框需要往右下偏移多少个单位*/
 int i = 0;
 
 
 
 //=============================================================================================================================================//
-/* ����ʵ�� */
+/* 函数实现 */
 //=============================================================================================================================================//
 
 
-/*��ֱ��*/
+/*画直线*/
 void LinkTwoObj(int ID1, int ID2)
 {
 	// int IDlast=COUNT[0]+COUNT[1]+COUNT[2]-1;
 	
-    int pensize = GetPenSize();/*���浱ǰϵͳ�ʻ���ϸ*/
-	string color = GetPenColor();/*���浱ǰϵͳ��ɫ*/
+    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
+	string color = GetPenColor();/*保存当前系统颜色*/
 
-    // // SetPenSize(SYSPENSIZE);/*���ô�ϸ*/
-	// // SetPenColor(SYSCOLOR);/*������ɫ*/
+    // // SetPenSize(SYSPENSIZE);/*设置粗细*/
+	// // SetPenColor(SYSCOLOR);/*设置颜色*/
 
-	// /*�жϿ������*/
+	// /*判断框的类型*/
 	// if(ID1!=0&&ID2!=0&&ID1!=IDlast&&ID2!=IDlast){
 	// 	ptr_ProcedureBox curr1;
 	// 	ptr_ProcedureBox curr2;
@@ -61,7 +61,7 @@ void LinkTwoObj(int ID1, int ID2)
 	int t;
 
 	if(y2>y1){
-		/*����������ʹ��x1��y1��λ������Ŀ���������*/
+		/*交换参数，使得x1和y1是位于上面的框的坐标参数*/
 		t=x1;
 		x1=x2;
 		x2=t;
@@ -71,125 +71,123 @@ void LinkTwoObj(int ID1, int ID2)
 		y2=t;
 	}
 	
-	/*�Ȼ�������ٻ�������*/
+	/*先画横的线再画竖的线*/
 	
-	/*���һ�����*/
+	/*往右画横线*/
 	if(x1<x2){
 		MovePen(x1+curr1->width/2,y1);
 		DrawLine(x2-x1-curr1->width/2,0);
 		DrawLine(0,-(y1-y2-curr2->height/2));
 	}
-	/*���󻭺���*/
+	/*往左画横线*/
 	else{
 		MovePen(x1-curr1->width/2,y1);
 		DrawLine(-(x1-x2-curr1->width/2),0);
 		DrawLine(0,-(y1-y2-curr2->height/2));
 	}
 	
-    SetPenSize(pensize); /*�ָ���ϸ*/
-	SetPenColor(color);/*�ָ���ɫ*/
+    SetPenSize(pensize); /*恢复粗细*/
+	SetPenColor(color);/*恢复颜色*/
 }
 
 
-/*��ִ�п�*/
+/*画执行框*/
 void DrawProcedureBox(void *ProcedureBox)
 {
     ptr_ProcedureBox box = (ptr_ProcedureBox)ProcedureBox;
-    int Height=(box->height);
-    int Width=(box->width);
-    int x_mid=WindowX/2;
-    int y_mid=WindowY/2;
+    //int Height=(box->height);
+    //int Width=(box->width);
+    int x_mid = box->x;
+    int y_mid = box->y;
 
-    int pensize = GetPenSize();/*���浱ǰϵͳ�ʻ���ϸ*/
-	string color = GetPenColor();/*���浱ǰϵͳ��ɫ*/
+    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
+	string color = GetPenColor();/*保存当前系统颜色*/
 
-    SetPenSize(box->PenSize);/*���ô�ϸ*/
-	SetPenColor(box->Color);/*������ɫ*/
     
-    /*����ƫ������ʹ���ظ����ʱ���ɵĿ��������ƫ��*/
-    int x_offset=Width/10;
-    int y_offset=Height/10;
+    /*定义偏移量，使得重复点击时生成的框会往右下偏移*/
+    //int x_offset=box->width/10;
+    //int y_offset=box->height/10;
     
         
-    /*������ִ�п�*/
-    MovePen( x_mid - Width/2 + i*x_offset , y_mid + Height/2 - i*y_offset );
-    DrawLine( Width , 0 );
-    DrawLine( 0 , -Height );
-    DrawLine( -Width , 0 );
-    DrawLine( 0 , Height );
+    /*画矩形执行框*/
+    MovePen( x_mid - box->width , y_mid + box->height );
+    DrawLine( box->width , 0 );
+    DrawLine( 0 , -box->height );
+    DrawLine( -box->width , 0 );
+    DrawLine( 0 , box->height );
 
-    /*¼����Ϣ*/
-    box->x = x_mid + i*x_offset;
-    box->y = y_mid - i*y_offset;
-    box->ID = i;
+    /*录入信息*/
+    //box->x = x_mid + i*x_offset;
+    //box->y = y_mid - i*y_offset;
+    //box->ID = i;
+    //box->TextID = i;
 
-    SetPenSize(pensize); /*�ָ���ϸ*/
-	SetPenColor(color);/*�ָ���ɫ*/
-    box->TextID = i;
+    SetPenSize(pensize); /*恢复粗细*/
+	SetPenColor(color);/*恢复颜色*/
 
     i++;
 }
 
 
-/*�������жϿ�*/
+/*画条件判断框*/
 void DrawJudgeBox(void *JudgeBox)
 {
     ptr_JudgeBox box = (ptr_JudgeBox)JudgeBox;
-    int Height=(box->height);
-    int Width=(box->width);
-    int x_mid=WindowX/2;
-    int y_mid=WindowY/2;
+    //int Height=(box->height);
+    //int Width=(box->width);
+    int x_mid = box->x;
+    int y_mid= box->y;
 
-    int pensize = GetPenSize();/*���浱ǰϵͳ�ʻ���ϸ*/
-	string color = GetPenColor();/*���浱ǰϵͳ��ɫ*/
+    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
+	string color = GetPenColor();/*保存当前系统颜色*/
     
-    /*����ƫ������ʹ���ظ����ʱ���ɵĿ��������ƫ��*/
-    int x_offset=Width/10;
-    int y_offset=Height/10;
+    /*定义偏移量，使得重复点击时生成的框会往右下偏移*/
+    //int x_offset=box->width/10;
+    //int y_offset=box->height/10;
 
-    /*�����������жϿ�*/
-    MovePen( x_mid - Width/2 + i*x_offset , y_mid - i*y_offset );
-    DrawLine( Width/2 , Height/2 );
-    DrawLine( Width/2 , -Height/2 );
-    DrawLine( -Width/2 , -Height/2 );
-    DrawLine( -Width/2 , Height/2 );
+    /*画菱形条件判断框*/
+    MovePen( x_mid - box->width , y_mid );
+    DrawLine( box->width , box->height );
+    DrawLine( box->width , -box->height );
+    DrawLine( -box->width , -box->height );
+    DrawLine( -box->width , box->height );
 
-    /*¼����Ϣ*/
-    box->x = x_mid + i*x_offset;
-    box->y = y_mid - i*y_offset;
-    box->ID = i;
-    box->TextID = i;
+    /*录入信息*/
+    //box->x = x_mid + i*x_offset;
+    //box->y = y_mid - i*y_offset;
+    //box->ID = i;
+    //box->TextID = i;
 
-    SetPenSize(pensize); /*�ָ���ϸ*/
-	SetPenColor(color);/*�ָ���ɫ*/
+    SetPenSize(pensize); /*恢复粗细*/
+	SetPenColor(color);/*恢复颜色*/
 
     i++;
 }
 
 
-/*����ʼ��ֹ��*/
+/*画起始终止框*/
 void DrawStartBox(void *StartBox)
 {
     ptr_StartBox box = (ptr_StartBox)StartBox;
     int x_mid = box->x;
     int y_mid = box->y;
 
-    int pensize = GetPenSize();/*���浱ǰϵͳ�ʻ���ϸ*/
-	string color = GetPenColor();/*���浱ǰϵͳ��ɫ*/
+    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
+	string color = GetPenColor();/*保存当前系统颜色*/
     
 
-    /*����Բ��ʼ��ֹ��*/
+    /*画椭圆起始终止框*/
     MovePen(x_mid + box->width , y_mid);
     DrawEllipticalArc(box->width , box->height, 0.0, 360.0);
 
-    /*¼����Ϣ*/
+    /*录入信息*/
     // box->x = x_mid + i*x_offset;
     // box->y = y_mid - i*y_offset;
     // box->ID = i;
     // box->TextID = i;
 
-    SetPenSize(pensize); /*�ָ���ϸ*/
-	SetPenColor(color);/*�ָ���ɫ*/
+    SetPenSize(pensize); /*恢复粗细*/
+	SetPenColor(color);/*恢复颜色*/
 
     i++;
 }
