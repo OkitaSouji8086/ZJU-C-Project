@@ -227,7 +227,7 @@ void KeyboardEventProcess(int key, int event)
             switch (key) {
                 case VK_F1:/*F1: »æÖÆÆðÊ¼ÖÕÖ¹¿ò*/
                     
-					StartBox = GetBlock(sizeof(*StartBox));
+					StartBox = (ptr_StartBox)GetBlock(sizeof(*StartBox));
 					StartBox->PenSize = GetPenSize();
 					StartBox->Color = GetPenColor();
 					StartBox->IsSelected = FALSE;
@@ -238,7 +238,7 @@ void KeyboardEventProcess(int key, int event)
 
                 case VK_F2:/*F2: »æÖÆÅÐ¶Ï¿ò*/
                     
-					JudgeBox = GetBlock(sizeof(*JudgeBox));
+					JudgeBox = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox));
 					JudgeBox->PenSize = GetPenSize();
 					JudgeBox->Color = GetPenColor();
 					JudgeBox->IsSelected = FALSE;
@@ -250,7 +250,7 @@ void KeyboardEventProcess(int key, int event)
 
                 case VK_F3:/*F3: »æÖÆÖ´ÐÐ¿ò*/
                     
-					ProcedureBox = GetBlock(sizeof(*ProcedureBox));
+					ProcedureBox = (ptr_ProcedureBox)GetBlock(sizeof(*ProcedureBox));
 					ProcedureBox->PenSize = GetPenSize();
 					ProcedureBox->Color = GetPenColor();
 					ProcedureBox->IsSelected = FALSE;
