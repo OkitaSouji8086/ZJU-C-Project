@@ -195,10 +195,10 @@ void DrawMenu()
 		CaseF1Process();
 		break;
 	case 2:
-		printf("2 clicked\n");
+		CaseF2Process();
 		break;
 	case 3:
-		printf("3 clicked\n");
+		CaseF3Process();
 		break;
 	case 4:
 		printf("4 clicked\n");

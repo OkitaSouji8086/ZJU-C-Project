@@ -127,11 +127,7 @@ void DrawProcedureBox(void *ProcedureBox)
 	SetPenColor(box->Color);/*…Ë÷√—’…´*/
         
     /*ª≠æÿ–Œ÷¥––øÚ*/
-    MovePen(x_mid - Width/2, y_mid + Height/2);
-    DrawLine(Width, 0);
-    DrawLine(0, -Height);
-    DrawLine(-Width, 0);
-    DrawLine(0, Height);
+	drawRectangle(x_mid - Width/2, y_mid + Height/2, Width, Height, FALSE);
 
     SetPenSize(pensize); /*ª÷∏¥¥÷œ∏*/
 	SetPenColor(color);/*ª÷∏¥—’…´*/
