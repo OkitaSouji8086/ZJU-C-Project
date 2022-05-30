@@ -26,62 +26,62 @@
 #include <winuser.h>
 
 //=============================================================================================================================================//
-/* Á´±í¶¨Òå */
+/* é“¾è¡¨å®šä¹‰ */
 //=============================================================================================================================================//
 
 
-/* Ã¿¸öÔªËØ¶¼ÊÇÒ»¸öÖ¸Ïò Ö±Ïß/¿òÁ´±í µÄÖ¸Õë */
+/* æ¯ä¸ªå…ƒç´ éƒ½æ˜¯ä¸€ä¸ªæŒ‡å‘ ç›´çº¿/æ¡†é“¾è¡¨ çš„æŒ‡é’ˆ */
 linkedlistADT List[4] = {NULL, NULL, NULL, NULL};
 
 
 
 //=============================================================================================================================================//
-/* È«¾Ö±äÁ¿¶¨Òå */
+/* å…¨å±€å˜é‡å®šä¹‰ */
 //=============================================================================================================================================//
 
-/* Ã¿ÖÖ¶ÔÏóµÄ¸öÊý */
+/* æ¯ç§å¯¹è±¡çš„ä¸ªæ•° */
 int COUNT[3] = {0, 0, 0};
 
 
-/* µ±Ç°Ñ¡ÖÐµÄÔªËØ,Ã»ÓÐÑ¡ÖÐÊ±ÎªNULL */
+/* å½“å‰é€‰ä¸­çš„å…ƒç´ ,æ²¡æœ‰é€‰ä¸­æ—¶ä¸ºNULL */
 void* CURR_OBJ = NULL;
-/* µ±Ç°Ñ¡ÖÐµÄÔªËØÖÖÀà,Ã»ÓÐÑ¡ÖÐÊ±Îª-1 */
+/* å½“å‰é€‰ä¸­çš„å…ƒç´ ç§ç±»,æ²¡æœ‰é€‰ä¸­æ—¶ä¸º-1 */
 int CURR_OBJ_KIND = -1;
 
 
-/* ¼ôÇÐ°å,Ö¸ÏòÉÏÒ»¸ö±»¸´ÖÆµÄ¶ÔÏó,Ã»ÓÐÔòÎªNULL */
+/* å‰ªåˆ‡æ¿,æŒ‡å‘ä¸Šä¸€ä¸ªè¢«å¤åˆ¶çš„å¯¹è±¡,æ²¡æœ‰åˆ™ä¸ºNULL */
 void* TEMP = NULL;
-/* ¼ôÇÐ°åÖÐµÄ¶ÔÏóÖÖÀà,Ã»ÓÐÔòÎª-1 */
+/* å‰ªåˆ‡æ¿ä¸­çš„å¯¹è±¡ç§ç±»,æ²¡æœ‰åˆ™ä¸º-1 */
 int TEMP_KIND = -1;
 
-/* IDÊý×é,Ã¿¸ö¶ÔÏóÎ¨Ò» */
+/* IDæ•°ç»„,æ¯ä¸ªå¯¹è±¡å”¯ä¸€ */
 int ID[1000000];
-/* TEXTÊý×é */
+/* TEXTæ•°ç»„ */
 string TextID[1000000];
 
-/* µ±Ç°±àºÅµ½µÚ¼¸ */
+/* å½“å‰ç¼–å·åˆ°ç¬¬å‡  */
 int CURR_ID = 0;
 
-/* µ±Ç°ÖÐÐÄµã±»Õ¼¾ÝµÄ¸öÊý */
+/* å½“å‰ä¸­å¿ƒç‚¹è¢«å æ®çš„ä¸ªæ•° */
 int CURR_OCCUPY = 0;
 
-/* Êó±ê×´Ì¬»ú */
+/* é¼ æ ‡çŠ¶æ€æœº */
 int MOUSE_FSM;
 
 
 
 //=============================================================================================================================================//
-/* Ä¬ÈÏÖµ¶¨Òå */
+/* é»˜è®¤å€¼å®šä¹‰ */
 //=============================================================================================================================================//
 
-/* Ä¬ÈÏ»æÍ¼ÊôÐÔ */
+/* é»˜è®¤ç»˜å›¾å±žæ€§ */
 string SYSCOLOR = "Red";
 int SYSPENSIZE = 1;
 
 
 
 //=============================================================================================================================================//
-/* º¯ÊýÊµÏÖ */
+/* å‡½æ•°å®žçŽ° */
 //=============================================================================================================================================//
 
 void Main()
@@ -93,7 +93,7 @@ void Main()
 	InitGraphics();
 	InitConsole();
 
-	Randomize(); /* Ëæ»úº¯Êý³õÊ¼»¯ */
+	Randomize(); /* éšæœºå‡½æ•°åˆå§‹åŒ– */
 	registerKeyboardEvent(KeyboardEventProcess);
 	registerCharEvent(CharEventProcess);
 	registerMouseEvent(MouseEventProcess);
@@ -154,12 +154,12 @@ void DrawMenu()
 		"About",
 		"Help"};
 
-	int selection; /* ²Ëµ¥Ñ¡ÖÐ */
+	int selection; /* èœå•é€‰ä¸­ */
 	static char * selectedLabel = NULL;
 
-	double MenuH = GetFontHeight() * 1.5; /* ²Ëµ¥¸ß¶È */
-	double MenuW = TextStringWidth(menuListFile[0])*2; /* ²Ëµ¥±êÌâ¿í¶È */
-	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* ²Ëµ¥ÌõÄ¿¿í¶È */
+	double MenuH = GetFontHeight() * 1.5; /* èœå•é«˜åº¦ */
+	double MenuW = TextStringWidth(menuListFile[0])*2; /* èœå•æ ‡é¢˜å®½åº¦ */
+	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* èœå•æ¡ç›®å®½åº¦ */
 
 	drawMenuBar(0, WindowH-MenuH, WindowW, MenuH);
 
@@ -240,51 +240,52 @@ void KeyboardEventProcess(int key, int event)
     uiGetKeyboard(key, event);
 	display();
 
-	/* ÆÁÄ»ÖÐÐÄµã×ø±ê */
+	/* å±å¹•ä¸­å¿ƒç‚¹åæ ‡ */
 	double MidX = WindowX/GetXResolution()/2;
 	double MidY = WindowY/GetYResolution()/2; 
 
     switch (event) {
         case KEY_DOWN:
             switch (key) {
-                case VK_F1:/*F1: »æÖÆÆðÊ¼ÖÕÖ¹¿ò*/
+                case VK_F1:/*F1: ç»˜åˆ¶èµ·å§‹ç»ˆæ­¢æ¡†*/
 					CaseF1Proccess();
 					break;
 
-                // case VK_F2:/*F2: »æÖÆÅÐ¶Ï¿ò*/
+                case VK_F2:/*F2: ç»˜åˆ¶åˆ¤æ–­æ¡†*/
                     
-				// 	JudgeBox = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox));
-				// 	JudgeBox->PenSize = GetPenSize();
-				// 	JudgeBox->Color = GetPenColor();
-				// 	JudgeBox->IsSelected = FALSE;
-				// 	DrawJudgeBox(JudgeBox);
-				// 	InsertNode(List[JUDGEBOX],NULL,JudgeBox);
+					CaseF2Proccess();
+				 	//JudgeBox = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox));
+				 	//JudgeBox->PenSize = GetPenSize();
+				 	//JudgeBox->Color = GetPenColor();
+				 	//JudgeBox->IsSelected = FALSE;
+				 	//DrawJudgeBox(JudgeBox);
+				 	//InsertNode(List[JUDGEBOX],NULL,JudgeBox);
 					
 					
-                //     break;
+                  break;
 
-                // case VK_F3:/*F3: »æÖÆÖ´ÐÐ¿ò*/
+                 case VK_F3:/*F3: ç»˜åˆ¶æ‰§è¡Œæ¡†*/
                     
-				// 	ProcedureBox = (ptr_ProcedureBox)GetBlock(sizeof(*ProcedureBox));
-				// 	ProcedureBox->PenSize = GetPenSize();
-				// 	ProcedureBox->Color = GetPenColor();
-				// 	ProcedureBox->IsSelected = FALSE;
-				// 	DrawProcedureBox(ProcedureBox);
-				// 	InsertNode(List[PROCEDUREBOX],NULL,ProcedureBox);
+					CaseF3Proccess();
+				 	//ProcedureBox = (ptr_ProcedureBox)GetBlock(sizeof(*ProcedureBox));
+				 	//ProcedureBox->PenSize = GetPenSize();
+					//ProcedureBox->Color = GetPenColor();
+				 	//ProcedureBox->IsSelected = FALSE;
+				 	//DrawProcedureBox(ProcedureBox);
+				 	//InsertNode(List[PROCEDUREBOX],NULL,ProcedureBox);
 					
-                //     break;
+					break;
 
-                case VK_F10:/*F4: ÍË³ö³ÌÐò*/
+                case VK_F10:/*F4: é€€å‡ºç¨‹åº*/
                     exit(1);
                     break;
         
-				case VK_BACK:/*BACKSP: É¾³ý¶ÔÏó*/
+				case VK_BACK:/*BACKSP: åˆ é™¤å¯¹è±¡*/
 					DeleteObj(CURR_OBJ);
 					break;
 
-				case VK_ESCAPE:/*ESCAPE: ÍË³ö¶ÔÏóÑ¡ÖÐ×´Ì¬*/
-					CURR_OBJ = NULL;
-					CURR_OBJ_KIND = -1;
+				case VK_ESCAPE:/*ESCAPE: é€€å‡ºå¯¹è±¡é€‰ä¸­çŠ¶æ€*/
+					CURR_OBJ=NULL;
 
 					break;
 
@@ -292,37 +293,29 @@ void KeyboardEventProcess(int key, int event)
 									
 					
 					break;
-				
-				case VK_DELETE:
-					if(CURR_OBJ != NULL){
-						DeleteObj(CURR_OBJ);
-						CURR_OBJ = NULL;
-						CURR_OBJ_KIND = -1;
-					}
-					break;
 
-				case 'S':/*Ctrl+S£º±£´æµ½save.data*/
+				case 'S':/*Ctrl+Sï¼šä¿å­˜åˆ°save.data*/
 					if(flag==1){
 						SaveAllObj();
 					}
 
 					break;
 
-				case 'O':/*Ctrl+O£º´Ósave.data¶ÁÈ¡*/
+				case 'O':/*Ctrl+Oï¼šä»Žsave.dataè¯»å–*/
 					if(flag==1){
 						LoadAllObj();
 					}
 
 					break;
 
-				case 'C':/*Ctrl+C£º¸´ÖÆÑ¡ÖÐ¶ÔÏó*/
+				case 'C':/*Ctrl+Cï¼šå¤åˆ¶é€‰ä¸­å¯¹è±¡*/
 					if(flag==1){
 						CopyObj();
 					}
 
 					break;
 
-				case 'V':/*Ctrl+V£ºÕ³Ìù¶ÔÏó*/
+				case 'V':/*Ctrl+Vï¼šç²˜è´´å¯¹è±¡*/
 					if(flag==1){
 						PasteObj(TEMP);
 					}
@@ -350,10 +343,9 @@ void MouseEventProcess(int x, int y, int button, int event)
 
 void CaseF1Proccess()
 {
-	/* ÆÁÄ»ÖÐÐÄµã×ø±ê */
-
-	double MidX = ScaleXInches(GetWindowWidth())/2;
-	double MidY = ScaleYInches(GetWindowHeight())/2; 
+	/* å±å¹•ä¸­å¿ƒç‚¹åæ ‡ */
+	double MidX = WindowX/GetXResolution()/2;
+	double MidY = WindowY/GetYResolution()/2; 
 
     ptr_Line Line_Obj;
     ptr_ProcedureBox ProcedureBox_Obj;
@@ -378,5 +370,68 @@ void CaseF1Proccess()
 
 	DrawStartBox(StartBox_Obj);
 	InsertNode(List[STARTBOX], NULL, StartBox_Obj);
+}
+
+
+void CaseF2Proccess()
+{
+	/* å±å¹•ä¸­å¿ƒç‚¹åæ ‡ */
+	double MidX = WindowX/GetXResolution()/2;
+	double MidY = WindowY/GetYResolution()/2; 
+
+    ptr_Line Line_Obj;
+    ptr_ProcedureBox ProcedureBox_Obj;
+    ptr_StartBox StartBox_Obj;
+	ptr_JudgeBox JudgeBox_Obj;
+
+	JudgeBox_Obj = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox_Obj));
+
+	JudgeBox_Obj->ID = CURR_ID;
+	CURR_ID ++;
+
+	JudgeBox_Obj->x = MidX + CURR_OCCUPY + OBJWIDTH/10;
+	JudgeBox_Obj->y = MidY + CURR_OCCUPY + OBJHEIGHT/10;
+	JudgeBox_Obj->width = OBJWIDTH;
+	JudgeBox_Obj->height = OBJHEIGHT;
+	JudgeBox_Obj->PenSize = SYSPENSIZE;
+	JudgeBox_Obj->Color = SYSCOLOR;
+	JudgeBox_Obj->TextID = -1;
+	JudgeBox_Obj->IsSelected = FALSE;
+
+	CURR_OCCUPY ++;
+
+	DrawJudgeBox(JudgeBox_Obj);
+	InsertNode(List[JUDGEBOX], NULL, JudgeBox_Obj);
+}
+
+void CaseF3Proccess()
+{
+	/* å±å¹•ä¸­å¿ƒç‚¹åæ ‡ */
+	double MidX = WindowX/GetXResolution()/2;
+	double MidY = WindowY/GetYResolution()/2; 
+
+    ptr_Line Line_Obj;
+    ptr_ProcedureBox ProcedureBox_Obj;
+    ptr_StartBox StartBox_Obj;
+	ptr_JudgeBox JudgeBox_Obj;
+
+	ProcedureBox_Obj = (ptr_ProcedureBox)GetBlock(sizeof(*ProcedureBox_Obj));
+
+	ProcedureBox_Obj->ID = CURR_ID;
+	CURR_ID ++;
+
+	ProcedureBox_Obj->x = MidX + CURR_OCCUPY + OBJWIDTH/10;
+	ProcedureBox_Obj->y = MidY + CURR_OCCUPY + OBJHEIGHT/10;
+	ProcedureBox_Obj->width = OBJWIDTH;
+	ProcedureBox_Obj->height = OBJHEIGHT;
+	ProcedureBox_Obj->PenSize = SYSPENSIZE;
+	ProcedureBox_Obj->Color = SYSCOLOR;
+	ProcedureBox_Obj->TextID = -1;
+	ProcedureBox_Obj->IsSelected = FALSE;
+
+	CURR_OCCUPY ++;
+
+	DrawProcedureBox(ProcedureBox_Obj);
+	InsertNode(List[PROCEDUREBOX], NULL, ProcedureBox_Obj);
 }
 #endif
