@@ -58,4 +58,38 @@ bool equalfunptr_SBox(void *obj1, void *obj2)
 	else return FALSE;
 }
 
+void PickNearestObj(double mx, double my)
+{
+	double MinDistance = 100000000;
+	double ObjDistance = -1;
+	void* MinObj = NULL;
+	int i;
+
+	linkedlistADT nodeptr = NULL;
+
+	for (i = STARTBOX; i < NLIST; i++)
+	{
+		nodeptr = List[i]->next;
+		while (nodeptr != NULL)
+		{
+			ObjDistance = LtsDistance(nodeptr->dataptr, mx, my);
+			if(ObjDistance < MinDistance){
+				MinDistance = ObjDistance;
+				CURR_OBJ = nodeptr->dataptr;
+				CURR_OBJ_KIND = i;
+			}
+			nodeptr = nodeptr->next;
+		}	
+	}
+}
+
+double LtsDistance(void* ptr_Obj, double mx, double my)
+{
+	double x0, y0;
+	x0 = ((ptr_StartBox)ptr_Obj)->x;
+	y0 = ((ptr_StartBox)ptr_Obj)->y;
+
+	return (fabs(x0-mx) + fabs(y0-my));
+}
+
 #endif

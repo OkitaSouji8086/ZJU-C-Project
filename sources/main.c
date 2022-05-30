@@ -68,6 +68,8 @@ int CURR_OCCUPY = 0;
 /* 鼠标状态机 */
 int MOUSE_FSM;
 
+bool isSelected = FALSE; /* 图形元素选中状态 */
+
 
 
 //=============================================================================================================================================//
@@ -213,9 +215,11 @@ void DrawMenu()
 	{
 	case 1:
 		printf("Copy clicked\n");
+		CopyObj();
 		break;
 	case 2:
 		printf("Paste clicked\n");
+		PasteObj();
 		break;
 	case 3:
 		printf("Delete clicked\n");
@@ -241,38 +245,41 @@ void DrawMenu()
 
 void KeyboardEventProcess(int key, int event)
 {
-    uiGetKeyboard(key, event);
+	uiGetKeyboard(key, event);
 	display();
 
-    switch (event) {
-        case KEY_DOWN:
-            switch (key) {
-                case VK_F1:/*F1: 绘制起始终止框*/
+	switch (event) {
+		case KEY_DOWN:
+			switch (key) {
+				case VK_F1:/*F1: 绘制起始终止框*/
 					CaseF1Process();
 					break;
 
-                case VK_F2:/*F2: 绘制判断框*/
+				case VK_F2:/*F2: 绘制判断框*/
 					CaseF2Process();
-                    break;
+					break;
 
-                case VK_F3:/*F3: 绘制执行框*/
+				case VK_F3:/*F3: 绘制执行框*/
 					CaseF3Process();
-                    break;
+					break;
 
-                case VK_F10:/*F10: 退出程序*/
-                    exit(1);
-                    break;
-        
+				case VK_F10:/*F10: 退出程序*/
+					exit(1);
+					break;
+		
 				case VK_BACK:/*BACKSP: 退格*/
 					break;
 
 				case VK_ESCAPE:/*ESCAPE: 退出对象选中状态*/
+					((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
+					((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
+					isSelected = FALSE;
 					CURR_OBJ = NULL;
 					CURR_OBJ_KIND = -1;
 
 					break;
 
-                case VK_CONTROL:  
+				case VK_CONTROL:  
 									
 					
 					break;
@@ -283,6 +290,7 @@ void KeyboardEventProcess(int key, int event)
 						CURR_OBJ = NULL;
 						CURR_OBJ_KIND = -1;
 					}
+					isSelected = FALSE;
 					break;
 
 				case 'S':/*Ctrl+S：保存到save.data*/
@@ -308,14 +316,14 @@ void KeyboardEventProcess(int key, int event)
 
 				case 'V':/*Ctrl+V：粘贴对象*/
 					if(flag==1){
-						PasteObj(TEMP);
+						PasteObj();
 					}
 
 					break;
 
 			}	
 		case KEY_UP:
-            break;
+			break;
 
 	}
 }
@@ -329,7 +337,66 @@ void MouseEventProcess(int x, int y, int button, int event)
 {
 	uiGetMouse(x, y, button, event);
 	display();
-}
+
+	static bool isMove = FALSE; /*移动标志*/
+	static bool isChangeSize = FALSE; /*缩放标志*/ 
+ 	static double omx = 0.0, omy = 0.0;/*前一鼠标坐标*/
+	double mx, my;/*当前鼠标坐标*/
+	double x1, y1, x2, y2, dx, dy;
+	 
+ 	mx = ScaleXInches(x);/*pixels --> inches*/
+	my = ScaleYInches(y);/*pixels --> inches*/
+ 
+	switch (event) {
+		case BUTTON_DOWN:
+			if (isSelected) { /*已是选中状态*/
+	   			omx = mx;
+			  	omy = my;
+			   	if (button == LEFT_BUTTON) { /*左键按下，进入移动状态*/
+		 			isMove = TRUE;
+		 		} else if (button == RIGHT_BUTTON) {/*右键键按下，进入缩放状态*/
+		 			isChangeSize = TRUE;
+		 		}
+				break;
+		 	}
+		
+		 	PickNearestObj(mx, my);/*选择对象*/ 
+			((ptr_StartBox)CURR_OBJ)->Color = "GREEN";
+			((ptr_StartBox)CURR_OBJ)->IsSelected = TRUE;
+
+		 	isSelected = TRUE;
+		 	DrawAllObj();
+			break;
+		case BUTTON_DOUBLECLICK:
+			break;
+		case BUTTON_UP:
+			isMove = FALSE; /*退出移动状态*/
+		 	isChangeSize = FALSE;/*退出缩放状态*/ 
+			break;
+		case MOUSEMOVE:
+			if (isSelected && (isMove || isChangeSize)) { /*选中状态下，移动或缩放*/ 
+			  	SetEraseMode(TRUE);
+			   	DrawAllObj();
+			   	dx = mx - omx;
+			   	dy = my - omy;
+				if (isMove) { /*移动*/
+					((ptr_StartBox)CURR_OBJ)->x += dx;
+					((ptr_StartBox)CURR_OBJ)->y += dy;
+				}
+			  	
+				else if (isChangeSize) {/*缩放*/
+					((ptr_StartBox)CURR_OBJ)->width += dx;
+					((ptr_StartBox)CURR_OBJ)->height += dy;
+				}
+				omx = mx;
+				omy = my;
+				SetEraseMode(FALSE);
+				DrawAllObj();
+			}
+			break;
+	}
+}	
+
 
 
 void CaseF1Process()
@@ -338,15 +405,15 @@ void CaseF1Process()
 	double MidX = GetWindowWidth()/2;
 	double MidY = GetWindowHeight()/2; 
 
-    ptr_StartBox StartBox_Obj;
+	ptr_StartBox StartBox_Obj;
 
 	StartBox_Obj = (ptr_StartBox)GetBlock(sizeof(*StartBox_Obj));
 
 	StartBox_Obj->ID = CURR_ID;
 	CURR_ID ++;
 
-	StartBox_Obj->x = MidX + CURR_OCCUPY*OBJWIDTH/10;
-	StartBox_Obj->y = MidY - CURR_OCCUPY*OBJHEIGHT/10;
+	StartBox_Obj->x = MidX + CURR_OCCUPY*OBJWIDTH/2;
+	StartBox_Obj->y = MidY - CURR_OCCUPY*OBJHEIGHT/2;
 	StartBox_Obj->width = OBJWIDTH;
 	StartBox_Obj->height = OBJHEIGHT;
 	StartBox_Obj->PenSize = SYSPENSIZE;
@@ -366,15 +433,15 @@ void CaseF2Process()
 	double MidX = GetWindowWidth()/2;
 	double MidY = GetWindowHeight()/2; 
 
-    ptr_ProcedureBox ProcedureBox_Obj;
+	ptr_ProcedureBox ProcedureBox_Obj;
 
 	ProcedureBox_Obj = (ptr_ProcedureBox)GetBlock(sizeof(*ProcedureBox_Obj));
 
 	ProcedureBox_Obj->ID = CURR_ID;
 	CURR_ID ++;
 
-	ProcedureBox_Obj->x = MidX + CURR_OCCUPY*OBJWIDTH/10;
-	ProcedureBox_Obj->y = MidY - CURR_OCCUPY*OBJHEIGHT/10;
+	ProcedureBox_Obj->x = MidX + CURR_OCCUPY*OBJWIDTH/2;
+	ProcedureBox_Obj->y = MidY - CURR_OCCUPY*OBJHEIGHT/2;
 	ProcedureBox_Obj->width = OBJWIDTH;
 	ProcedureBox_Obj->height = OBJHEIGHT;
 	ProcedureBox_Obj->PenSize = SYSPENSIZE;
@@ -394,15 +461,15 @@ void CaseF3Process()
 	double MidX = GetWindowWidth()/2;
 	double MidY = GetWindowHeight()/2; 
 
-    ptr_JudgeBox JudgeBox_Obj;
+	ptr_JudgeBox JudgeBox_Obj;
 
 	JudgeBox_Obj = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox_Obj));
 
 	JudgeBox_Obj->ID = CURR_ID;
 	CURR_ID ++;
 
-	JudgeBox_Obj->x = MidX + CURR_OCCUPY*OBJWIDTH/10;
-	JudgeBox_Obj->y = MidY - CURR_OCCUPY*OBJHEIGHT/10;
+	JudgeBox_Obj->x = MidX + CURR_OCCUPY*OBJWIDTH/2;
+	JudgeBox_Obj->y = MidY - CURR_OCCUPY*OBJHEIGHT/2;
 	JudgeBox_Obj->width = OBJWIDTH;
 	JudgeBox_Obj->height = OBJHEIGHT;
 	JudgeBox_Obj->PenSize = SYSPENSIZE;

@@ -54,21 +54,29 @@ void PasteObj()
 
 	switch (TEMP_KIND)
 	{
-	case PROCEDUREBOX:
-		StartBox_Obj = (ptr_ProcedureBox)GetBlock(sizeof(*StartBox_Obj));
+	case STARTBOX:
+		StartBox_Obj = (ptr_StartBox)GetBlock(sizeof(*StartBox_Obj));
 
-		StartBox_Obj = (ptr_ProcedureBox)TEMP;
-		StartBox_Obj->x = StartBox_Obj->x + StartBox_Obj->width/10;
-		StartBox_Obj->y = StartBox_Obj->y + StartBox_Obj->height/10;
+		StartBox_Obj->ID = CURR_ID;
+		CURR_ID ++;
+
+		StartBox_Obj->x = GetMouseX();
+		StartBox_Obj->y = GetMouseY();
+		StartBox_Obj->width = OBJWIDTH;
+		StartBox_Obj->height = OBJHEIGHT;
+		StartBox_Obj->PenSize = SYSPENSIZE;
+		StartBox_Obj->Color = SYSCOLOR;
+		StartBox_Obj->TextID = -1;
+		StartBox_Obj->IsSelected = FALSE;
 
 		DrawStartBox(StartBox_Obj);
-		InsertNode(List[STARTBOX],NULL,StartBox_Obj);
+		InsertNode(List[STARTBOX], NULL, StartBox_Obj);
 		
 		break;
 	case JUDGEBOX:
 		//
 		break;
-	case STARTBOX:
+	case PROCEDUREBOX:
 		//
 		break;
 	default:

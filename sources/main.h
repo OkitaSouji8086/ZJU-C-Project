@@ -309,4 +309,6 @@ extern void DrawStartBox(void *StartBox);
 extern void DrawProcedureBox(void *ProcedureBox);
 extern void DrawJudgeBox(void *JudgeBox);
 
+extern void PickNearestObj(double mx, double my);
+
 #endif
