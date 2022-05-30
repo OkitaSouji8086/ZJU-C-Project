@@ -351,6 +351,7 @@ void MouseEventProcess(int x, int y, int button, int event)
 void CaseF1Proccess()
 {
 	/* 屏幕中心点坐标 */
+
 	double MidX = ScaleXInches(GetWindowWidth())/2;
 	double MidY = ScaleYInches(GetWindowHeight())/2; 
 
