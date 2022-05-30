@@ -5,6 +5,15 @@
 
 void DeleteObj(void* ptr_Obj)
 {
+	switch (CURR_OBJ_KIND)
+	{
+	case STARTBOX:
+		DeleteNode(List[STARTBOX], &(((ptr_StartBox)ptr_Obj)->ID), equalfunptr_SBox);
+		break;
+	
+	default:
+		break;
+	}
 	return;
 }
 
