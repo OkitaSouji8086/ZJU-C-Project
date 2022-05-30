@@ -14,9 +14,6 @@
 /* 全局变量定义 */
 //=============================================================================================================================================//
 
-/*判断生成的框需要往右下偏移多少个单位*/
-int i = 0;
-
 
 
 //=============================================================================================================================================//
@@ -91,43 +88,53 @@ void LinkTwoObj(int ID1, int ID2)
 }
 
 
+/*画起始终止框*/
+void DrawStartBox(void *StartBox)
+{
+    ptr_StartBox box = (ptr_StartBox)StartBox;
+	double Width = box->width;
+	double Height = box->height;
+    double x_mid = box->x;
+    double y_mid = box->y;
+
+    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
+	string color = GetPenColor();/*保存当前系统颜色*/
+    
+    SetPenSize(box->PenSize);/*设置粗细*/
+	SetPenColor(box->Color);/*设置颜色*/
+
+    /*画椭圆起始终止框*/
+    MovePen(x_mid + Width/2, y_mid);
+    DrawEllipticalArc(Width , Height, 0.0, 360.0);
+
+    SetPenSize(pensize); /*恢复粗细*/
+	SetPenColor(color);/*恢复颜色*/
+}
+
 /*画执行框*/
 void DrawProcedureBox(void *ProcedureBox)
 {
     ptr_ProcedureBox box = (ptr_ProcedureBox)ProcedureBox;
-    int Height=(box->height);
-    int Width=(box->width);
-    int x_mid=WindowX/2;
-    int y_mid=WindowY/2;
+	double Height = box->height;
+    double Width = box->width;
+    double x_mid = box->x;
+    double y_mid = box->y;
 
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
 
     SetPenSize(box->PenSize);/*设置粗细*/
 	SetPenColor(box->Color);/*设置颜色*/
-    
-    /*定义偏移量，使得重复点击时生成的框会往右下偏移*/
-    int x_offset=Width/10;
-    int y_offset=Height/10;
-    
         
     /*画矩形执行框*/
-    MovePen( x_mid - Width/2 + i*x_offset , y_mid + Height/2 - i*y_offset );
-    DrawLine( Width , 0 );
-    DrawLine( 0 , -Height );
-    DrawLine( -Width , 0 );
-    DrawLine( 0 , Height );
-
-    /*录入信息*/
-    box->x = x_mid + i*x_offset;
-    box->y = y_mid - i*y_offset;
-    box->ID = i;
+    MovePen(x_mid - Width/2, y_mid + Height/2);
+    DrawLine(Width, 0);
+    DrawLine(0, -Height);
+    DrawLine(-Width, 0);
+    DrawLine(0, Height);
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
-    box->TextID = i;
-
-    i++;
 }
 
 
@@ -135,63 +142,28 @@ void DrawProcedureBox(void *ProcedureBox)
 void DrawJudgeBox(void *JudgeBox)
 {
     ptr_JudgeBox box = (ptr_JudgeBox)JudgeBox;
-    int Height=(box->height);
-    int Width=(box->width);
-    int x_mid=WindowX/2;
-    int y_mid=WindowY/2;
-
-    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
-	string color = GetPenColor();/*保存当前系统颜色*/
-    
-    /*定义偏移量，使得重复点击时生成的框会往右下偏移*/
-    int x_offset=Width/10;
-    int y_offset=Height/10;
-
-    /*画菱形条件判断框*/
-    MovePen( x_mid - Width/2 + i*x_offset , y_mid - i*y_offset );
-    DrawLine( Width/2 , Height/2 );
-    DrawLine( Width/2 , -Height/2 );
-    DrawLine( -Width/2 , -Height/2 );
-    DrawLine( -Width/2 , Height/2 );
-
-    /*录入信息*/
-    box->x = x_mid + i*x_offset;
-    box->y = y_mid - i*y_offset;
-    box->ID = i;
-    box->TextID = i;
-
-    SetPenSize(pensize); /*恢复粗细*/
-	SetPenColor(color);/*恢复颜色*/
-
-    i++;
-}
-
-
-/*画起始终止框*/
-void DrawStartBox(void *StartBox)
-{
-    ptr_StartBox box = (ptr_StartBox)StartBox;
+    int Width = box->width;
+    int Height = box->height;
     int x_mid = box->x;
     int y_mid = box->y;
 
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
     
+    SetPenSize(box->PenSize);/*设置粗细*/
+	SetPenColor(box->Color);/*设置颜色*/
+	
 
-    /*画椭圆起始终止框*/
-    MovePen(x_mid + box->width , y_mid);
-    DrawEllipticalArc(box->width , box->height, 0.0, 360.0);
-
-    /*录入信息*/
-    // box->x = x_mid + i*x_offset;
-    // box->y = y_mid - i*y_offset;
-    // box->ID = i;
-    // box->TextID = i;
+    /*画菱形条件判断框*/
+    MovePen( x_mid - Width/2, y_mid);
+    DrawLine( Width/2 , Height/2 );
+    DrawLine( Width/2 , -Height/2 );
+    DrawLine( -Width/2 , -Height/2 );
+    DrawLine( -Width/2 , Height/2 );
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
-
-    i++;
 }
+
 
 #endif

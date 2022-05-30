@@ -1,7 +1,7 @@
 #ifndef _TEST_C_
 #define _TEST_C_
 
-#include "main.h"
+#include "test.h"
 
 void test()
 {

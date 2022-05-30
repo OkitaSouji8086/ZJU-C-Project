@@ -17,7 +17,6 @@
 #include <time.h>
 #include <wincon.h>
 #include <Windows.h>
-#include <Commdlg.h>
 
 #include "genlib.h"
 #include "gcalloc.h"
@@ -215,12 +214,18 @@ static bool initialized = FALSE;
 static bool pauseOnExit = TRUE;
 
 static HWND consoleWindow, graphicsWindow;
-static HDC gdc, osdc,bgdc;
-static HBITMAP osBits,bgBits;
+static HDC gdc, osdc;
+static HBITMAP osBits;
 static HPEN drawPen, erasePen, nullPen;
 static COLORREF drawColor, eraseColor;
 static PAINTSTRUCT ps;
 static string windowTitle = "Graphics Window";
+
+static string bgImgName = "";
+static int srcX, srcY, destX, destY;
+static int srcW, srcH, destW, destH;
+HBITMAP hBitmap = NULL;
+static int displayBG = 0;
 
 static double xResolution, yResolution;
 static double windowWidth = DesiredWidth;
@@ -588,9 +593,6 @@ void DefineColor(string name,
     if (cindex == -1) {
         if (nColors == MaxColors) Error("DefineColor: Too many colors");
         cindex = nColors++;
-    }
-    else if (previousColor == cindex) {
-        previousColor = -1;
     }
     colorTable[cindex].name = CopyString(name);
     colorTable[cindex].red = red;
@@ -1082,9 +1084,9 @@ static LONG FAR PASCAL GraphicsEventProc(HWND hwnd, UINT msg,
 {
     switch(msg)
     {
-		// ï¿½ï¿½ï¿½Â¹ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½double buffer, ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		//         ï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¸
-		//         ï¿½ï¿½Ð»18ï¿½ï¿½Ê¯ï¿½ï¿½Í¬Ñ§ï¿½ï¿½ï¿½á¹©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¢ï¿½ï¿½ï¿½ï¿½Ë¸ï¿½ï¿½ï¿½ï¿½
+		// ÁõÐÂ¹ú£ºÊ¹ÓÃÁËdouble buffer, ÊÖ¶¯ÇåÆÁ£¬
+		//         ºöÂÔ²Á³ý±³¾°ÏûÏ¢£¬±ÜÃâÉÁË¸
+		//         ¸ÐÐ»18¼¶Ê¯ÃÉÍ¬Ñ§£¬Ìá¹©Õâ¸ö·½·¨½â¾öË¢ÐÂÉÁË¸ÎÊÌâ
 		case WM_ERASEBKGND: 
 			return 0; 
 
@@ -1235,62 +1237,23 @@ static void DoUpdate(void)
     EndPaint(graphicsWindow, &ps);
 }
 
-void DrawImage(const char* path,int xSrc, int ySrc, int wSrc, int hSrc, int xDest, int yDest, int wDest, int hDest)
+void DisplayBackGroundImg(const char* path,int xSrc, int ySrc, int wSrc, int hSrc, int xDest, int yDest, int wDest, int hDest)
 {
-    if(!bgdc){
-        bgdc = CreateCompatibleDC(gdc);
-        bgBits = CreateCompatibleBitmap(gdc,pixelWidth,pixelHeight);
-        SelectObject(bgdc,bgBits);
-        BitBlt(bgdc,0,0,pixelWidth,pixelHeight,NULL,0,0,WHITENESS);
-    }
-
-    HBITMAP hBitmap = (HBITMAP)LoadImage(NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-    HDC tmp = CreateCompatibleDC(gdc);
-    SelectObject(tmp,hBitmap);
-    StretchBlt(bgdc,xDest,yDest,wDest,hDest,tmp,xSrc,ySrc,wSrc,hSrc,SRCCOPY);
-    DeleteDC(tmp);
-
-    BitBlt(osdc,0,0,pixelWidth,pixelHeight,bgdc,0,0,SRCCOPY);
+    displayBG = 1;
+    hBitmap = (HBITMAP)LoadImage(NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+    DWORD lastError = GetLastError();
+    srcX = xSrc;
+    srcY = ySrc;
+    srcW = wSrc;
+    srcH = hSrc;
+    destX = xDest;
+    destY = yDest;
+    destW = wDest;
+    destH = hDest;
 }
 
-void ClearImageRegion(int xSrc, int ySrc, int wSrc, int hSrc) {
-    if(bgdc){
-        BitBlt(bgdc, xSrc, ySrc, wSrc, hSrc, NULL, 0, 0, WHITENESS);
-        BitBlt(osdc,0,0,pixelWidth,pixelHeight,bgdc,0,0,SRCCOPY);
-    }
-}
-
-bool OpenFileDialog(const char* filter,char filename[]){
-    OPENFILENAME ofn = {0};
-    ofn.lStructSize = sizeof(OPENFILENAME);
-    ofn.hwndOwner = NULL;
-    if(!filter)
-        ofn.lpstrFilter = TEXT("files\0*.*");
-    else
-        ofn.lpstrFilter = filter;
-    ofn.nFilterIndex = 1;
-    ofn.lpstrFile = filename;
-    ofn.nMaxFile = MAX_PATH;
-    ofn.lpstrInitialDir = NULL;
-    ofn.lpstrTitle = NULL;
-    ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
-    bool e = GetOpenFileName(&ofn);
-    return e;
-}
-
-bool SaveFileDialog(const char* filter,char filename[]){
-    OPENFILENAME ofn = {0};
-    ofn.lStructSize = sizeof(OPENFILENAME);
-    ofn.hwndOwner = NULL;
-    ofn.lpstrFilter = filter;
-    ofn.nFilterIndex = 1;
-    ofn.lpstrFile = filename;
-    ofn.nMaxFile = MAX_PATH;
-    ofn.lpstrInitialDir = NULL;
-    ofn.lpstrTitle = NULL;
-    ofn.Flags = OFN_PATHMUSTEXIST | OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT;
-    bool e = GetSaveFileName(&ofn);
-    return e;
+void ClearBackGroundImg() {
+    displayBG = 0;
 }
 
 /*
@@ -1308,6 +1271,15 @@ void DisplayClear(void)
     InvalidateRect(graphicsWindow, &r, TRUE);
     BitBlt(osdc, 0, 0, pixelWidth, pixelHeight, NULL, 0, 0, WHITENESS);
 
+    if (displayBG) {
+        HDC hdcMem = CreateCompatibleDC(gdc);
+        HGDIOBJ oldBitmap = SelectObject(hdcMem, hBitmap);
+        BITMAP bitmap;
+        GetObject(hBitmap, sizeof(bitmap), &bitmap);
+        StretchBlt(osdc, destX, destY, destW, destH, hdcMem, srcX, srcY, srcW, srcH, SRCCOPY);
+        SelectObject(hdcMem, oldBitmap);
+        DeleteDC(hdcMem);
+    }
 }
 
 /*

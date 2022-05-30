@@ -12,9 +12,6 @@
 
 #ifndef _graphics_h
 #define _graphics_h
-
-#include "boolean.h"
-
 /*
  * Overview
  * --------
@@ -188,12 +185,7 @@ void cancelTimer(int id);
 
 void DisplayClear();
 
-void DrawImage(const char* path,int xSrc, int ySrc, int wSrc, int hSrc, int xDest, int yDest, int wDest, int hDest);
-
-void ClearImageRegion(int xSrc, int ySrc, int wSrc, int hSrc);
-
-bool OpenFileDialog(const char* filter,char filename[]);
-
-bool SaveFileDialog(const char* filter,char filename[]);
+void DisplayBackGroundImg(const char* path,int xSrc, int ySrc, int wSrc, int hSrc, int xDest, int yDest, int wDest, int hDest);
+void ClearBackGroundImg();
 
 #endif

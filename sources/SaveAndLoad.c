@@ -33,7 +33,7 @@ void SaveAllObj()                        //保存的函数//
  } 
  void DrawLineDSave(FILE* fp) //线// 
  {
- 		char r = r;
+ 	char r = r;
 	char l = l;
 	char g = g;
 	char b = b;
@@ -44,12 +44,14 @@ void SaveAllObj()                        //保存的函数//
  	
  	nodeptr = List[LINE]->next;
  	while(nodeptr != NULL)
-	 {
-	        	 data = nodeptr->dataptr;
- 				fwrite(&i,sizeof(unsigned int ),1,fp);
- 				fwrite(&data->ID_1,sizeof(int),1,fp);
- 				fwrite(&data->ID_2,sizeof(int),1,fp);
- 				fwrite(&data->PenSize,sizeof(int),1,fp);
+	{
+	    data = nodeptr->dataptr;
+
+ 		fwrite(&i,sizeof(unsigned int ),1,fp);
+ 		fwrite(&data->ID_1,sizeof(int),1,fp);
+ 		fwrite(&data->ID_2,sizeof(int),1,fp);
+ 		fwrite(&data->PenSize,sizeof(int),1,fp);
+
 		if(!strcmp(data->Color,"Red"))
 		fwrite(&r,sizeof(char),1,fp);
 		

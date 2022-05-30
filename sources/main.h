@@ -15,22 +15,11 @@
 /* 对象种类 */
 #define NLIST 4
 #define LINE 0
-#define PROCEDUREBOX 1
-#define JUDGEBOX 2
-#define STARTBOX 3
+#define STARTBOX 1
+#define PROCEDUREBOX 2
+#define JUDGEBOX 3
 #define TEXT 4
 
-
-/* 窗口宽度 */
-#define WindowX 1280
-
-/* 窗口高度 */
-#define WindowY 720
-
-
-/* 默认对象长宽 */
-#define OBJWIDTH 1.0
-#define OBJHEIGHT 0.4
 
 
 //=============================================================================================================================================//
@@ -64,6 +53,8 @@ extern int TEMP_KIND;
 
 /* ID数组,每个对象唯一 */
 extern int ID[1000000];
+/* TEXT数组 */
+extern string TextID[1000000];
 
 /* 当前编号到第几 */
 extern int CURR_ID;
@@ -81,6 +72,12 @@ extern int MOUSE_FSM;
 /* 默认绘图属性 */
 extern string SYSCOLOR;
 extern int SYSPENSIZE;
+extern double WindowX;
+extern double WindowY;
+
+/* 默认对象长宽 */
+extern double OBJWIDTH;
+extern double OBJHEIGHT;
 
 
 
@@ -97,6 +94,19 @@ typedef struct Line
 	string Color; /* 颜色 */
 	bool IsSelected; /* 是否选中 */
 } *ptr_Line;
+
+
+/* 起始终止框 */
+typedef struct StartBox
+{
+	int ID; /* 唯一对象编号 */
+	double x, y; /* 中心坐标 */
+	double width, height; /* 长宽 */
+	int PenSize; /* 粗细 */
+	string Color; /* 颜色 */
+	int TextID; /* 文本框编号 */
+	bool IsSelected; /* 是否选中 */
+} *ptr_StartBox;
 
 
 /* 执行框 */
@@ -123,19 +133,6 @@ typedef struct JudgeBox
 	int TextID; /* 文本框编号 */
 	bool IsSelected; /* 是否选中 */
 } *ptr_JudgeBox;
-
-
-/* 起始终止框 */
-typedef struct StartBox
-{
-	int ID; /* 唯一对象编号 */
-	double x, y; /* 中心坐标 */
-	double width, height; /* 长宽 */
-	int PenSize; /* 粗细 */
-	string Color; /* 颜色 */
-	int TextID; /* 文本框编号 */
-	bool IsSelected; /* 是否选中 */
-} *ptr_StartBox;
 
 
 /* 文本框 */
@@ -210,12 +207,13 @@ void DrawAllObj();
  */
 void KeyboardEventProcess(int key, int event);
 
-/* 功能:键盘回调函数辅助函数,处理F1事件
+/* 功能:键盘回调函数辅助函数,处理 F1/ F2/ F3 事件
  * 参数:无
  * 说明:无
  */
-void CaseF1Proccess();
-
+void CaseF1Process();
+void CaseF2Process();
+void CaseF3Process();
 
 /* 功能:响应鼠标事件事件
  * 参数1:x坐标
@@ -308,5 +306,7 @@ void LoadAllObj();
  * 返回值:无
  */
 extern void DrawStartBox(void *StartBox);
+extern void DrawProcedureBox(void *ProcedureBox);
+extern void DrawJudgeBox(void *JudgeBox);
 
 #endif

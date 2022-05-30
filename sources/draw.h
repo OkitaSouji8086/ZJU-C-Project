@@ -19,9 +19,9 @@ void EnLargeObj(double Times, void* ptr_Obj, void (*fptr_EnLargeObj)(double Time
  * 返回值:无
  * 说明:缩放 给定指针指向的特定类型对象
  */
+void EnLargeStartBox(double Times, void* ptr_Obj);
 void EnLargeProcedureBox(double Times, void* ptr_Obj);
 void EnLargeJudgeBox(double Times, void* ptr_Obj);
-void EnLargeStartBox(double Times, void* ptr_Obj);
 
 
 /* 功能:复制选中的对象
