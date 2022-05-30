@@ -142,10 +142,10 @@ void DrawProcedureBox(void *ProcedureBox)
 void DrawJudgeBox(void *JudgeBox)
 {
     ptr_JudgeBox box = (ptr_JudgeBox)JudgeBox;
-    int Width = box->width;
-    int Height = box->height;
-    int x_mid = box->x;
-    int y_mid = box->y;
+    double Width = box->width;
+    double Height = box->height;
+    double x_mid = box->x;
+    double y_mid = box->y;
 
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/

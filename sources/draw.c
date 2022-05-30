@@ -6,7 +6,8 @@
 void DrawAllObj()
 {
 	TraverseLinkedList(List[STARTBOX], DrawStartBox);
-	
+	TraverseLinkedList(List[PROCEDUREBOX], DrawProcedureBox);
+	TraverseLinkedList(List[JUDGEBOX], DrawJudgeBox);
 }
 
 void EnLargeObj(double Times, void* ptr_Obj, void (*fptr_EnLargeObj)(double Times, void* ptr_Obj))
