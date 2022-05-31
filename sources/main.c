@@ -68,7 +68,11 @@ int CURR_OCCUPY = 0;
 /* 鼠标状态机 */
 int MOUSE_FSM;
 
-bool isSelected = FALSE; /* 图形元素选中状态 */
+/* 修改CURR_OCCUPY使能信号 */
+static bool CURR_OCCUPY_EN = FALSE;
+
+/* 图形元素选中状态 */
+bool isSelected = FALSE;
 
 
 
@@ -365,6 +369,7 @@ void MouseEventProcess(int x, int y, int button, int event)
 			((ptr_StartBox)CURR_OBJ)->IsSelected = TRUE;
 
 		 	isSelected = TRUE;
+			CURR_OCCUPY_EN = TRUE;
 		 	DrawAllObj();
 			break;
 		case BUTTON_DOUBLECLICK:
@@ -390,6 +395,10 @@ void MouseEventProcess(int x, int y, int button, int event)
 				}
 				omx = mx;
 				omy = my;
+				if(CURR_OCCUPY_EN){
+					CURR_OCCUPY --;
+					CURR_OCCUPY_EN = FALSE;
+				}
 				SetEraseMode(FALSE);
 				DrawAllObj();
 			}

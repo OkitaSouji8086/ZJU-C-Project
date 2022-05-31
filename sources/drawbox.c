@@ -96,6 +96,7 @@ void DrawStartBox(void *StartBox)
 	double Height = box->height;
     double x_mid = box->x;
     double y_mid = box->y;
+	double c=0;
 
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
@@ -103,9 +104,16 @@ void DrawStartBox(void *StartBox)
     SetPenSize(box->PenSize);/*设置粗细*/
 	SetPenColor(box->Color);/*设置颜色*/
 
-    /*画椭圆起始终止框*/
-    MovePen(x_mid + Width/2, y_mid);
-    DrawEllipticalArc(Width , Height, 0.0, 360.0);
+    /*画圆角矩形起始终止框*/
+    MovePen( x_mid , y_mid);
+	DrawLine( c , Height-0.2);
+	DrawArc(0.1,c+180,c-90);
+	DrawLine(Width-0.2,c);
+	DrawArc(0.1,c+90,c-90);
+	DrawLine(c,-(Height-0.2));
+	DrawArc(0.1,c,c-90);
+	DrawLine(-(Width-0.2),c);
+	DrawArc(0.1,c-90,c-90);
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
