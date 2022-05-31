@@ -41,14 +41,23 @@ void DrawStartBox(void *StartBox)
 
     /*»­Ô²½Ç¾ØÐÎÆðÊ¼ÖÕÖ¹¿ò*/
     MovePen( x_mid - Width/2, y_mid - Height/2);
-	DrawLine( c , Height-0.2);
-	DrawArc(0.1,c+180,c-90);
-	DrawLine(Width-0.2,c);
-	DrawArc(0.1,c+90,c-90);
-	DrawLine(c,-(Height-0.2));
-	DrawArc(0.1,c,c-90);
-	DrawLine(-(Width-0.2),c);
-	DrawArc(0.1,c-90,c-90);
+	DrawLine(c, Height-0.2);
+	DrawArc(0.1, c+180, c-90);
+	DrawLine(Width-0.2, c);
+	DrawArc(0.1, c+90, c-90);
+	DrawLine(c, -(Height-0.2));
+	DrawArc(0.1, c, c-90);
+	DrawLine(-(Width-0.2), c);
+	DrawArc(0.1, c-90, c-90);	
+
+	// DrawLine(c, Height/2);
+	// DrawArc(Height/4, c+180, c-90);
+	// DrawLine(Width/2, c);
+	// DrawArc(Height/4, c+90, c-90);
+	// DrawLine(c, -(Height/2));
+	// DrawArc(Height/4, c, c-90);
+	// DrawLine(-(Width/2), c);
+	// DrawArc(Height/4, c-90, c-90);
 
     SetPenSize(pensize); /*»Ö¸´´ÖÏ¸*/
 	SetPenColor(color);/*»Ö¸´ÑÕÉ«*/

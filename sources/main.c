@@ -82,7 +82,7 @@ bool isSelected = FALSE;
 
 /* 默认绘图属性 */
 string SYSCOLOR = "Red";
-int SYSPENSIZE = 1;
+int SYSPENSIZE = 2;
 double WindowX = 1280;
 double WindowY = 720;
 
@@ -103,7 +103,7 @@ void Main()
 	SetWindowTitle("Program Creater");
 	SetWindowSize(ScaleXInches(WindowX), ScaleXInches(WindowY));
 	InitGraphics();
-	 InitConsole();
+	InitConsole();
 	
 	Randomize(); /* 随机函数初始化 */
 	registerKeyboardEvent(KeyboardEventProcess);
@@ -113,17 +113,16 @@ void Main()
 	for (i = 0; i < NLIST; i++)
 		List[i] = NewLinkedList();
 	
-
+	#if _DEBUG_
+		test();
+	#endif
+	
 	display();
 }
 
 void display()
 {
 	DisplayClear();
-	
-	#if _DEBUG_
-		test();
-	#endif
 
 	DrawMenu();
 

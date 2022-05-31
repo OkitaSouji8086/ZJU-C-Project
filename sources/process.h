@@ -22,6 +22,7 @@ void* SearchObj(int ID);
  * 参数2:给定ID
  * 返回值:是否相等,相等为TRUE
  */
+bool equalfunptr_Line(void *obj1, void *obj2);
 bool equalfunptr_PBox(void *obj1, void *obj2);
 bool equalfunptr_JBox(void *obj1, void *obj2);
 bool equalfunptr_SBox(void *obj1, void *obj2);

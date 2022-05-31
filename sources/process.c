@@ -5,6 +5,11 @@
 
 void DeleteObj(void* ptr_Obj)
 {
+	linkedlistADT deletednode = NULL;
+	do{
+		deletednode = DeleteNode(List[LINE], &(((ptr_StartBox)ptr_Obj)->ID), equalfunptr_Line);
+	} while (deletednode != NULL);
+
 	switch (CURR_OBJ_KIND)
 	{
 	case STARTBOX:
@@ -19,7 +24,6 @@ void DeleteObj(void* ptr_Obj)
 	default:
 		break;
 	}
-	return;
 }
 
 void* SearchObj(int ID)
@@ -38,6 +42,14 @@ void* SearchObj(int ID)
 	return ptr_SearchObj->dataptr;
 }
 
+bool equalfunptr_Line(void *obj1, void *obj2)
+{
+	ptr_Line ptr_temp = (ptr_Line)obj1;
+	int* id_temp = (int*)obj2;
+
+	if(ptr_temp->ID_1 == *id_temp || ptr_temp->ID_2 == *id_temp) return TRUE;
+	else return FALSE;
+}
 bool equalfunptr_PBox(void *obj1, void *obj2)
 {
 	ptr_ProcedureBox ptr_temp = (ptr_ProcedureBox)obj1;
