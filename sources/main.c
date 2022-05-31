@@ -79,8 +79,7 @@ static bool isInText = FALSE;
 char _EMPTY_CHAR_[101];
 
 
-static bool isMove = FALSE; /*移动标志*/
-static bool isChangeSize = FALSE; /*缩放标志*/ 
+
 
 //=============================================================================================================================================//
 /* 默认值定义 */
@@ -289,9 +288,10 @@ void KeyboardEventProcess(int key, int event)
 					break;
 
 				case VK_ESCAPE:/*ESCAPE: 退出对象选中状态*/
+					if(!isSelected) break;
 					((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
 					((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
-					isMove = isChangeSize = isInText = isSelected = FALSE;
+					isSelected = FALSE;
 					CURR_OBJ = NULL;
 					CURR_OBJ_KIND = -1;
 
@@ -330,6 +330,9 @@ void CharEventProcess(char c)
 {
 	uiGetChar(c);
 	display();
+
+	if(!isSelected) return;
+
 	string curr_textbuf = ((ptr_StartBox)CURR_OBJ)->Text;
 	int len = strlen(curr_textbuf);
 
@@ -343,7 +346,6 @@ void CharEventProcess(char c)
 			((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
 			CURR_OBJ = NULL;
 			CURR_OBJ_KIND = -1;
-			isMove = isChangeSize = FALSE;
 			break;
  		case '\b':/*BACKSPACE*/
  			if (len == 0) break;
@@ -364,7 +366,8 @@ void MouseEventProcess(int x, int y, int button, int event)
 	uiGetMouse(x, y, button, event);
 	display();
 
-
+	static bool isMove = FALSE; /*移动标志*/
+	static bool isChangeSize = FALSE; /*缩放标志*/ 
  	static double omx = 0.0, omy = 0.0;/*前一鼠标坐标*/
 	double mx, my;/*当前鼠标坐标*/
 	double x1, y1, x2, y2, dx, dy;
@@ -372,7 +375,7 @@ void MouseEventProcess(int x, int y, int button, int event)
 
  	mx = ScaleXInches(x);/*pixels --> inches*/
 	my = ScaleYInches(y);/*pixels --> inches*/
- 
+
 	switch (event) {
 		case BUTTON_DOWN:
 			if (isSelected) { /*已是选中状态*/
