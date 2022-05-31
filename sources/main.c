@@ -184,6 +184,7 @@ void DrawMenu()
 		break;
 	case 3:
 		printf("Save clicked\n");
+		SaveAllObj();
 		break;
 	case 4:
 		printf("Exit clicked\n");
@@ -297,34 +298,12 @@ void KeyboardEventProcess(int key, int event)
 					isSelected = FALSE;
 					break;
 
-				case 'S':/*Ctrl+S：保存到save.data*/
-					if(flag==1){
-						SaveAllObj();
-					}
-
-					break;
-
 				case 'O':/*Ctrl+O：从save.data读取*/
 					if(flag==1){
 						LoadAllObj();
 					}
 
 					break;
-
-				case 'C':/*Ctrl+C：复制选中对象*/
-					if(flag==1){
-						CopyObj();
-					}
-
-					break;
-
-				case 'V':/*Ctrl+V：粘贴对象*/
-					if(flag==1){
-						PasteObj();
-					}
-
-					break;
-
 			}	
 		case KEY_UP:
 			break;

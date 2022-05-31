@@ -104,8 +104,8 @@ void PasteObj()
 	if(TEMP == NULL) return;
 
 	ptr_StartBox StartBox_Obj;
-	ptr_JudgeBox JudgeBox_Obj;
 	ptr_ProcedureBox ProcedureBox_Obj;
+	ptr_JudgeBox JudgeBox_Obj;
 
 	switch (TEMP_KIND)
 	{
@@ -115,10 +115,10 @@ void PasteObj()
 		StartBox_Obj->ID = CURR_ID;
 		CURR_ID ++;
 
-		StartBox_Obj->x = GetMouseX();
-		StartBox_Obj->y = GetMouseY();
-		StartBox_Obj->width = OBJWIDTH;
-		StartBox_Obj->height = OBJHEIGHT;
+		StartBox_Obj->x = ((ptr_StartBox)CURR_OBJ)->x + ((ptr_StartBox)CURR_OBJ)->width/3;
+		StartBox_Obj->y = ((ptr_StartBox)CURR_OBJ)->y - ((ptr_StartBox)CURR_OBJ)->height/3;
+		StartBox_Obj->width = ((ptr_StartBox)CURR_OBJ)->width;
+		StartBox_Obj->height = ((ptr_StartBox)CURR_OBJ)->height;
 		StartBox_Obj->PenSize = SYSPENSIZE;
 		StartBox_Obj->Color = SYSCOLOR;
 		StartBox_Obj->TextID = -1;
@@ -128,11 +128,42 @@ void PasteObj()
 		InsertNode(List[STARTBOX], NULL, StartBox_Obj);
 		
 		break;
-	case JUDGEBOX:
-		//
-		break;
 	case PROCEDUREBOX:
-		//
+		ProcedureBox_Obj = (ptr_ProcedureBox)GetBlock(sizeof(*ProcedureBox_Obj));
+
+		ProcedureBox_Obj->ID = CURR_ID;
+		CURR_ID ++;
+
+		ProcedureBox_Obj->x = ((ptr_ProcedureBox)CURR_OBJ)->x + ((ptr_ProcedureBox)CURR_OBJ)->width/3;
+		ProcedureBox_Obj->y = ((ptr_ProcedureBox)CURR_OBJ)->y - ((ptr_ProcedureBox)CURR_OBJ)->height/3;
+		ProcedureBox_Obj->width = ((ptr_ProcedureBox)CURR_OBJ)->width;
+		ProcedureBox_Obj->height = ((ptr_ProcedureBox)CURR_OBJ)->height;
+		ProcedureBox_Obj->PenSize = SYSPENSIZE;
+		ProcedureBox_Obj->Color = SYSCOLOR;
+		ProcedureBox_Obj->TextID = -1;
+		ProcedureBox_Obj->IsSelected = FALSE;
+
+		DrawStartBox(ProcedureBox_Obj);
+		InsertNode(List[PROCEDUREBOX], NULL, ProcedureBox_Obj);
+		break;
+	case JUDGEBOX:
+		JudgeBox_Obj = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox_Obj));
+
+		JudgeBox_Obj->ID = CURR_ID;
+		CURR_ID ++;
+
+		JudgeBox_Obj->x = ((ptr_JudgeBox)CURR_OBJ)->x + ((ptr_JudgeBox)CURR_OBJ)->width/3;
+		JudgeBox_Obj->y = ((ptr_JudgeBox)CURR_OBJ)->y - ((ptr_JudgeBox)CURR_OBJ)->height/3;
+		JudgeBox_Obj->width = ((ptr_JudgeBox)CURR_OBJ)->width;
+		JudgeBox_Obj->height = ((ptr_JudgeBox)CURR_OBJ)->height;
+		JudgeBox_Obj->PenSize = SYSPENSIZE;
+		JudgeBox_Obj->Color = SYSCOLOR;
+		JudgeBox_Obj->TextID = -1;
+		JudgeBox_Obj->IsSelected = FALSE;
+
+		DrawStartBox(JudgeBox_Obj);
+		InsertNode(List[JUDGEBOX], NULL, JudgeBox_Obj);
+
 		break;
 	default:
 		break;
