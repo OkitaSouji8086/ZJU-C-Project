@@ -49,9 +49,4 @@ void DrawStartLoad(FILE *fp);
 /*
 读取开始框 
 */
-void  DrawTextSave(FILE *fp);
-/* 
-读取文本框
-*/ 
-
 #endif

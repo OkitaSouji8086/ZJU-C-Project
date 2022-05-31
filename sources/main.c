@@ -74,7 +74,13 @@ static bool CURR_OCCUPY_EN = FALSE;
 /* 图形元素选中状态 */
 bool isSelected = FALSE;
 
+static bool isInText = FALSE;
 
+char _EMPTY_CHAR_[101];
+
+
+static bool isMove = FALSE; /*移动标志*/
+static bool isChangeSize = FALSE; /*缩放标志*/ 
 
 //=============================================================================================================================================//
 /* 默认值定义 */
@@ -99,6 +105,8 @@ double OBJHEIGHT = 0.4;
 void Main()
 {
 	int i;
+
+	_EMPTY_CHAR_[0] = '\0';
 
 	SetWindowTitle("Program Creater");
 	SetWindowSize(ScaleXInches(WindowX), ScaleXInches(WindowY));
@@ -218,15 +226,19 @@ void DrawMenu()
 	switch (selection)
 	{
 	case 1:
-		printf("Copy clicked\n");
 		CopyObj();
 		break;
 	case 2:
-		printf("Paste clicked\n");
 		PasteObj();
 		break;
 	case 3:
-		printf("Delete clicked\n");
+		if(CURR_OBJ != NULL){
+			DeleteObj(CURR_OBJ);
+			CURR_OCCUPY --;
+			CURR_OBJ = NULL;
+			CURR_OBJ_KIND = -1;
+		}
+		isSelected = FALSE;
 		break;
 	default:
 		break;
@@ -266,7 +278,9 @@ void KeyboardEventProcess(int key, int event)
 				case VK_F3:/*F3: 绘制执行框*/
 					CaseF3Process();
 					break;
-
+				case VK_F5: /* 编辑当前选中的对象的文本框 */
+					CaseF5Process();
+					break;
 				case VK_F10:/*F10: 退出程序*/
 					exit(1);
 					break;
@@ -277,7 +291,7 @@ void KeyboardEventProcess(int key, int event)
 				case VK_ESCAPE:/*ESCAPE: 退出对象选中状态*/
 					((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
 					((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
-					isSelected = FALSE;
+					isMove = isChangeSize = isInText = isSelected = FALSE;
 					CURR_OBJ = NULL;
 					CURR_OBJ_KIND = -1;
 
@@ -304,30 +318,58 @@ void KeyboardEventProcess(int key, int event)
 					}
 
 					break;
+					
 			}	
 		case KEY_UP:
 			break;
 
 	}
 }
+
 void CharEventProcess(char c)
 {
 	uiGetChar(c);
 	display();
+	string curr_textbuf = ((ptr_StartBox)CURR_OBJ)->Text;
+	int len = strlen(curr_textbuf);
+
+	if (!isInText) return;
+	switch (c) {
+		case 27: /*ESC*/
+		case '\r':  /* 注意：回车在这里返回的字符是'\r'，不是'\n'*/
+			isSelected = FALSE;
+			isInText = FALSE;
+			((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
+			((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
+			CURR_OBJ = NULL;
+			CURR_OBJ_KIND = -1;
+			isMove = isChangeSize = FALSE;
+			break;
+ 		case '\b':/*BACKSPACE*/
+ 			if (len == 0) break;
+			curr_textbuf[len] = '\0';
+			len --;
+ 			break;
+		default:
+			curr_textbuf[len] = c;
+			curr_textbuf[len + 1] = '\0';
+			len ++;
+			break;
+	}
 }
+
 
 void MouseEventProcess(int x, int y, int button, int event)
 {
 	uiGetMouse(x, y, button, event);
 	display();
 
-	static bool isMove = FALSE; /*移动标志*/
-	static bool isChangeSize = FALSE; /*缩放标志*/ 
+
  	static double omx = 0.0, omy = 0.0;/*前一鼠标坐标*/
 	double mx, my;/*当前鼠标坐标*/
 	double x1, y1, x2, y2, dx, dy;
 	ptr_Line Line_Obj = NULL;
-	 
+
  	mx = ScaleXInches(x);/*pixels --> inches*/
 	my = ScaleYInches(y);/*pixels --> inches*/
  
@@ -401,9 +443,7 @@ void MouseEventProcess(int x, int y, int button, int event)
 			}
 			break;
 	}
-}	
-
-
+}
 
 void CaseF1Process()
 {
@@ -412,6 +452,7 @@ void CaseF1Process()
 	double MidY = GetWindowHeight()/2; 
 
 	ptr_StartBox StartBox_Obj;
+	string textbuf = CopyString(_EMPTY_CHAR_);
 
 	StartBox_Obj = (ptr_StartBox)GetBlock(sizeof(*StartBox_Obj));
 
@@ -424,7 +465,7 @@ void CaseF1Process()
 	StartBox_Obj->height = OBJHEIGHT;
 	StartBox_Obj->PenSize = SYSPENSIZE;
 	StartBox_Obj->Color = SYSCOLOR;
-	StartBox_Obj->TextID = -1;
+	StartBox_Obj->Text = textbuf;
 	StartBox_Obj->IsSelected = FALSE;
 
 	CURR_OCCUPY ++;
@@ -440,6 +481,7 @@ void CaseF2Process()
 	double MidY = GetWindowHeight()/2; 
 
 	ptr_ProcedureBox ProcedureBox_Obj;
+	string textbuf = CopyString(_EMPTY_CHAR_);
 
 	ProcedureBox_Obj = (ptr_ProcedureBox)GetBlock(sizeof(*ProcedureBox_Obj));
 
@@ -452,7 +494,7 @@ void CaseF2Process()
 	ProcedureBox_Obj->height = OBJHEIGHT;
 	ProcedureBox_Obj->PenSize = SYSPENSIZE;
 	ProcedureBox_Obj->Color = SYSCOLOR;
-	ProcedureBox_Obj->TextID = -1;
+	ProcedureBox_Obj->Text = textbuf;
 	ProcedureBox_Obj->IsSelected = FALSE;
 
 	CURR_OCCUPY ++;
@@ -468,6 +510,7 @@ void CaseF3Process()
 	double MidY = GetWindowHeight()/2; 
 
 	ptr_JudgeBox JudgeBox_Obj;
+	string textbuf = CopyString(_EMPTY_CHAR_);
 
 	JudgeBox_Obj = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox_Obj));
 
@@ -480,7 +523,7 @@ void CaseF3Process()
 	JudgeBox_Obj->height = OBJHEIGHT;
 	JudgeBox_Obj->PenSize = SYSPENSIZE;
 	JudgeBox_Obj->Color = SYSCOLOR;
-	JudgeBox_Obj->TextID = -1;
+	JudgeBox_Obj->Text = textbuf;
 	JudgeBox_Obj->IsSelected = FALSE;
 
 	CURR_OCCUPY ++;
@@ -488,4 +531,12 @@ void CaseF3Process()
 	DrawJudgeBox(JudgeBox_Obj);
 	InsertNode(List[JUDGEBOX], NULL, JudgeBox_Obj);
 }
+
+void CaseF5Process()
+{
+	if(!isSelected) return;
+	
+	isInText = TRUE;
+}
+
 #endif

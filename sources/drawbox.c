@@ -48,16 +48,10 @@ void DrawStartBox(void *StartBox)
 	DrawLine(c, -(Height-0.2));
 	DrawArc(0.1, c, c-90);
 	DrawLine(-(Width-0.2), c);
-	DrawArc(0.1, c-90, c-90);	
+	DrawArc(0.1, c-90, c-90);
 
-	// DrawLine(c, Height/2);
-	// DrawArc(Height/4, c+180, c-90);
-	// DrawLine(Width/2, c);
-	// DrawArc(Height/4, c+90, c-90);
-	// DrawLine(c, -(Height/2));
-	// DrawArc(Height/4, c, c-90);
-	// DrawLine(-(Width/2), c);
-	// DrawArc(Height/4, c-90, c-90);
+    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight());
+    DrawTextString(box->Text);
 
     SetPenSize(pensize); /*»Ö¸´´ÖÏ¸*/
 	SetPenColor(color);/*»Ö¸´ÑÕÉ«*/
@@ -80,6 +74,9 @@ void DrawProcedureBox(void *ProcedureBox)
         
     /*»­¾ØĞÎÖ´ĞĞ¿ò*/
 	drawRectangle(x_mid - Width/2, y_mid - Height/2, Width, Height, FALSE);
+
+    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight());
+    DrawTextString(box->Text);
 
     SetPenSize(pensize); /*»Ö¸´´ÖÏ¸*/
 	SetPenColor(color);/*»Ö¸´ÑÕÉ«*/
@@ -108,6 +105,9 @@ void DrawJudgeBox(void *JudgeBox)
     DrawLine( Width/2 , -Height/2 );
     DrawLine( -Width/2 , -Height/2 );
     DrawLine( -Width/2 , Height/2 );
+
+    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight());
+    DrawTextString(box->Text);
 
     SetPenSize(pensize); /*»Ö¸´´ÖÏ¸*/
 	SetPenColor(color);/*»Ö¸´ÑÕÉ«*/

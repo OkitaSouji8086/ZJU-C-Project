@@ -26,6 +26,7 @@ bool equalfunptr_Line(void *obj1, void *obj2);
 bool equalfunptr_PBox(void *obj1, void *obj2);
 bool equalfunptr_JBox(void *obj1, void *obj2);
 bool equalfunptr_SBox(void *obj1, void *obj2);
+bool equalfunptr_Text(void *obj1, void *obj2);
 
 void PickNearestObj(double mx, double my);
 double LtsDistance(void* ptr_Obj, double mx, double my);

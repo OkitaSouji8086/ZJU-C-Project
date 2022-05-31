@@ -20,7 +20,9 @@
 #define JUDGEBOX 3
 #define TEXT 4
 
-
+#define TEXTLEN  100
+#define CURSOR "_"          /*光标符号*/
+#define CURSOR_BLINK  1     /*光标闪烁定时器事件标志号*/
 
 //=============================================================================================================================================//
 /* 链表定义 */
@@ -28,7 +30,7 @@
 
 
 /* 每个元素都是一个指向 直线/框链表 的指针 */
-extern linkedlistADT List[4];
+extern linkedlistADT List[NLIST];
 
 
 
@@ -53,8 +55,6 @@ extern int TEMP_KIND;
 
 /* ID数组,每个对象唯一 */
 extern int ID[1000000];
-/* TEXT数组 */
-extern string TextID[1000000];
 
 /* 当前编号到第几 */
 extern int CURR_ID;
@@ -106,7 +106,7 @@ typedef struct StartBox
 	double width, height; /* 长宽 */
 	int PenSize; /* 粗细 */
 	string Color; /* 颜色 */
-	int TextID; /* 文本框编号 */
+	string Text; /* 文本框指针 */
 	bool IsSelected; /* 是否选中 */
 } *ptr_StartBox;
 
@@ -119,7 +119,7 @@ typedef struct ProcedureBox
 	double width, height; /* 长宽 */
 	int PenSize; /* 粗细 */
 	string Color; /* 颜色 */
-	int TextID; /* 文本框编号 */
+	string Text; /* 文本框指针 */
 	bool IsSelected; /* 是否选中 */
 } *ptr_ProcedureBox;
 
@@ -132,23 +132,9 @@ typedef struct JudgeBox
 	double width, height; /* 长宽 */
 	int PenSize; /* 粗细 */
 	string Color; /* 颜色 */
-	int TextID; /* 文本框编号 */
+	string Text; /* 文本框指针 */
 	bool IsSelected; /* 是否选中 */
 } *ptr_JudgeBox;
-
-
-/* 文本框 */
-typedef struct Text
-{
-	int ID; /* 唯一对象编号 */
-	string text; /* 文本指针 */
-	double x, y; /* 文本显示起始位置坐标 */
-	int PenSize; /* 粗细 */
-	string Color; /* 颜色 */
-	bool IsSelected; /* 是否选中 */
-	int curPos; /* 光标位置 */
-	bool isDisplayed; /*光标是否处于显示状态*/
-} *ptr_Text;
 
 
 

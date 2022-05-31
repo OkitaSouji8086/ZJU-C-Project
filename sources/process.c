@@ -2,13 +2,13 @@
 #define _PROCESS_C_
 
 #include "process.h"
-
 void DeleteObj(void* ptr_Obj)
 {
 	linkedlistADT deletednode = NULL;
 	do{
 		deletednode = DeleteNode(List[LINE], &(((ptr_StartBox)ptr_Obj)->ID), equalfunptr_Line);
 	} while (deletednode != NULL);
+
 
 	switch (CURR_OBJ_KIND)
 	{

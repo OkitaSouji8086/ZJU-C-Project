@@ -7,11 +7,11 @@ static char l = 'l';
 static char g = 'g';
 static char b = 'b';
 
-void SaveAllObj();//±£´æËùÓÐµ±Ç°¶ÔÏó// 
-void DrawLineDSave(FILE *fp);  /*±£´æÖ±Ïß*/ 
-void DrawProcedureSave(FILE *fp);   /*±£´æÖ´ÐÐ¿ò*/ 
-void DrawJudgeSave(FILE *fp);/*±£´æÅÐ¶Ï¿ò*/ 
-void DrawStartSave(FILE *fp);/*±£´æÆðÊ¼¿ò*/
+void SaveAllObj();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ç°ï¿½ï¿½ï¿½ï¿½// 
+void DrawLineDSave(FILE *fp);  /*ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½*/ 
+void DrawProcedureSave(FILE *fp);   /*ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð¿ï¿½*/ 
+void DrawJudgeSave(FILE *fp);/*ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï¿ï¿½*/ 
+void DrawStartSave(FILE *fp);/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½*/
 void LoadAllObj();
 void DrawLineDLoad(FILE *fp);
 void DrawProcedureLoad(FILE *fp);
@@ -24,25 +24,25 @@ void DrawTextSave(FILE *fp);
 
 
 
-void SaveAllObj()                        //±£´æµÄº¯Êý// 
+void SaveAllObj()                        //ï¿½ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½// 
 {
-	FILE *fp = fopen("save.dat","wb");
+	FILE *fp = fopen("save.data","wb");
 	
 	DrawLineDSave(fp);
 	DrawProcedureSave(fp);
 	DrawJudgeSave(fp);
 	DrawStartSave(fp);
-	DrawTextSave(fp);
 	fclose(fp);
  } 
- void DrawLineDSave(FILE* fp) //Ïß// 
+ void DrawLineDSave(FILE* fp) //ï¿½ï¿½// 
  {
 	
  	linkedlistADT nodeptr;
  	unsigned int i = LINE;
  	ptr_Line data;
  	
- 	nodeptr = List[LINE]->next;
+ 	nodeptr = List[LINE] ->next;
+ 	
  	while(nodeptr != NULL)
 	{
 	    data = nodeptr->dataptr;
@@ -68,13 +68,13 @@ void SaveAllObj()                        //±£´æµÄº¯Êý//
 	}
  }
  
- void DrawProcedureSave(FILE *fp)          //±£´æÖ´ÐÐ¿ò// 
+ void DrawProcedureSave(FILE *fp)          //ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð¿ï¿½// 
  {
  	linkedlistADT nodeptr;
- 	unsigned int i = 1;
+ 	unsigned int i = 1,s_len = 0;
  	
  	ptr_ProcedureBox data;
- 	nodeptr = List[PROCEDUREBOX] ->next;
+ 	nodeptr = List[PROCEDUREBOX] ->next ;
  	while(nodeptr != NULL)
  	{
  		data = nodeptr->dataptr;
@@ -97,7 +97,9 @@ void SaveAllObj()                        //±£´æµÄº¯Êý//
 		else if(!strcmp(data->Color,"Black"))
 		fwrite(&b,sizeof(char),1,fp);
  		
- 		fwrite(&data->TextID,sizeof(int),1,fp);
+ 		s_len = strlen(data->Text);
+ 		fwrite(&s_len,sizeof(unsigned int),1,fp);
+ 		fwrite(data->Text,sizeof(char),s_len,fp);
  		nodeptr = nodeptr->next;
 	 }
  }
@@ -105,7 +107,7 @@ void SaveAllObj()                        //±£´æµÄº¯Êý//
  void DrawJudgeSave(FILE *fp)
  {
 	linkedlistADT nodeptr;
- 	unsigned int i  = 2;
+ 	unsigned int i  = 2,s_len = 0;
  	
  	ptr_JudgeBox data;
  	nodeptr = List[JUDGEBOX]->next;
@@ -131,7 +133,9 @@ void SaveAllObj()                        //±£´æµÄº¯Êý//
 		else if(!strcmp(data->Color,"Black"))
 		fwrite(&b,sizeof(char),1,fp);
 
- 		fwrite(&data->TextID,sizeof(int),1,fp);
+ 		s_len = strlen(data->Text);
+ 		fwrite(&s_len,sizeof(unsigned int),1,fp);
+ 		fwrite(data->Text,sizeof(char),s_len,fp);
  		nodeptr = nodeptr->next;
 	 }
  }
@@ -139,7 +143,7 @@ void SaveAllObj()                        //±£´æµÄº¯Êý//
 void DrawStartSave(FILE *fp)
 {	
 	linkedlistADT nodeptr;
-	unsigned int i = 3;
+	unsigned int i = 3,s_len = 0;
 	
 	ptr_StartBox data;
 	nodeptr = List[STARTBOX]->next;
@@ -164,7 +168,9 @@ void DrawStartSave(FILE *fp)
 		else if(!strcmp(data->Color,"Black"))
 		fwrite(&b,sizeof(char),1,fp);
 		
-		fwrite(&data->TextID,sizeof(int),1,fp);
+	 	s_len = strlen(data->Text);
+ 		fwrite(&s_len,sizeof(unsigned int),1,fp);
+ 		fwrite(data->Text,sizeof(char),s_len,fp);
  		nodeptr = nodeptr->next;
 }
 }
@@ -179,7 +185,6 @@ void LoadAllObj( )
 	ptr_ProcedureBox ProcedureData;
 	ptr_JudgeBox JudgeData;
 	ptr_StartBox StartData;
-	ptr_Text TextData;
 
 	while(1){
 		fread(&ObjKind, sizeof(unsigned int), 1, fp);
@@ -199,7 +204,7 @@ void LoadAllObj( )
 			DrawStartLoad(fp);
 			break;
 		case 4:
-			DrawTextLoad(fp);
+			//DrawTextLoad(fp);//
 			break;
 		default:
 			break;
@@ -232,6 +237,8 @@ void DrawLineDLoad(FILE *fp)
 
 void DrawProcedureLoad(FILE *fp)
 {
+		unsigned int s_len;
+	string buf;
 	char mid;
 
 	ptr_ProcedureBox data = (ptr_ProcedureBox)malloc(sizeof(*data));
@@ -249,15 +256,18 @@ void DrawProcedureLoad(FILE *fp)
 	else if(mid == 'g') data->Color = "Green";
 	else if(mid == 'l') data->Color = "Blue";
 	else if(mid == 'b') data->Color = "Black";
+	fread(&s_len,sizeof(unsigned int),1,fp);
+	fread(buf,sizeof(unsigned char),s_len,fp);
+	data->Text = buf;
 	
-    fread(&data->TextID,sizeof(int),1,fp);
 	data->IsSelected = FALSE;
-
 	InsertNode(List[PROCEDUREBOX], NULL, data);
 	
 }
 void DrawJudgeLoad(FILE *fp)
 {  
+	unsigned int s_len;
+	string buf;
 	char mid;
 
 	ptr_JudgeBox data = (ptr_JudgeBox)malloc(sizeof(*data));
@@ -274,8 +284,11 @@ void DrawJudgeLoad(FILE *fp)
 	if(mid == 'r') data->Color = "Red";
 	else if(mid == 'g') data->Color = "Green";
 	else if(mid == 'l') data->Color = "Blue";
-	else if(mid == 'b') data->Color = "Black";    
-	fread(&data->TextID,sizeof(int),1,fp);
+	else if(mid == 'b') data->Color = "Black";
+	    
+	fread(&s_len,sizeof(unsigned int),1,fp);
+	fread(buf,sizeof(unsigned char),s_len,fp);
+	data->Text = buf;
 	data->IsSelected = FALSE;
 
 	InsertNode(List[JUDGEBOX], NULL, data);
@@ -285,6 +298,8 @@ void DrawJudgeLoad(FILE *fp)
 
 void DrawStartLoad(FILE *fp)
 {
+	unsigned int s_len;
+	string buf;
 	char mid;
 	
 	ptr_StartBox data = (ptr_StartBox)malloc(sizeof(*data));
@@ -304,14 +319,16 @@ void DrawStartLoad(FILE *fp)
 	else if(mid == 'b') data->Color = "Black";
 
 
-	fread(&data->TextID,sizeof(int),1,fp);
+	fread(&s_len,sizeof(unsigned int),1,fp);
+	fread(buf,sizeof(unsigned char),s_len,fp);
+	data->Text = buf;
 	data->IsSelected = FALSE;
 	InsertNode(List[STARTBOX], NULL, data);
 	
 }
 
 
-void DrawTextSave(FILE *fp)
+ /*void DrawTextSave(FILE *fp)
 {
 	linkedlistADT nodeptr;
 	ptr_Text data;
@@ -348,9 +365,9 @@ void DrawTextSave(FILE *fp)
 		nodeptr = nodeptr->next;
 		
 	}
-}
+}  */
 
-void DrawTextLoad(FILE *fp)
+/* void DrawTextLoad(FILE *fp)
 {
 	ptr_Text data = (ptr_Text)malloc(sizeof(*data));
 	unsigned int s_len;
@@ -378,6 +395,6 @@ void DrawTextLoad(FILE *fp)
 	data->isDisplayed = FALSE;
 
 	InsertNode(List[TEXT], NULL, data);
-}
+} */
 
 #endif

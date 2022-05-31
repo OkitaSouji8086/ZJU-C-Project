@@ -3,11 +3,16 @@
 
 #include "main.h"
 
+extern bool inText;
+
 void DrawAllObj();
 
 void DrawLinkLine(void* Line_Obj);
 
+void DrawAllText();
+
 void DrawArray(double x1, double y1, double x2, double y2, bool ExchangeX);
+
 
 /* 功能:缩放对象
  * 参数1:缩放倍数

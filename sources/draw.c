@@ -3,6 +3,9 @@
 
 #include "draw.h"
 #include "graphics.h"
+#include "string.h"
+
+static string textbuf;
 
 void DrawAllObj()
 {
@@ -25,7 +28,7 @@ void DrawLinkLine(void* Line_Obj)
 	double width1 = ((ptr_StartBox)line->Obj1)->width;
 	double width2 = ((ptr_StartBox)line->Obj2)->width;
 
-    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
+	int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
 	
 	SetPenSize(line->PenSize);/*设置粗细*/
@@ -64,6 +67,7 @@ void DrawArray(double x1, double y1, double x2, double y2, bool ExchangeX)
 	}
 
 }
+
 
 void EnLargeObj(double Times, void* ptr_Obj, void (*fptr_EnLargeObj)(double Times, void* ptr_Obj))
 {
@@ -112,20 +116,18 @@ void PasteObj()
 	case STARTBOX:
 		StartBox_Obj = (ptr_StartBox)GetBlock(sizeof(*StartBox_Obj));
 
-		StartBox_Obj->ID = CURR_ID;
-		CURR_ID ++;
-
 		StartBox_Obj->x = ((ptr_StartBox)CURR_OBJ)->x + ((ptr_StartBox)CURR_OBJ)->width/3;
 		StartBox_Obj->y = ((ptr_StartBox)CURR_OBJ)->y - ((ptr_StartBox)CURR_OBJ)->height/3;
 		StartBox_Obj->width = ((ptr_StartBox)CURR_OBJ)->width;
 		StartBox_Obj->height = ((ptr_StartBox)CURR_OBJ)->height;
 		StartBox_Obj->PenSize = SYSPENSIZE;
 		StartBox_Obj->Color = SYSCOLOR;
-		StartBox_Obj->TextID = -1;
 		StartBox_Obj->IsSelected = FALSE;
 
 		DrawStartBox(StartBox_Obj);
+
 		InsertNode(List[STARTBOX], NULL, StartBox_Obj);
+
 		
 		break;
 	case PROCEDUREBOX:
@@ -140,7 +142,7 @@ void PasteObj()
 		ProcedureBox_Obj->height = ((ptr_ProcedureBox)CURR_OBJ)->height;
 		ProcedureBox_Obj->PenSize = SYSPENSIZE;
 		ProcedureBox_Obj->Color = SYSCOLOR;
-		ProcedureBox_Obj->TextID = -1;
+
 		ProcedureBox_Obj->IsSelected = FALSE;
 
 		DrawStartBox(ProcedureBox_Obj);
@@ -158,7 +160,7 @@ void PasteObj()
 		JudgeBox_Obj->height = ((ptr_JudgeBox)CURR_OBJ)->height;
 		JudgeBox_Obj->PenSize = SYSPENSIZE;
 		JudgeBox_Obj->Color = SYSCOLOR;
-		JudgeBox_Obj->TextID = -1;
+
 		JudgeBox_Obj->IsSelected = FALSE;
 
 		DrawStartBox(JudgeBox_Obj);
