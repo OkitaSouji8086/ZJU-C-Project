@@ -26,52 +26,52 @@
 #include <winuser.h>
 
 //=============================================================================================================================================//
-/* Á´±í¶¨Òå */
+/* é“¾è¡¨å®šä¹‰ */
 //=============================================================================================================================================//
 
 
-/* Ã¿¸öÔªËØ¶¼ÊÇÒ»¸öÖ¸Ïò Ö±Ïß/¿òÁ´±í µÄÖ¸Õë */
+/* æ¯ä¸ªå…ƒç´ éƒ½æ˜¯ä¸€ä¸ªæŒ‡å‘ ç›´çº¿/æ¡†é“¾è¡¨ çš„æŒ‡é’ˆ */
 linkedlistADT List[4] = {NULL, NULL, NULL, NULL};
 
 
 
 //=============================================================================================================================================//
-/* È«¾Ö±äÁ¿¶¨Òå */
+/* å…¨å±€å˜é‡å®šä¹‰ */
 //=============================================================================================================================================//
 
-/* Ã¿ÖÖ¶ÔÏóµÄ¸öÊı */
+/* æ¯ç§å¯¹è±¡çš„ä¸ªæ•° */
 int COUNT[3] = {0, 0, 0};
 
 
-/* µ±Ç°Ñ¡ÖĞµÄÔªËØ,Ã»ÓĞÑ¡ÖĞÊ±ÎªNULL */
+/* å½“å‰é€‰ä¸­çš„å…ƒç´ ,æ²¡æœ‰é€‰ä¸­æ—¶ä¸ºNULL */
 void* CURR_OBJ = NULL;
-/* µ±Ç°Ñ¡ÖĞµÄÔªËØÖÖÀà,Ã»ÓĞÑ¡ÖĞÊ±Îª-1 */
+/* å½“å‰é€‰ä¸­çš„å…ƒç´ ç§ç±»,æ²¡æœ‰é€‰ä¸­æ—¶ä¸º-1 */
 int CURR_OBJ_KIND = -1;
 
 
-/* ¼ôÇĞ°å,Ö¸ÏòÉÏÒ»¸ö±»¸´ÖÆµÄ¶ÔÏó,Ã»ÓĞÔòÎªNULL */
+/* å‰ªåˆ‡æ¿,æŒ‡å‘ä¸Šä¸€ä¸ªè¢«å¤åˆ¶çš„å¯¹è±¡,æ²¡æœ‰åˆ™ä¸ºNULL */
 void* TEMP = NULL;
-/* ¼ôÇĞ°åÖĞµÄ¶ÔÏóÖÖÀà,Ã»ÓĞÔòÎª-1 */
+/* å‰ªåˆ‡æ¿ä¸­çš„å¯¹è±¡ç§ç±»,æ²¡æœ‰åˆ™ä¸º-1 */
 int TEMP_KIND = -1;
 
-/* IDÊı×é,Ã¿¸ö¶ÔÏóÎ¨Ò» */
+/* IDæ•°ç»„,æ¯ä¸ªå¯¹è±¡å”¯ä¸€ */
 int ID[1000000];
-/* TEXTÊı×é */
+/* TEXTæ•°ç»„ */
 string TextID[1000000];
 
-/* µ±Ç°±àºÅµ½µÚ¼¸ */
+/* å½“å‰ç¼–å·åˆ°ç¬¬å‡  */
 int CURR_ID = 0;
 
-/* µ±Ç°ÖĞĞÄµã±»Õ¼¾İµÄ¸öÊı */
+/* å½“å‰ä¸­å¿ƒç‚¹è¢«å æ®çš„ä¸ªæ•° */
 int CURR_OCCUPY = 0;
 
-/* Êó±ê×´Ì¬»ú */
+/* é¼ æ ‡çŠ¶æ€æœº */
 int MOUSE_FSM;
 
-/* ĞŞ¸ÄCURR_OCCUPYÊ¹ÄÜĞÅºÅ */
+/* ä¿®æ”¹CURR_OCCUPYä½¿èƒ½ä¿¡å· */
 static bool CURR_OCCUPY_EN = FALSE;
 
-/* Í¼ĞÎÔªËØÑ¡ÖĞ×´Ì¬ */
+/* å›¾å½¢å…ƒç´ é€‰ä¸­çŠ¶æ€ */
 bool isSelected = FALSE;
 
 static bool isInText = FALSE;
@@ -82,23 +82,23 @@ char _EMPTY_CHAR_[101];
 
 
 //=============================================================================================================================================//
-/* Ä¬ÈÏÖµ¶¨Òå */
+/* é»˜è®¤å€¼å®šä¹‰ */
 //=============================================================================================================================================//
 
-/* Ä¬ÈÏ»æÍ¼ÊôĞÔ */
+/* é»˜è®¤ç»˜å›¾å±æ€§ */
 string SYSCOLOR = "Red";
 int SYSPENSIZE = 2;
 double WindowX = 1280;
 double WindowY = 720;
 
-/* Ä¬ÈÏ¶ÔÏó³¤¿í */
+/* é»˜è®¤å¯¹è±¡é•¿å®½ */
 double OBJWIDTH = 1.0;
 double OBJHEIGHT = 0.4;
 
 
 
 //=============================================================================================================================================//
-/* º¯ÊıÊµÏÖ */
+/* å‡½æ•°å®ç° */
 //=============================================================================================================================================//
 
 void Main()
@@ -112,7 +112,7 @@ void Main()
 	InitGraphics();
 	InitConsole();
 	
-	Randomize(); /* Ëæ»úº¯Êı³õÊ¼»¯ */
+	Randomize(); /* éšæœºå‡½æ•°åˆå§‹åŒ– */
 	registerKeyboardEvent(KeyboardEventProcess);
 	registerCharEvent(CharEventProcess);
 	registerMouseEvent(MouseEventProcess);
@@ -169,15 +169,34 @@ void DrawMenu()
 		"Help",
 		"About",
 		"Help"};
+	
+	static char * menuListisSelected[] = {
+		"isSelected"};
 
-	int selection; /* ²Ëµ¥Ñ¡ÖĞ */
+	static char * menuListisInText[] = {
+		"isInText"};
+
+	static char * menuListStartBox[] = {
+		"StartBox"};
+
+	static char * menuListProcedureBox[] = {
+		"ProcedureBox"};
+
+	static char * menuListJudgeBox[] = {
+		"JudgeBox"};
+
+
+
+	int selection; /* èœå•é€‰ä¸­ */
 	static char * selectedLabel = NULL;
 
-	double MenuH = GetFontHeight() * 1.5; /* ²Ëµ¥¸ß¶È */
-	double MenuW = TextStringWidth(menuListFile[0])*2; /* ²Ëµ¥±êÌâ¿í¶È */
-	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* ²Ëµ¥ÌõÄ¿¿í¶È */
+	double MenuH = GetFontHeight() * 1.5; /* èœå•é«˜åº¦ */
+	double MenuW = TextStringWidth(menuListFile[0])*2; /* èœå•æ ‡é¢˜å®½åº¦ */
+	double wlist = TextStringWidth(menuListEdit[1])*1.2; /* èœå•æ¡ç›®å®½åº¦ */
+	double ControlInfoW = TextStringWidth(menuListFile[0])*4;
 
 	drawMenuBar(0, WindowH-MenuH, WindowW, MenuH);
+	drawMenuBar(0, 0, WindowH, MenuH*2);
 
 	selection = menuList(GenUIID(0), 0, WindowH-MenuH, MenuW, wlist, MenuH, menuListFile, sizeof(menuListFile)/sizeof(menuListFile[0]));
 	if(selection > 0) selectedLabel = menuListFile[selection];
@@ -256,8 +275,57 @@ void DrawMenu()
 	default:
 		break;
 	}
-}
 
+	selection = menuList(GenUIID(0), 0, MenuH, ControlInfoW, wlist, MenuH, menuListisSelected, sizeof(menuListisSelected)/sizeof(menuListisSelected[0]));
+	if(selection > 0) selectedLabel = menuListFile[selection];
+	switch (selection)
+	{
+	case 1:
+		if(isSelected==TRUE)printf("Yes\n");
+		else printf("False\n");
+		break;
+	}
+
+	selection = menuList(GenUIID(0), ControlInfoW, MenuH, ControlInfoW, wlist, MenuH, menuListisInText, sizeof(menuListisInText)/sizeof(menuListisInText[0]));
+	if(selection > 0) selectedLabel = menuListFile[selection];
+	switch (selection)
+	{
+	case 1:
+		if(isInText==TRUE)printf("Yes\n");
+		else printf("False\n");
+		break;
+	}
+
+	//selection = menuList(GenUIID(0), ControlInfoW*2, MenuH, ControlInfoW, wlist, MenuH, menuListStartBox, sizeof(menuListStartBox)/sizeof(menuListStartBox[0]));
+	//if(selection > 0) selectedLabel = menuListFile[selection];
+	//switch (selection)
+	//{
+	//case 1:
+	//	printf("%d",COUNT[0]);
+	//	break;
+	//}
+
+	//selection = menuList(GenUIID(0), ControlInfoW*3, MenuH, ControlInfoW, wlist, MenuH, menuList, sizeof(menuListProcedureBox)/sizeof(menuListProcedureBox[0]));
+	//if(selection > 0) selectedLabel = menuListFile[selection];
+	//switch (selection)
+	//{
+	//case 1:
+	//	printf("%d",COUNT[1]);
+	//	break;
+	//}
+		
+	//selection = menuList(GenUIID(0), ControlInfoW*4, MenuH, ControlInfoW, wlist, MenuH, menuList, sizeof(menuListJudgeBox)/sizeof(menuListJudgeBox[0]));
+	//if(selection > 0) selectedLabel = menuListFile[selection];
+	//switch (selection)
+	//{
+	//case 1:
+	//	printf("%d",COUNT[2]);
+	//	break;
+	//}
+
+
+
+}
 void KeyboardEventProcess(int key, int event)
 {
 	uiGetKeyboard(key, event);
@@ -266,28 +334,28 @@ void KeyboardEventProcess(int key, int event)
 	switch (event) {
 		case KEY_DOWN:
 			switch (key) {
-				case VK_F1:/*F1: »æÖÆÆğÊ¼ÖÕÖ¹¿ò*/
+				case VK_F1:/*F1: ç»˜åˆ¶èµ·å§‹ç»ˆæ­¢æ¡†*/
 					CaseF1Process();
 					break;
 
-				case VK_F2:/*F2: »æÖÆÅĞ¶Ï¿ò*/
+				case VK_F2:/*F2: ç»˜åˆ¶åˆ¤æ–­æ¡†*/
 					CaseF2Process();
 					break;
 
-				case VK_F3:/*F3: »æÖÆÖ´ĞĞ¿ò*/
+				case VK_F3:/*F3: ç»˜åˆ¶æ‰§è¡Œæ¡†*/
 					CaseF3Process();
 					break;
-				case VK_F5: /* ±à¼­µ±Ç°Ñ¡ÖĞµÄ¶ÔÏóµÄÎÄ±¾¿ò */
+				case VK_F5: /* ç¼–è¾‘å½“å‰é€‰ä¸­çš„å¯¹è±¡çš„æ–‡æœ¬æ¡† */
 					CaseF5Process();
 					break;
-				case VK_F10:/*F10: ÍË³ö³ÌĞò*/
+				case VK_F10:/*F10: é€€å‡ºç¨‹åº*/
 					exit(1);
 					break;
 		
-				case VK_BACK:/*BACKSP: ÍË¸ñ*/
+				case VK_BACK:/*BACKSP: é€€æ ¼*/
 					break;
 
-				case VK_ESCAPE:/*ESCAPE: ÍË³ö¶ÔÏóÑ¡ÖĞ×´Ì¬*/
+				case VK_ESCAPE:/*ESCAPE: é€€å‡ºå¯¹è±¡é€‰ä¸­çŠ¶æ€*/
 					if(!isSelected) break;
 					((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
 					((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
@@ -312,7 +380,7 @@ void KeyboardEventProcess(int key, int event)
 					isSelected = FALSE;
 					break;
 
-				case 'O':/*Ctrl+O£º´Ósave.data¶ÁÈ¡*/
+				case 'O':/*Ctrl+Oï¼šä»save.dataè¯»å–*/
 					if(flag==1){
 						LoadAllObj();
 					}
@@ -339,7 +407,7 @@ void CharEventProcess(char c)
 	if (!isInText) return;
 	switch (c) {
 		case 27: /*ESC*/
-		case '\r':  /* ×¢Òâ£º»Ø³µÔÚÕâÀï·µ»ØµÄ×Ö·ûÊÇ'\r'£¬²»ÊÇ'\n'*/
+		case '\r':  /* æ³¨æ„ï¼šå›è½¦åœ¨è¿™é‡Œè¿”å›çš„å­—ç¬¦æ˜¯'\r'ï¼Œä¸æ˜¯'\n'*/
 			isSelected = FALSE;
 			isInText = FALSE;
 			((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
@@ -366,10 +434,10 @@ void MouseEventProcess(int x, int y, int button, int event)
 	uiGetMouse(x, y, button, event);
 	display();
 
-	static bool isMove = FALSE; /*ÒÆ¶¯±êÖ¾*/
-	static bool isChangeSize = FALSE; /*Ëõ·Å±êÖ¾*/ 
- 	static double omx = 0.0, omy = 0.0;/*Ç°Ò»Êó±ê×ø±ê*/
-	double mx, my;/*µ±Ç°Êó±ê×ø±ê*/
+	static bool isMove = FALSE; /*ç§»åŠ¨æ ‡å¿—*/
+	static bool isChangeSize = FALSE; /*ç¼©æ”¾æ ‡å¿—*/ 
+ 	static double omx = 0.0, omy = 0.0;/*å‰ä¸€é¼ æ ‡åæ ‡*/
+	double mx, my;/*å½“å‰é¼ æ ‡åæ ‡*/
 	double x1, y1, x2, y2, dx, dy;
 	ptr_Line Line_Obj = NULL;
 
@@ -378,18 +446,18 @@ void MouseEventProcess(int x, int y, int button, int event)
 
 	switch (event) {
 		case BUTTON_DOWN:
-			if (isSelected) { /*ÒÑÊÇÑ¡ÖĞ×´Ì¬*/
+			if (isSelected) { /*å·²æ˜¯é€‰ä¸­çŠ¶æ€*/
 	   			omx = mx;
 			  	omy = my;
-			   	if (button == LEFT_BUTTON) { /*×ó¼ü°´ÏÂ£¬½øÈëÒÆ¶¯×´Ì¬*/
+			   	if (button == LEFT_BUTTON) { /*å·¦é”®æŒ‰ä¸‹ï¼Œè¿›å…¥ç§»åŠ¨çŠ¶æ€*/
 		 			isMove = TRUE;
-		 		} else if (button == RIGHT_BUTTON) {/*ÓÒ¼ü¼ü°´ÏÂ£¬½øÈëËõ·Å×´Ì¬*/
+		 		} else if (button == RIGHT_BUTTON) {/*å³é”®é”®æŒ‰ä¸‹ï¼Œè¿›å…¥ç¼©æ”¾çŠ¶æ€*/
 		 			isChangeSize = TRUE;
 		 		}
 				break;
 		 	}
 		
-		 	PickNearestObj(mx, my);/*Ñ¡Ôñ¶ÔÏó*/ 
+		 	PickNearestObj(mx, my);/*é€‰æ‹©å¯¹è±¡*/ 
 			((ptr_StartBox)CURR_OBJ)->Color = "GREEN";
 			((ptr_StartBox)CURR_OBJ)->IsSelected = TRUE;
 
@@ -417,21 +485,21 @@ void MouseEventProcess(int x, int y, int button, int event)
 			}
 			break;
 		case BUTTON_UP:
-			isMove = FALSE; /*ÍË³öÒÆ¶¯×´Ì¬*/
-		 	isChangeSize = FALSE;/*ÍË³öËõ·Å×´Ì¬*/ 
+			isMove = FALSE; /*é€€å‡ºç§»åŠ¨çŠ¶æ€*/
+		 	isChangeSize = FALSE;/*é€€å‡ºç¼©æ”¾çŠ¶æ€*/ 
 			break;
 		case MOUSEMOVE:
-			if (isSelected && (isMove || isChangeSize)) { /*Ñ¡ÖĞ×´Ì¬ÏÂ£¬ÒÆ¶¯»òËõ·Å*/ 
+			if (isSelected && (isMove || isChangeSize)) { /*é€‰ä¸­çŠ¶æ€ä¸‹ï¼Œç§»åŠ¨æˆ–ç¼©æ”¾*/ 
 			  	SetEraseMode(TRUE);
 			   	DrawAllObj();
 			   	dx = mx - omx;
 			   	dy = my - omy;
-				if (isMove) { /*ÒÆ¶¯*/
+				if (isMove) { /*ç§»åŠ¨*/
 					((ptr_StartBox)CURR_OBJ)->x += dx;
 					((ptr_StartBox)CURR_OBJ)->y += dy;
 				}
 			  	
-				else if (isChangeSize) {/*Ëõ·Å*/
+				else if (isChangeSize) {/*ç¼©æ”¾*/
 					((ptr_StartBox)CURR_OBJ)->width += dx;
 					((ptr_StartBox)CURR_OBJ)->height += dy;
 				}
@@ -450,7 +518,7 @@ void MouseEventProcess(int x, int y, int button, int event)
 
 void CaseF1Process()
 {
-	/* ÆÁÄ»ÖĞĞÄµã×ø±ê */
+	/* å±å¹•ä¸­å¿ƒç‚¹åæ ‡ */
 	double MidX = GetWindowWidth()/2;
 	double MidY = GetWindowHeight()/2; 
 
@@ -479,7 +547,7 @@ void CaseF1Process()
 
 void CaseF2Process()
 {
-	/* ÆÁÄ»ÖĞĞÄµã×ø±ê */
+	/* å±å¹•ä¸­å¿ƒç‚¹åæ ‡ */
 	double MidX = GetWindowWidth()/2;
 	double MidY = GetWindowHeight()/2; 
 
@@ -508,7 +576,7 @@ void CaseF2Process()
 
 void CaseF3Process()
 {
-	/* ÆÁÄ»ÖĞĞÄµã×ø±ê */
+	/* å±å¹•ä¸­å¿ƒç‚¹åæ ‡ */
 	double MidX = GetWindowWidth()/2;
 	double MidY = GetWindowHeight()/2; 
 
