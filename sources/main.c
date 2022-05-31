@@ -349,7 +349,7 @@ void CharEventProcess(char c)
 			break;
  		case '\b':/*BACKSPACE*/
  			if (len == 0) break;
-			curr_textbuf[len] = '\0';
+			curr_textbuf[len - 1] = '\0';
 			len --;
  			break;
 		default:
