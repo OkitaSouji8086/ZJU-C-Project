@@ -39,10 +39,6 @@ linkedlistADT List[4] = {NULL, NULL, NULL, NULL};
 /* 全局变量定义 */
 //=============================================================================================================================================//
 
-/* 每种对象的个数 */
-int COUNT[3] = {0, 0, 0};
-
-
 /* 当前选中的元素,没有选中时为NULL */
 void* CURR_OBJ = NULL;
 /* 当前选中的元素种类,没有选中时为-1 */
@@ -256,6 +252,8 @@ void DrawMenu()
 	default:
 		break;
 	}
+
+	drawBox(0, 0, MenuW, MenuH, 0, SYSCOLOR, 'L', SYSCOLOR);
 }
 
 void KeyboardEventProcess(int key, int event)
@@ -540,6 +538,7 @@ void CaseF5Process()
 	if(!isSelected) return;
 	
 	isInText = TRUE;
+	((ptr_StartBox)CURR_OBJ)->Color = "BLACK";
 }
 
 #endif
