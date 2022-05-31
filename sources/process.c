@@ -10,7 +10,12 @@ void DeleteObj(void* ptr_Obj)
 	case STARTBOX:
 		DeleteNode(List[STARTBOX], &(((ptr_StartBox)ptr_Obj)->ID), equalfunptr_SBox);
 		break;
-	
+	case PROCEDUREBOX:
+		DeleteNode(List[PROCEDUREBOX], &(((ptr_ProcedureBox)ptr_Obj)->ID), equalfunptr_PBox);
+		break;
+	case JUDGEBOX:
+		DeleteNode(List[JUDGEBOX], &(((ptr_JudgeBox)ptr_Obj)->ID), equalfunptr_JBox);
+		break;
 	default:
 		break;
 	}

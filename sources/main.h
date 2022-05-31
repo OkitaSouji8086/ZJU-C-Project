@@ -90,6 +90,8 @@ typedef struct Line
 {
 	int ID_1; /* 起始对象编号 */
 	int ID_2; /* 终止对象编号 */
+	void* Obj1;
+	void* Obj2;
 	int PenSize; /* 粗细 */
 	string Color; /* 颜色 */
 	bool IsSelected; /* 是否选中 */

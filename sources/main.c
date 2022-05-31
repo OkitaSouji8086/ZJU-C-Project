@@ -115,15 +115,15 @@ void Main()
 	
 
 	display();
-
-	#if _DEBUG_
-		test();
-	#endif
 }
 
 void display()
 {
 	DisplayClear();
+	
+	#if _DEBUG_
+		test();
+	#endif
 
 	DrawMenu();
 
@@ -135,7 +135,7 @@ void DrawMenu()
 	double WindowW = WindowX/GetXResolution(), WindowH = WindowY/GetYResolution();
 	double ButtonW = 1.0, ButtonH = 0.4;
 	
-	if(button(GenUIID(0), WindowW/2, WindowH/2, ButtonW, ButtonH, "OK")){
+	if(button(GenUIID(0), WindowW - ButtonW*1.5, ButtonH/2, ButtonW, ButtonH, "OK")){
 		printf("OK button clicked\n");
 	}
 
@@ -291,6 +291,7 @@ void KeyboardEventProcess(int key, int event)
 				case VK_DELETE:
 					if(CURR_OBJ != NULL){
 						DeleteObj(CURR_OBJ);
+						CURR_OCCUPY --;
 						CURR_OBJ = NULL;
 						CURR_OBJ_KIND = -1;
 					}
@@ -347,6 +348,7 @@ void MouseEventProcess(int x, int y, int button, int event)
  	static double omx = 0.0, omy = 0.0;/*前一鼠标坐标*/
 	double mx, my;/*当前鼠标坐标*/
 	double x1, y1, x2, y2, dx, dy;
+	ptr_Line Line_Obj = NULL;
 	 
  	mx = ScaleXInches(x);/*pixels --> inches*/
 	my = ScaleYInches(y);/*pixels --> inches*/
@@ -373,6 +375,23 @@ void MouseEventProcess(int x, int y, int button, int event)
 		 	DrawAllObj();
 			break;
 		case BUTTON_DOUBLECLICK:
+			if(isSelected){
+				Line_Obj = (ptr_Line)GetBlock(sizeof(*Line_Obj));
+				Line_Obj->Obj1 = CURR_OBJ;
+				Line_Obj->ID_1 = ((ptr_StartBox)CURR_OBJ)->ID;
+				((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
+				((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
+				PickNearestObj(mx, my);
+				((ptr_StartBox)CURR_OBJ)->IsSelected = TRUE;
+				((ptr_StartBox)CURR_OBJ)->Color = "GREEN";
+				Line_Obj->Obj2 = CURR_OBJ;
+				Line_Obj->ID_2 = ((ptr_StartBox)CURR_OBJ)->ID;
+				Line_Obj->PenSize = SYSPENSIZE;
+				Line_Obj->Color = SYSCOLOR;
+				Line_Obj->IsSelected = FALSE;
+				DrawLinkLine(Line_Obj);
+				InsertNode(List[LINE], NULL, Line_Obj);
+			}
 			break;
 		case BUTTON_UP:
 			isMove = FALSE; /*退出移动状态*/
