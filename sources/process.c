@@ -112,6 +112,7 @@ void PickNearestObj(double mx, double my)
 	double ObjDistance = -1;
 	void *MinObj = NULL;
 	int i;
+	bool Found = FALSE;
 
 	linkedlistADT nodeptr = NULL;
 
@@ -121,14 +122,21 @@ void PickNearestObj(double mx, double my)
 		while (nodeptr != NULL)
 		{
 			ObjDistance = LtsDistance(nodeptr->dataptr, mx, my);
-			if (ObjDistance < MinDistance)
+			if (IsInZone(mx, my, nodeptr->dataptr) && ObjDistance < MinDistance)
 			{
+				Found = TRUE;
 				MinDistance = ObjDistance;
 				CURR_OBJ = nodeptr->dataptr;
 				CURR_OBJ_KIND = i;
 			}
 			nodeptr = nodeptr->next;
 		}
+	}
+
+	if (!Found)
+	{
+		CURR_OBJ = NULL;
+		CURR_OBJ_KIND = -1;
 	}
 }
 
@@ -139,6 +147,19 @@ double LtsDistance(void *ptr_Obj, double mx, double my)
 	y0 = ((ptr_StartBox)ptr_Obj)->y;
 
 	return (fabs(x0 - mx) + fabs(y0 - my));
+}
+
+bool IsInZone(double mx, double my, void *Obj)
+{
+	double ObjX = ((ptr_StartBox)Obj)->x;
+	double ObjY = ((ptr_StartBox)Obj)->y;
+	double ObjW = ((ptr_StartBox)Obj)->width;
+	double ObjH = ((ptr_StartBox)Obj)->height;
+
+	if (mx < ObjX + ObjW && mx > ObjX - ObjW && my < ObjY + ObjH && my > ObjY - ObjH)
+		return TRUE;
+	else
+		return FALSE;
 }
 
 #endif

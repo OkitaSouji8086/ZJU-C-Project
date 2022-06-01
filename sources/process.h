@@ -29,4 +29,5 @@ bool equalfunptr_Text(void *obj1, void *obj2);
 
 void PickNearestObj(double mx, double my);
 double LtsDistance(void *ptr_Obj, double mx, double my);
+bool IsInZone(double mx, double my, void *Obj);
 #endif

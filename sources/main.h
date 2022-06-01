@@ -19,11 +19,10 @@
 #define PROCEDUREBOX 2
 #define JUDGEBOX 3
 #define INPUTANDOUTPUTBOX 4
-#define TEXT 5
 
 #define TEXTLEN 100
-#define CURSOR "_"	   /*光标符号*/
-#define CURSOR_BLINK 1 /*光标闪烁定时器事件标志号*/
+
+#define TIMER 1
 
 //=============================================================================================================================================//
 /* 链表定义 */
@@ -49,17 +48,11 @@ extern void *TEMP;
 /* 剪切板中的对象种类,没有则为-1 */
 extern int TEMP_KIND;
 
-/* ID数组,每个对象唯一 */
-extern int ID[1000000];
-
 /* 当前编号到第几 */
 extern int CURR_ID;
 
 /* 当前中心点被占据的个数 */
 extern int CURR_OCCUPY;
-
-/* 鼠标状态机 */
-extern int MOUSE_FSM;
 
 //=============================================================================================================================================//
 /* 默认值定义 */
@@ -216,6 +209,8 @@ void MouseEventProcess(int x, int y, int button, int event);
  */
 void CharEventProcess(char c);
 
+void TimerEventProcess(int timerID);
+
 /* 功能:新增一条直线，连接两个控件
  * 参数1:对象1 ID
  * 参数2:对象2 ID
@@ -237,7 +232,7 @@ void EnlargeObj(void *ptr_Obj);
 void CopyObj();
 
 /* 功能:粘贴选中的对象
- * 参数:剪切板中的对象指针，即TEMP
+ * 参数:无
  * 返回值:无
  * 说明:在当前鼠标位置生成一个新对象,除位置外其余参数与 TEMP 指向的对象相同
  */

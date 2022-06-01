@@ -49,19 +49,11 @@ void *TEMP = NULL;
 /* 剪切板中的对象种类,没有则为-1 */
 int TEMP_KIND = -1;
 
-/* ID数组,每个对象唯一 */
-int ID[1000000];
-/* TEXT数组 */
-string TextID[1000000];
-
 /* 当前编号到第几 */
 int CURR_ID = 0;
 
 /* 当前中心点被占据的个数 */
 int CURR_OCCUPY = 0;
-
-/* 鼠标状态机 */
-int MOUSE_FSM;
 
 /* 修改CURR_OCCUPY使能信号 */
 static bool CURR_OCCUPY_EN = FALSE;
@@ -71,7 +63,9 @@ static bool isSelected = FALSE;
 
 static bool isInText = FALSE;
 
-char _EMPTY_CHAR_[101];
+static bool IsPaste = FALSE;
+
+char _EMPTY_CHAR_[TEXTLEN + 1];
 
 //=============================================================================================================================================//
 /* 默认值定义 */
@@ -100,12 +94,17 @@ void Main()
 	SetWindowTitle("Program Creater");
 	SetWindowSize(ScaleXInches(WindowX), ScaleXInches(WindowY));
 	InitGraphics();
-	//	InitConsole();
 
-	Randomize(); /* 随机函数初始化 */
+#if _DEBUG_ == 1
+	InitConsole();
+#endif
+
 	registerKeyboardEvent(KeyboardEventProcess);
 	registerCharEvent(CharEventProcess);
 	registerMouseEvent(MouseEventProcess);
+	registerTimerEvent(TimerEventProcess);
+
+	startTimer(TIMER, 16);
 
 	for (i = 0; i < NLIST; i++)
 		List[i] = NewLinkedList();
@@ -160,21 +159,6 @@ void DrawMenu()
 		"Help",
 		"About",
 		"Help"};
-
-	static char *menuListisSelected[] = {
-		"isSelected"};
-
-	static char *menuListisInText[] = {
-		"isInText"};
-
-	static char *menuListStartBox[] = {
-		"StartBox"};
-
-	static char *menuListProcedureBox[] = {
-		"ProcedureBox"};
-
-	static char *menuListJudgeBox[] = {
-		"JudgeBox"};
 
 	int selection; /* 菜单选中 */
 	static char *selectedLabel = NULL;
@@ -246,6 +230,7 @@ void DrawMenu()
 			CURR_OCCUPY--;
 			CURR_OBJ = NULL;
 			CURR_OBJ_KIND = -1;
+			IsPaste = FALSE;
 		}
 		isSelected = FALSE;
 		break;
@@ -284,53 +269,6 @@ void DrawMenu()
 		sprintf(InfoBuffer, "Not Selected.");
 
 	drawLabel(MenuW, GetFontHeight() / 3, InfoBuffer);
-
-	// selection = menuList(GenUIID(0), 0, MenuH, ControlInfoW, wlist, MenuH, menuListisSelected, sizeof(menuListisSelected)/sizeof(menuListisSelected[0]));
-	// if(selection > 0) selectedLabel = menuListFile[selection];
-	// switch (selection)
-	// {
-	// case 1:
-	// 	if(isSelected==TRUE)printf("Yes\n");
-	// 	else printf("No\n");
-	// 	break;
-	// }
-
-	// selection = menuList(GenUIID(0), ControlInfoW, MenuH, ControlInfoW, wlist, MenuH, menuListisInText, sizeof(menuListisInText)/sizeof(menuListisInText[0]));
-	// if(selection > 0) selectedLabel = menuListFile[selection];
-	// switch (selection)
-	// {
-	// case 1:
-	// 	if(isInText==TRUE)printf("Yes\n");
-	// 	else printf("No\n");
-	// 	break;
-	// }
-
-	/*selection = menuList(GenUIID(0), ControlInfoW*2, MenuH, ControlInfoW, wlist, MenuH, menuListStartBox, sizeof(menuListStartBox)/sizeof(menuListStartBox[0]));
-	if(selection > 0) selectedLabel = menuListFile[selection];
-	switch (selection)
-	{
-	case 1:
-		printf("%d",COUNT[0]);
-		break;
-	}
-
-	selection = menuList(GenUIID(0), ControlInfoW*3, MenuH, ControlInfoW, wlist, MenuH, menuList, sizeof(menuListProcedureBox)/sizeof(menuListProcedureBox[0]));
-	if(selection > 0) selectedLabel = menuListFile[selection];
-	switch (selection)
-	{
-	case 1:
-		printf("%d",COUNT[1]);
-		break;
-	}
-
-	selection = menuList(GenUIID(0), ControlInfoW*4, MenuH, ControlInfoW, wlist, MenuH, menuList, sizeof(menuListJudgeBox)/sizeof(menuListJudgeBox[0]));
-	if(selection > 0) selectedLabel = menuListFile[selection];
-	switch (selection)
-	{
-	case 1:
-		printf("%d",COUNT[2]);
-		break;
-	}*/
 }
 
 void KeyboardEventProcess(int key, int event)
@@ -376,6 +314,7 @@ void KeyboardEventProcess(int key, int event)
 			((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
 			((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
 			isSelected = FALSE;
+			IsPaste = FALSE;
 			CURR_OBJ = NULL;
 			CURR_OBJ_KIND = -1;
 
@@ -412,7 +351,6 @@ void KeyboardEventProcess(int key, int event)
 void CharEventProcess(char c)
 {
 	uiGetChar(c);
-	display();
 
 	if (!isSelected)
 		return;
@@ -428,6 +366,7 @@ void CharEventProcess(char c)
 	case '\r': /* 注意：回车在这里返回的字符是'\r'，不是'\n'*/
 		isSelected = FALSE;
 		isInText = FALSE;
+		IsPaste = FALSE;
 		((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
 		((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
 		CURR_OBJ = NULL;
@@ -443,24 +382,18 @@ void CharEventProcess(char c)
 		curr_textbuf[len] = c;
 		curr_textbuf[len + 1] = '\0';
 		len++;
-		// if(TextStringWidth(curr_textbuf) > ((ptr_StartBox)CURR_OBJ)->width){
-		// 	((ptr_StartBox)CURR_OBJ)->width *= 1.2;
-		// 	((ptr_StartBox)CURR_OBJ)->height *= 1.2;
-		// }else if( TextStringWidth(curr_textbuf) < ((ptr_StartBox)CURR_OBJ)->width && ((ptr_StartBox)CURR_OBJ)->width > OBJWIDTH){
-		// 	((ptr_StartBox)CURR_OBJ)->width /= 1.2;
-		// 	((ptr_StartBox)CURR_OBJ)->height /= 1.2;
-		// }
 		break;
 	}
+
+	display();
 }
 
 void MouseEventProcess(int x, int y, int button, int event)
 {
 	uiGetMouse(x, y, button, event);
-	display();
 
-	static bool isMove = FALSE;			/*移动标志*/
 	static bool isChangeSize = FALSE;	/*缩放标志*/
+	static bool isMove = FALSE;			/*移动标志*/
 	static double omx = 0.0, omy = 0.0; /*前一鼠标坐标*/
 	double mx, my;						/*当前鼠标坐标*/
 	double x1, y1, x2, y2, dx, dy;
@@ -490,6 +423,8 @@ void MouseEventProcess(int x, int y, int button, int event)
 		}
 
 		PickNearestObj(mx, my); /*选择对象*/
+		if (CURR_OBJ_KIND == -1)
+			break;
 		((ptr_StartBox)CURR_OBJ)->Color = "GREEN";
 		((ptr_StartBox)CURR_OBJ)->IsSelected = TRUE;
 
@@ -504,8 +439,10 @@ void MouseEventProcess(int x, int y, int button, int event)
 			PreObjID = ((ptr_StartBox)CURR_OBJ)->ID;
 
 			PickNearestObj(mx, my);
+			if (CURR_OBJ_KIND == -1)
+				break;
 
-			if (((ptr_StartBox)CURR_OBJ)->ID != PreObjID)
+			if (((ptr_StartBox)CURR_OBJ)->ID != PreObjID || IsPaste)
 			{
 				((ptr_StartBox)PreObj)->IsSelected = FALSE;
 				((ptr_StartBox)PreObj)->Color = SYSCOLOR;
@@ -521,6 +458,14 @@ void MouseEventProcess(int x, int y, int button, int event)
 				Line_Obj->IsSelected = FALSE;
 				DrawLinkLine(Line_Obj);
 				InsertNode(List[LINE], NULL, Line_Obj);
+				if (PreObj == (ptr_StartBox)TEMP)
+				{
+					IsPaste = FALSE;
+					((ptr_StartBox)TEMP)->IsSelected = FALSE;
+					((ptr_StartBox)TEMP)->Color = SYSCOLOR;
+					TEMP = NULL;
+					TEMP_KIND = -1;
+				}
 			}
 			else
 			{
@@ -562,6 +507,13 @@ void MouseEventProcess(int x, int y, int button, int event)
 		}
 		break;
 	}
+	display();
+}
+
+void TimerEventProcess(int timerID)
+{
+	display();
+	printf("TimerCallback.\n");
 }
 
 void CaseF1Process()
@@ -570,27 +522,26 @@ void CaseF1Process()
 	double MidX = GetWindowWidth() / 2;
 	double MidY = GetWindowHeight() / 2;
 
-	ptr_StartBox StartBox_Obj;
+	ptr_StartBox PastedObj;
 	string textbuf = CopyString(_EMPTY_CHAR_);
 
-	StartBox_Obj = (ptr_StartBox)GetBlock(sizeof(*StartBox_Obj));
+	PastedObj = (ptr_StartBox)GetBlock(sizeof(*PastedObj));
 
-	StartBox_Obj->ID = CURR_ID;
+	PastedObj->ID = CURR_ID;
 	CURR_ID++;
 
-	StartBox_Obj->x = MidX + CURR_OCCUPY * OBJWIDTH / 2;
-	StartBox_Obj->y = MidY - CURR_OCCUPY * OBJHEIGHT / 2;
-	StartBox_Obj->width = OBJWIDTH;
-	StartBox_Obj->height = OBJHEIGHT;
-	StartBox_Obj->PenSize = SYSPENSIZE;
-	StartBox_Obj->Color = SYSCOLOR;
-	StartBox_Obj->Text = textbuf;
-	StartBox_Obj->IsSelected = FALSE;
+	PastedObj->x = MidX + CURR_OCCUPY * OBJWIDTH / 2;
+	PastedObj->y = MidY - CURR_OCCUPY * OBJHEIGHT / 2;
+	PastedObj->width = OBJWIDTH;
+	PastedObj->height = OBJHEIGHT;
+	PastedObj->PenSize = SYSPENSIZE;
+	PastedObj->Color = SYSCOLOR;
+	PastedObj->Text = textbuf;
+	PastedObj->IsSelected = FALSE;
 
 	CURR_OCCUPY++;
 
-	DrawStartBox(StartBox_Obj);
-	InsertNode(List[STARTBOX], NULL, StartBox_Obj);
+	InsertNode(List[STARTBOX], NULL, PastedObj);
 }
 
 void CaseF2Process()
@@ -618,7 +569,6 @@ void CaseF2Process()
 
 	CURR_OCCUPY++;
 
-	DrawProcedureBox(ProcedureBox_Obj);
 	InsertNode(List[PROCEDUREBOX], NULL, ProcedureBox_Obj);
 }
 
@@ -647,7 +597,6 @@ void CaseF3Process()
 
 	CURR_OCCUPY++;
 
-	DrawJudgeBox(JudgeBox_Obj);
 	InsertNode(List[JUDGEBOX], NULL, JudgeBox_Obj);
 }
 
@@ -676,7 +625,6 @@ void CaseF4Process()
 
 	CURR_OCCUPY++;
 
-	DrawInputAndOutputBox(InputAndOutputBox_Obj);
 	InsertNode(List[INPUTANDOUTPUTBOX], NULL, InputAndOutputBox_Obj);
 }
 
@@ -687,6 +635,77 @@ void CaseF5Process()
 
 	isInText = TRUE;
 	((ptr_StartBox)CURR_OBJ)->Color = "BLACK";
+}
+
+void CopyObj()
+{
+	if (CURR_OBJ == NULL)
+		return;
+
+	TEMP = GetBlock(sizeof(*(ptr_StartBox)CURR_OBJ));
+
+	((ptr_StartBox)TEMP)->x = ((ptr_StartBox)CURR_OBJ)->x + ((ptr_StartBox)CURR_OBJ)->width / 3;
+	((ptr_StartBox)TEMP)->y = ((ptr_StartBox)CURR_OBJ)->y - ((ptr_StartBox)CURR_OBJ)->height / 3;
+	((ptr_StartBox)TEMP)->width = ((ptr_StartBox)CURR_OBJ)->width;
+	((ptr_StartBox)TEMP)->height = ((ptr_StartBox)CURR_OBJ)->height;
+	((ptr_StartBox)TEMP)->PenSize = ((ptr_StartBox)CURR_OBJ)->PenSize;
+	((ptr_StartBox)TEMP)->Color = ((ptr_StartBox)CURR_OBJ)->Color;
+	((ptr_StartBox)TEMP)->Text = CopyString(((ptr_StartBox)CURR_OBJ)->Text);
+
+	TEMP_KIND = CURR_OBJ_KIND;
+}
+
+void PasteObj()
+{
+	if (TEMP == NULL)
+		return;
+
+	void *PastedObj = GetBlock(sizeof(*(ptr_StartBox)TEMP));
+
+	if (CURR_OBJ_KIND != -1)
+	{
+		((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
+		((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
+	}
+
+	((ptr_StartBox)PastedObj)->ID = ++CURR_ID;
+	((ptr_StartBox)PastedObj)->x = ((ptr_StartBox)TEMP)->x;
+	((ptr_StartBox)PastedObj)->y = ((ptr_StartBox)TEMP)->y;
+	((ptr_StartBox)PastedObj)->width = ((ptr_StartBox)TEMP)->width;
+	((ptr_StartBox)PastedObj)->height = ((ptr_StartBox)TEMP)->height;
+	((ptr_StartBox)PastedObj)->PenSize = ((ptr_StartBox)TEMP)->PenSize;
+	((ptr_StartBox)PastedObj)->Color = "GREEN";
+	((ptr_StartBox)PastedObj)->Text = CopyString(((ptr_StartBox)TEMP)->Text);
+	((ptr_StartBox)PastedObj)->IsSelected = TRUE;
+
+	((ptr_StartBox)TEMP)->x = ((ptr_StartBox)TEMP)->x + ((ptr_StartBox)TEMP)->width / 3;
+	((ptr_StartBox)TEMP)->y = ((ptr_StartBox)TEMP)->y - ((ptr_StartBox)TEMP)->height / 3;
+	CURR_OBJ = PastedObj;
+
+	switch (TEMP_KIND)
+	{
+	case STARTBOX:
+		InsertNode(List[STARTBOX], NULL, PastedObj);
+		CURR_OBJ_KIND = STARTBOX;
+		break;
+	case PROCEDUREBOX:
+		InsertNode(List[PROCEDUREBOX], NULL, PastedObj);
+		CURR_OBJ_KIND = PROCEDUREBOX;
+		break;
+	case JUDGEBOX:
+		InsertNode(List[JUDGEBOX], NULL, PastedObj);
+		CURR_OBJ_KIND = JUDGEBOX;
+		break;
+	case INPUTANDOUTPUTBOX:
+		InsertNode(List[INPUTANDOUTPUTBOX], NULL, PastedObj);
+		CURR_OBJ_KIND = INPUTANDOUTPUTBOX;
+		break;
+	default:
+		break;
+	}
+
+	isSelected = TRUE;
+	IsPaste = TRUE;
 }
 
 #endif

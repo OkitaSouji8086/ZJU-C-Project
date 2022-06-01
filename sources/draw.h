@@ -3,8 +3,6 @@
 
 #include "main.h"
 
-extern bool inText;
-
 void DrawAllObj();
 
 void DrawLinkLine(void *Line_Obj);
@@ -32,19 +30,5 @@ void EnLargeObj(double Times, void *ptr_Obj, void (*fptr_EnLargeObj)(double Time
 void EnLargeStartBox(double Times, void *ptr_Obj);
 void EnLargeProcedureBox(double Times, void *ptr_Obj);
 void EnLargeJudgeBox(double Times, void *ptr_Obj);
-
-/* 功能:复制选中的对象
- * 参数:无
- * 返回值:无
- * 说明:若有对象被选中且按下 Ctrl+C, 则令 TEMP 指向该对象
- */
-void CopyObj();
-
-/* 功能:粘贴选中的对象
- * 参数:无
- * 返回值:无
- * 说明:在当前鼠标位置生成一个新对象,除位置外其余参数与 TEMP 指向的对象相同
- */
-void PasteObj();
 
 #endif
