@@ -78,13 +78,13 @@ void DrawHArray(double x1, double y1, double x2, double y2, bool ExchangeX)
 	DrawLine(zero, y2 - y1);
 	DrawLine(x2 - MidX, zero);
 	if(!ExchangeX){
-		DrawLine(-0.2, 0.1);
-		DrawLine(0.2, -0.1);
-		DrawLine(-0.2, -0.1);
+		DrawLine(-0.15, 0.05);
+		DrawLine(0.15, -0.05);
+		DrawLine(-0.15, -0.05);
 	}else{
-		DrawLine(0.2, 0.1);
-		DrawLine(-0.2, -0.1);
-		DrawLine(0.2, -0.1);
+		DrawLine(0.15, 0.05);
+		DrawLine(-0.15, -0.05);
+		DrawLine(0.15, -0.05);
 	}
 }
 
@@ -98,13 +98,13 @@ void DrawVArray(double x1, double y1, double x2, double y2, bool ExchangeY)
 	DrawLine(x2 - x1, zero);
 	DrawLine(zero, y2 - MidY);
 	if(!ExchangeY){
-		DrawLine(-0.1, 0.2);
-		DrawLine(0.1, -0.2);
-		DrawLine(0.1, 0.2);
+		DrawLine(-0.05, 0.15);
+		DrawLine(0.05, -0.15);
+		DrawLine(0.05, 0.15);
 	}else{
-		DrawLine(-0.1, -0.2);
-		DrawLine(0.1, 0.2);
-		DrawLine(0.1, -0.2);
+		DrawLine(-0.05, -0.15);
+		DrawLine(0.05, 0.15);
+		DrawLine(0.05, -0.15);
 	}
 }
 
@@ -153,6 +153,9 @@ void PasteObj()
 	ptr_InputAndOutputBox InputAndOutputBox_Obj;
 	string textbuf = CopyString(((ptr_StartBox)TEMP)->Text);
 
+	((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
+	((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
+
 	switch (TEMP_KIND)
 	{
 	case STARTBOX:
@@ -163,14 +166,16 @@ void PasteObj()
 		StartBox_Obj->width = ((ptr_StartBox)CURR_OBJ)->width;
 		StartBox_Obj->height = ((ptr_StartBox)CURR_OBJ)->height;
 		StartBox_Obj->PenSize = SYSPENSIZE;
-		StartBox_Obj->Color = SYSCOLOR;
+		StartBox_Obj->Color = "GREEN";
 		StartBox_Obj->Text = textbuf;
-		StartBox_Obj->IsSelected = FALSE;
+		StartBox_Obj->IsSelected = TRUE;
 
 		DrawStartBox(StartBox_Obj);
 
 		InsertNode(List[STARTBOX], NULL, StartBox_Obj);
 
+		CURR_OBJ = StartBox_Obj;
+		CURR_OBJ_KIND = STARTBOX;
 		
 		break;
 	case PROCEDUREBOX:
@@ -184,12 +189,16 @@ void PasteObj()
 		ProcedureBox_Obj->width = ((ptr_ProcedureBox)CURR_OBJ)->width;
 		ProcedureBox_Obj->height = ((ptr_ProcedureBox)CURR_OBJ)->height;
 		ProcedureBox_Obj->PenSize = SYSPENSIZE;
-		ProcedureBox_Obj->Color = SYSCOLOR;
+		ProcedureBox_Obj->Color = "GREEN";
 		ProcedureBox_Obj->Text = textbuf;
-		ProcedureBox_Obj->IsSelected = FALSE;
+		ProcedureBox_Obj->IsSelected = TRUE;
 
 		DrawProcedureBox(ProcedureBox_Obj);
 		InsertNode(List[PROCEDUREBOX], NULL, ProcedureBox_Obj);
+
+		CURR_OBJ = ProcedureBox_Obj;
+		CURR_OBJ_KIND = PROCEDUREBOX;
+
 		break;
 	case JUDGEBOX:
 		JudgeBox_Obj = (ptr_JudgeBox)GetBlock(sizeof(*JudgeBox_Obj));
@@ -202,12 +211,17 @@ void PasteObj()
 		JudgeBox_Obj->width = ((ptr_JudgeBox)CURR_OBJ)->width;
 		JudgeBox_Obj->height = ((ptr_JudgeBox)CURR_OBJ)->height;
 		JudgeBox_Obj->PenSize = SYSPENSIZE;
-		JudgeBox_Obj->Color = SYSCOLOR;
+		JudgeBox_Obj->Color = "GREEN";
 		JudgeBox_Obj->Text = textbuf;
-		JudgeBox_Obj->IsSelected = FALSE;
+		JudgeBox_Obj->IsSelected = TRUE;
 
 		DrawJudgeBox(JudgeBox_Obj);
 		InsertNode(List[JUDGEBOX], NULL, JudgeBox_Obj);
+
+		CURR_OBJ = JudgeBox_Obj;
+		CURR_OBJ_KIND = JUDGEBOX;
+
+		break;
 	case INPUTANDOUTPUTBOX:
 		InputAndOutputBox_Obj = (ptr_InputAndOutputBox)GetBlock(sizeof(*InputAndOutputBox_Obj));
 
@@ -219,12 +233,15 @@ void PasteObj()
 		InputAndOutputBox_Obj->width = ((ptr_InputAndOutputBox)CURR_OBJ)->width;
 		InputAndOutputBox_Obj->height = ((ptr_InputAndOutputBox)CURR_OBJ)->height;
 		InputAndOutputBox_Obj->PenSize = SYSPENSIZE;
-		InputAndOutputBox_Obj->Color = SYSCOLOR;
+		InputAndOutputBox_Obj->Color = "GREEN";
 		InputAndOutputBox_Obj->Text = textbuf;
-		InputAndOutputBox_Obj->IsSelected = FALSE;
+		InputAndOutputBox_Obj->IsSelected = TRUE;
 
 		DrawInputAndOutputBox(InputAndOutputBox_Obj);
 		InsertNode(List[INPUTANDOUTPUTBOX], NULL, InputAndOutputBox_Obj);
+
+		CURR_OBJ = InputAndOutputBox_Obj;
+		CURR_OBJ_KIND = INPUTANDOUTPUTBOX;
 
 		break;
 	default:

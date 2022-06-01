@@ -31,6 +31,7 @@ void DrawStartBox(void *StartBox)
 	double Height = box->height;
     double x_mid = box->x;
     double y_mid = box->y;
+    double Chamfer = Height/8;
 	double c=0;
 
     int pensize = GetPenSize();/*±£¥Êµ±«∞œµÕ≥± ª≠¥÷œ∏*/
@@ -40,17 +41,17 @@ void DrawStartBox(void *StartBox)
 	SetPenColor(box->Color);/*…Ë÷√—’…´*/
 
     /*ª≠‘≤Ω«æÿ–Œ∆ º÷’÷πøÚ*/
-    MovePen( x_mid - Width/2, y_mid - Height/2);
-	DrawLine(c, Height-0.2);
-	DrawArc(0.1, c+180, c-90);
-	DrawLine(Width-0.2, c);
-	DrawArc(0.1, c+90, c-90);
-	DrawLine(c, -(Height-0.2));
-	DrawArc(0.1, c, c-90);
-	DrawLine(-(Width-0.2), c);
-	DrawArc(0.1, c-90, c-90);
+    MovePen( x_mid - Width/2, y_mid - Height/2 + Chamfer);
+	DrawLine(c, Height - 2*Chamfer);
+	DrawArc(Chamfer, c+180, c-90);
+	DrawLine(Width - 2*Chamfer, c);
+	DrawArc(Chamfer, c+90, c-90);
+	DrawLine(c, -(Height - 2*Chamfer));
+	DrawArc(Chamfer, c, c-90);
+	DrawLine(-(Width - 2*Chamfer), c);
+	DrawArc(Chamfer, c-90, c-90);
 
-    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight());
+    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight()/2);
     DrawTextString(box->Text);
 
     SetPenSize(pensize); /*ª÷∏¥¥÷œ∏*/
@@ -77,7 +78,7 @@ void DrawProcedureBox(void *ProcedureBox)
     /*ª≠æÿ–Œ÷¥––øÚ*/
 	drawRectangle(x_mid - Width/2, y_mid - Height/2, Width, Height, FALSE);
 
-    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight());
+    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight()/2);
     DrawTextString(box->Text);
 
     SetPenSize(pensize); /*ª÷∏¥¥÷œ∏*/
@@ -110,7 +111,7 @@ void DrawJudgeBox(void *JudgeBox)
     DrawLine( -Width/2 , -Height/2 );
     DrawLine( -Width/2 , Height/2 );
 
-    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight());
+    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight()/2);
     DrawTextString(box->Text);
 
     SetPenSize(pensize); /*ª÷∏¥¥÷œ∏*/
@@ -136,13 +137,13 @@ void DrawInputAndOutputBox(void *InputAndOutputBox)
 	
 
     /*ª≠∆Ω––Àƒ±ﬂ–ŒÃıº˛≈–∂œøÚ*/
-    MovePen( x_mid - Width/2, y_mid);
-    DrawLine( Width/2 , Height/2 );
-    DrawLine( Width/2 , 0 );
-    DrawLine( -Width/2 , -Height/2 );
-    DrawLine( -Width/2 , 0 );
+    MovePen( x_mid - Width/2 - Height/8, y_mid - Height/2);
+    DrawLine( Height/4, Height );
+    DrawLine( Width , 0 );
+    DrawLine( -Height/4 , -Height );
+    DrawLine( -Width , 0 );
 
-    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight());
+    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight()/2);
     DrawTextString(box->Text);
 
     SetPenSize(pensize); /*ª÷∏¥¥÷œ∏*/
