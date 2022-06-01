@@ -7,13 +7,12 @@ extern bool inText;
 
 void DrawAllObj();
 
-void DrawLinkLine(void* Line_Obj);
+void DrawLinkLine(void *Line_Obj);
 
 void DrawAllText();
 
 void DrawHArray(double x1, double y1, double x2, double y2, bool ExchangeX);
 void DrawVArray(double x1, double y1, double x2, double y2, bool ExchangeY);
-
 
 /* 功能:缩放对象
  * 参数1:缩放倍数
@@ -22,7 +21,7 @@ void DrawVArray(double x1, double y1, double x2, double y2, bool ExchangeY);
  * 返回值:无
  * 说明:调用 给定缩放函数，缩放 给定指针指向的任意类型对象
  */
-void EnLargeObj(double Times, void* ptr_Obj, void (*fptr_EnLargeObj)(double Times, void* ptr_Obj));
+void EnLargeObj(double Times, void *ptr_Obj, void (*fptr_EnLargeObj)(double Times, void *ptr_Obj));
 
 /* 功能:EnLargeObj辅助函数
  * 参数1:缩放倍数
@@ -30,10 +29,9 @@ void EnLargeObj(double Times, void* ptr_Obj, void (*fptr_EnLargeObj)(double Time
  * 返回值:无
  * 说明:缩放 给定指针指向的特定类型对象
  */
-void EnLargeStartBox(double Times, void* ptr_Obj);
-void EnLargeProcedureBox(double Times, void* ptr_Obj);
-void EnLargeJudgeBox(double Times, void* ptr_Obj);
-
+void EnLargeStartBox(double Times, void *ptr_Obj);
+void EnLargeProcedureBox(double Times, void *ptr_Obj);
+void EnLargeJudgeBox(double Times, void *ptr_Obj);
 
 /* 功能:复制选中的对象
  * 参数:无

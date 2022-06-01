@@ -21,19 +21,16 @@
 #define INPUTANDOUTPUTBOX 4
 #define TEXT 5
 
-#define TEXTLEN  100
-#define CURSOR "_"          /*光标符号*/
-#define CURSOR_BLINK  1     /*光标闪烁定时器事件标志号*/
+#define TEXTLEN 100
+#define CURSOR "_"	   /*光标符号*/
+#define CURSOR_BLINK 1 /*光标闪烁定时器事件标志号*/
 
 //=============================================================================================================================================//
 /* 链表定义 */
 //=============================================================================================================================================//
 
-
 /* 每个元素都是一个指向 直线/框链表 的指针 */
 extern linkedlistADT List[NLIST];
-
-
 
 //=============================================================================================================================================//
 /* 全局变量定义 */
@@ -42,15 +39,13 @@ extern linkedlistADT List[NLIST];
 /* 每种对象的个数 */
 extern int COUNT[4];
 
-
 /* 当前选中的元素,没有选中时为NULL */
-extern void* CURR_OBJ;
+extern void *CURR_OBJ;
 /* 当前选中的元素种类,没有选中时为-1 */
 extern int CURR_OBJ_KIND;
 
-
 /* 剪切板,指向上一个被复制的对象,没有则为NULL */
-extern void* TEMP;
+extern void *TEMP;
 /* 剪切板中的对象种类,没有则为-1 */
 extern int TEMP_KIND;
 
@@ -80,8 +75,6 @@ extern double WindowY;
 extern double OBJWIDTH;
 extern double OBJHEIGHT;
 
-
-
 //=============================================================================================================================================//
 /* 结构声明 */
 //=============================================================================================================================================//
@@ -91,65 +84,60 @@ typedef struct Line
 {
 	int ID_1; /* 起始对象编号 */
 	int ID_2; /* 终止对象编号 */
-	void* Obj1;
-	void* Obj2;
-	int PenSize; /* 粗细 */
-	string Color; /* 颜色 */
+	void *Obj1;
+	void *Obj2;
+	int PenSize;	 /* 粗细 */
+	string Color;	 /* 颜色 */
 	bool IsSelected; /* 是否选中 */
-} *ptr_Line;
-
+} * ptr_Line;
 
 /* 起始终止框 */
 typedef struct StartBox
 {
-	int ID; /* 唯一对象编号 */
-	double x, y; /* 中心坐标 */
+	int ID;				  /* 唯一对象编号 */
+	double x, y;		  /* 中心坐标 */
 	double width, height; /* 长宽 */
-	int PenSize; /* 粗细 */
-	string Color; /* 颜色 */
-	string Text; /* 文本框指针 */
-	bool IsSelected; /* 是否选中 */
-} *ptr_StartBox;
-
+	int PenSize;		  /* 粗细 */
+	string Color;		  /* 颜色 */
+	string Text;		  /* 文本框指针 */
+	bool IsSelected;	  /* 是否选中 */
+} * ptr_StartBox;
 
 /* 执行框 */
 typedef struct ProcedureBox
 {
-	int ID; /* 唯一对象编号 */
-	double x, y; /* 中心坐标 */
+	int ID;				  /* 唯一对象编号 */
+	double x, y;		  /* 中心坐标 */
 	double width, height; /* 长宽 */
-	int PenSize; /* 粗细 */
-	string Color; /* 颜色 */
-	string Text; /* 文本框指针 */
-	bool IsSelected; /* 是否选中 */
-} *ptr_ProcedureBox;
-
+	int PenSize;		  /* 粗细 */
+	string Color;		  /* 颜色 */
+	string Text;		  /* 文本框指针 */
+	bool IsSelected;	  /* 是否选中 */
+} * ptr_ProcedureBox;
 
 /* 判断框 */
 typedef struct JudgeBox
 {
-	int ID; /* 唯一对象编号 */
-	double x, y; /* 中心坐标 */
+	int ID;				  /* 唯一对象编号 */
+	double x, y;		  /* 中心坐标 */
 	double width, height; /* 长宽 */
-	int PenSize; /* 粗细 */
-	string Color; /* 颜色 */
-	string Text; /* 文本框指针 */
-	bool IsSelected; /* 是否选中 */
-} *ptr_JudgeBox;\
+	int PenSize;		  /* 粗细 */
+	string Color;		  /* 颜色 */
+	string Text;		  /* 文本框指针 */
+	bool IsSelected;	  /* 是否选中 */
+} * ptr_JudgeBox;
 
 /* 输入输出框 */
 typedef struct InputAndOutputBox
 {
-	int ID; /* 唯一对象编号 */
-	double x, y; /* 中心坐标 */
+	int ID;				  /* 唯一对象编号 */
+	double x, y;		  /* 中心坐标 */
 	double width, height; /* 长宽 */
-	int PenSize; /* 粗细 */
-	string Color; /* 颜色 */
-	string Text; /* 文本框指针 */
-	bool IsSelected; /* 是否选中 */
-} *ptr_InputAndOutputBox;
-
-
+	int PenSize;		  /* 粗细 */
+	string Color;		  /* 颜色 */
+	string Text;		  /* 文本框指针 */
+	bool IsSelected;	  /* 是否选中 */
+} * ptr_InputAndOutputBox;
 
 //=============================================================================================================================================//
 /* 函数声明 */
@@ -162,13 +150,11 @@ typedef struct InputAndOutputBox
  */
 void Main();
 
-
 /* 功能:重新绘制所有图形
  * 参数:无
  * 返回值:无
  */
 void display();
-
 
 /* 功能:绘制菜单
  * 参数:无
@@ -186,7 +172,6 @@ void DrawMenu();
  */
 void DrawAllObj();
 
-
 /* 功能:响应键盘事件
  * 参数1:按键名
  * 参数2:事件
@@ -195,7 +180,7 @@ void DrawAllObj();
  * |   F1   |  绘制随机起始终止框  |      DrawStartBox()     |
  * |   F2   |    绘制随机判断框    |     DrawJudegeBox()     |
  * |   F3   |    绘制随机执行框    |    DrawProcedureBox()   |
- * |  F10   |       退出程序      |         exit(1)         | 
+ * |  F10   |       退出程序      |         exit(1)         |
  * | Ctrl+N |  删除所有链表,清屏， |      DeleteAllObj()     |
  *             重新绘制菜单        |     DisplayClear()      |
  *                                |       DrawMenu()        |
@@ -225,13 +210,11 @@ void CaseF3Process();
  */
 void MouseEventProcess(int x, int y, int button, int event);
 
-
 /* 功能:响应字符事件事件
  * 参数:字符
  * 说明:事件表:暂缺
  */
 void CharEventProcess(char c);
-
 
 /* 功能:新增一条直线，连接两个控件
  * 参数1:对象1 ID
@@ -240,13 +223,11 @@ void CharEventProcess(char c);
  */
 void LinkTwoObj(int ID1, int ID2);
 
-
 /* 功能:缩放对象
  * 参数:对象指针，即CURR_OBJ
  * 返回值:无
  */
-void EnlargeObj(void* ptr_Obj); 
-
+void EnlargeObj(void *ptr_Obj);
 
 /* 功能:复制选中的对象
  * 参数:无
@@ -255,7 +236,6 @@ void EnlargeObj(void* ptr_Obj);
  */
 void CopyObj();
 
-
 /* 功能:粘贴选中的对象
  * 参数:剪切板中的对象指针，即TEMP
  * 返回值:无
@@ -263,19 +243,17 @@ void CopyObj();
  */
 void PasteObj();
 
-
 /* 功能:删除对象
  * 参数:对象指针，即CURR_OBJ
  * 返回值:无
  */
-void DeleteObj(void* ptr_Obj);
-
+void DeleteObj(void *ptr_Obj);
 
 /* 功能:遍历链表,找到给定 ID 对应的对象
  * 参数:对象ID
  * 返回值:找到的对象指针
  */
-void* SearchObj(int ID);
+void *SearchObj(int ID);
 
 /* 功能:SearchObj辅助函数
  * 参数1:待查找data指针
@@ -287,21 +265,17 @@ bool equalfunptr_JBox(void *obj1, void *obj2);
 bool equalfunptr_SBox(void *obj1, void *obj2);
 bool equalfunptr_IBox(void *obj1, void *obj2);
 
-
 /* 功能:保存所有对象到save.data
  * 参数:无
  * 返回值:无
  */
 void SaveAllObj();
 
-
 /* 功能:从save.data读取
  * 参数:无
  * 返回值:无
  */
 void LoadAllObj();
-
-
 
 /* 功能:绘制起始框
  * 参数:起始框指针

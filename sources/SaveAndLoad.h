@@ -3,27 +3,23 @@
 
 #include "main.h"
 
-
-
-void SaveAllObj();//保存所有当前对象// 
-
+void SaveAllObj(); //保存所有当前对象//
 
 void DrawLineDSave(FILE *fp);
-  /*
-  保存直线
-  fp是在SaveAllObj中创建的文件指针
-  */ 
-  
-  
-  void DrawProcedureSave(FILE *fp);   
-  /*
-  保存执行框
-  */ 
+/*
+保存直线
+fp是在SaveAllObj中创建的文件指针
+*/
+
+void DrawProcedureSave(FILE *fp);
+/*
+保存执行框
+*/
 
 void DrawJudgeSave(FILE *fp);
 /*
 保存判断框
-*/ 
+*/
 
 void DrawStartSave(FILE *fp);
 /*
@@ -41,12 +37,12 @@ void DrawProcedureLoad(FILE *fp);
 /*
 读取执行框
 */
- void DrawJudgeLoad(FILE *fp);
+void DrawJudgeLoad(FILE *fp);
 /*
 读取判断框
 */
 void DrawStartLoad(FILE *fp);
 /*
-读取开始框 
+读取开始框
 */
 #endif

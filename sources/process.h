@@ -8,14 +8,13 @@
  * 参数:对象指针，即CURR_OBJ
  * 返回值:无
  */
-void DeleteObj(void* ptr_Obj);
-
+void DeleteObj(void *ptr_Obj);
 
 /* 功能:遍历链表,找到给定 ID 对应的对象
  * 参数:对象ID
  * 返回值:找到的对象指针
  */
-void* SearchObj(int ID);
+void *SearchObj(int ID);
 
 /* 功能:SearchObj辅助函数
  * 参数1:待查找data指针
@@ -29,5 +28,5 @@ bool equalfunptr_SBox(void *obj1, void *obj2);
 bool equalfunptr_Text(void *obj1, void *obj2);
 
 void PickNearestObj(double mx, double my);
-double LtsDistance(void* ptr_Obj, double mx, double my);
+double LtsDistance(void *ptr_Obj, double mx, double my);
 #endif
