@@ -32,30 +32,34 @@ void DrawStartBox(void *StartBox)
     double x_mid = box->x;
     double y_mid = box->y;
     double Chamfer = Height/8;
-	double c=0;
 
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
+    int pointsize = GetPointSize();
     
     SetPenSize(box->PenSize);/*设置粗细*/
 	SetPenColor(box->Color);/*设置颜色*/
 
     /*画圆角矩形起始终止框*/
     MovePen( x_mid - Width/2, y_mid - Height/2 + Chamfer);
-	DrawLine(c, Height - 2*Chamfer);
-	DrawArc(Chamfer, c+180, c-90);
-	DrawLine(Width - 2*Chamfer, c);
-	DrawArc(Chamfer, c+90, c-90);
-	DrawLine(c, -(Height - 2*Chamfer));
-	DrawArc(Chamfer, c, c-90);
-	DrawLine(-(Width - 2*Chamfer), c);
-	DrawArc(Chamfer, c-90, c-90);
+	DrawLine(0, Height - 2*Chamfer);
+	DrawArc(Chamfer, 180, -90);
+	DrawLine(Width - 2*Chamfer, 0);
+	DrawArc(Chamfer, 90, -90);
+	DrawLine(0, -(Height - 2*Chamfer));
+	DrawArc(Chamfer, 0, -90);
+	DrawLine(-(Width - 2*Chamfer), 0);
+	DrawArc(Chamfer, -90, -90);
 
-    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight()/2);
+    if(Width*20 > pointsize)
+        SetPointSize(Width*20);
+
+    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontAscent()/2);
     DrawTextString(box->Text);
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
+    SetPointSize(pointsize);
 
     COUNT[0]++;
 }
@@ -71,6 +75,7 @@ void DrawProcedureBox(void *ProcedureBox)
 
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
+    int pointsize = GetPointSize();
 
     SetPenSize(box->PenSize);/*设置粗细*/
 	SetPenColor(box->Color);/*设置颜色*/
@@ -78,11 +83,15 @@ void DrawProcedureBox(void *ProcedureBox)
     /*画矩形执行框*/
 	drawRectangle(x_mid - Width/2, y_mid - Height/2, Width, Height, FALSE);
 
+    if(Width*20 > pointsize)
+        SetPointSize(Width*20);
+
     MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight()/2);
     DrawTextString(box->Text);
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
+    SetPointSize(pointsize);
 
     COUNT[1]++;
 }
@@ -99,7 +108,8 @@ void DrawJudgeBox(void *JudgeBox)
 
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
-    
+    int pointsize = GetPointSize();
+
     SetPenSize(box->PenSize);/*设置粗细*/
 	SetPenColor(box->Color);/*设置颜色*/
 	
@@ -111,11 +121,15 @@ void DrawJudgeBox(void *JudgeBox)
     DrawLine( -Width/2 , -Height/2 );
     DrawLine( -Width/2 , Height/2 );
 
+    if(Width*20 > pointsize)
+        SetPointSize(Width*20);
+
     MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight()/2);
     DrawTextString(box->Text);
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
+    SetPointSize(pointsize);
 
     COUNT[2]++;
 }
@@ -131,7 +145,8 @@ void DrawInputAndOutputBox(void *InputAndOutputBox)
 
     int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
-    
+    int pointsize = GetPointSize();
+
     SetPenSize(box->PenSize);/*设置粗细*/
 	SetPenColor(box->Color);/*设置颜色*/
 	
@@ -143,11 +158,15 @@ void DrawInputAndOutputBox(void *InputAndOutputBox)
     DrawLine( -Height/4 , -Height );
     DrawLine( -Width , 0 );
 
+    if(Width*20 > pointsize)
+        SetPointSize(Width*20);
+
     MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight()/2);
     DrawTextString(box->Text);
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
+    SetPointSize(pointsize);
 
     COUNT[3]++;
 }

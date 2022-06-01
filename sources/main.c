@@ -445,6 +445,13 @@ void CharEventProcess(char c)
 			curr_textbuf[len] = c;
 			curr_textbuf[len + 1] = '\0';
 			len ++;
+			// if(TextStringWidth(curr_textbuf) > ((ptr_StartBox)CURR_OBJ)->width){
+			// 	((ptr_StartBox)CURR_OBJ)->width *= 1.2;
+			// 	((ptr_StartBox)CURR_OBJ)->height *= 1.2;
+			// }else if( TextStringWidth(curr_textbuf) < ((ptr_StartBox)CURR_OBJ)->width && ((ptr_StartBox)CURR_OBJ)->width > OBJWIDTH){
+			// 	((ptr_StartBox)CURR_OBJ)->width /= 1.2;
+			// 	((ptr_StartBox)CURR_OBJ)->height /= 1.2;
+			// }
 			break;
 	}
 }
