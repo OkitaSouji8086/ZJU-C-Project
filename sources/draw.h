@@ -11,7 +11,8 @@ void DrawLinkLine(void* Line_Obj);
 
 void DrawAllText();
 
-void DrawArray(double x1, double y1, double x2, double y2, bool ExchangeX);
+void DrawHArray(double x1, double y1, double x2, double y2, bool ExchangeX);
+void DrawVArray(double x1, double y1, double x2, double y2, bool ExchangeY);
 
 
 /* 功能:缩放对象

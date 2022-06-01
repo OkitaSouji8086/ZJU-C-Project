@@ -110,7 +110,7 @@ void Main()
 	SetWindowTitle("Program Creater");
 	SetWindowSize(ScaleXInches(WindowX), ScaleXInches(WindowY));
 	InitGraphics();
-	InitConsole();
+//	InitConsole();
 	
 	Randomize(); /* 随机函数初始化 */
 	registerKeyboardEvent(KeyboardEventProcess);
@@ -231,7 +231,7 @@ void DrawMenu()
 		CaseF3Process();
 		break;
 	case 4:
-		printf("4 clicked\n");
+		CaseF4Process();
 		break;
 	default:
 		break;
@@ -279,9 +279,12 @@ void DrawMenu()
 
 	drawMenuBar(0, 0, WindowW, MenuH);
 
-	if(isSelected)
-		sprintf(InfoBuffer, "Now Edited Object Info: %d", ((ptr_StartBox)CURR_OBJ)->ID + 1);
-	else
+	if(isSelected){
+		if (isInText)
+			sprintf(InfoBuffer, "Editing Text...");
+		else
+			sprintf(InfoBuffer, "Current Edited Object ID is: %d", ((ptr_StartBox)CURR_OBJ)->ID + 1);
+	}else
 		sprintf(InfoBuffer, "Not Selected.");
 
 	drawLabel(MenuW, GetFontHeight()/3, InfoBuffer);
@@ -655,6 +658,7 @@ void CaseF5Process()
 	if(!isSelected) return;
 	
 	isInText = TRUE;
+	((ptr_StartBox)CURR_OBJ)->Color = "BLACK";
 }
 
 #endif

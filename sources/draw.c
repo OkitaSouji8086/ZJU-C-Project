@@ -20,6 +20,8 @@ void DrawLinkLine(void* Line_Obj)
 {
 	ptr_Line line = (ptr_Line)Line_Obj;
 	bool ExchangeX = FALSE;
+	bool ExchangeY = FALSE;
+	bool HorV = TRUE; 
 
 
 	double x1 = ((ptr_StartBox)line->Obj1)->x;
@@ -29,6 +31,8 @@ void DrawLinkLine(void* Line_Obj)
 	double y2 = ((ptr_StartBox)line->Obj2)->y;
 	double width1 = ((ptr_StartBox)line->Obj1)->width;
 	double width2 = ((ptr_StartBox)line->Obj2)->width;
+	double height1 = ((ptr_StartBox)line->Obj1)->height;
+	double height2 = ((ptr_StartBox)line->Obj2)->height;
 
 	int pensize = GetPenSize();/*保存当前系统笔画粗细*/
 	string color = GetPenColor();/*保存当前系统颜色*/
@@ -36,13 +40,27 @@ void DrawLinkLine(void* Line_Obj)
 	SetPenSize(line->PenSize);/*设置粗细*/
 	SetPenColor(line->Color);/*设置颜色*/
 
-	if(x1 > x2)
-		ExchangeX = TRUE;
-	
-	if(!ExchangeX){
-		DrawArray(x1 + width1/2, y1, x2 - width2/2, y2, ExchangeX);
+	if(fabs(x1 - x2) < 2.0) HorV = FALSE;
+	if(fabs(y1 - y2) < 0.8) HorV = TRUE;
+
+	if(HorV){
+		if(x1 > x2)
+			ExchangeX = TRUE;
+
+		if(!ExchangeX){
+			DrawHArray(x1 + width1/2, y1, x2 - width2/2, y2, ExchangeX);
+		}else{
+			DrawHArray(x1 - width1/2, y1, x2 + width2/2, y2, ExchangeX);
+		}
 	}else{
-		DrawArray(x1 - width1/2, y1, x2 + width2/2, y2, ExchangeX);
+		if(y1 < y2)
+			ExchangeY = TRUE;
+		
+		if(!ExchangeY){
+			DrawVArray(x1, y1 - height1/2, x2, y2 + height2/2, ExchangeY);
+		}else{
+			DrawVArray(x1, y1 + height1/2, x2, y2 - height2/2, ExchangeY);
+		}
 	}
 	
 
@@ -50,7 +68,7 @@ void DrawLinkLine(void* Line_Obj)
 	SetPenColor(color);
 }
 
-void DrawArray(double x1, double y1, double x2, double y2, bool ExchangeX)
+void DrawHArray(double x1, double y1, double x2, double y2, bool ExchangeX)
 {
 	double zero = 0;
 	double MidX = (x1 + x2)/2;
@@ -68,7 +86,26 @@ void DrawArray(double x1, double y1, double x2, double y2, bool ExchangeX)
 		DrawLine(-0.2, -0.1);
 		DrawLine(0.2, -0.1);
 	}
+}
 
+void DrawVArray(double x1, double y1, double x2, double y2, bool ExchangeY)
+{
+	double zero = 0;
+	double MidY = (y1 + y2)/2;
+
+	MovePen(x1, y1);
+	DrawLine(zero, MidY - y1);
+	DrawLine(x2 - x1, zero);
+	DrawLine(zero, y2 - MidY);
+	if(!ExchangeY){
+		DrawLine(-0.1, 0.2);
+		DrawLine(0.1, -0.2);
+		DrawLine(0.1, 0.2);
+	}else{
+		DrawLine(-0.1, -0.2);
+		DrawLine(0.1, 0.2);
+		DrawLine(0.1, -0.2);
+	}
 }
 
 
@@ -114,6 +151,7 @@ void PasteObj()
 	ptr_ProcedureBox ProcedureBox_Obj;
 	ptr_JudgeBox JudgeBox_Obj;
 	ptr_InputAndOutputBox InputAndOutputBox_Obj;
+	string textbuf = CopyString(((ptr_StartBox)TEMP)->Text);
 
 	switch (TEMP_KIND)
 	{
@@ -126,6 +164,7 @@ void PasteObj()
 		StartBox_Obj->height = ((ptr_StartBox)CURR_OBJ)->height;
 		StartBox_Obj->PenSize = SYSPENSIZE;
 		StartBox_Obj->Color = SYSCOLOR;
+		StartBox_Obj->Text = textbuf;
 		StartBox_Obj->IsSelected = FALSE;
 
 		DrawStartBox(StartBox_Obj);
@@ -146,10 +185,10 @@ void PasteObj()
 		ProcedureBox_Obj->height = ((ptr_ProcedureBox)CURR_OBJ)->height;
 		ProcedureBox_Obj->PenSize = SYSPENSIZE;
 		ProcedureBox_Obj->Color = SYSCOLOR;
-
+		ProcedureBox_Obj->Text = textbuf;
 		ProcedureBox_Obj->IsSelected = FALSE;
 
-		DrawStartBox(ProcedureBox_Obj);
+		DrawProcedureBox(ProcedureBox_Obj);
 		InsertNode(List[PROCEDUREBOX], NULL, ProcedureBox_Obj);
 		break;
 	case JUDGEBOX:
@@ -164,10 +203,10 @@ void PasteObj()
 		JudgeBox_Obj->height = ((ptr_JudgeBox)CURR_OBJ)->height;
 		JudgeBox_Obj->PenSize = SYSPENSIZE;
 		JudgeBox_Obj->Color = SYSCOLOR;
-
+		JudgeBox_Obj->Text = textbuf;
 		JudgeBox_Obj->IsSelected = FALSE;
 
-		DrawStartBox(JudgeBox_Obj);
+		DrawJudgeBox(JudgeBox_Obj);
 		InsertNode(List[JUDGEBOX], NULL, JudgeBox_Obj);
 	case INPUTANDOUTPUTBOX:
 		InputAndOutputBox_Obj = (ptr_InputAndOutputBox)GetBlock(sizeof(*InputAndOutputBox_Obj));
@@ -181,10 +220,10 @@ void PasteObj()
 		InputAndOutputBox_Obj->height = ((ptr_InputAndOutputBox)CURR_OBJ)->height;
 		InputAndOutputBox_Obj->PenSize = SYSPENSIZE;
 		InputAndOutputBox_Obj->Color = SYSCOLOR;
-
+		InputAndOutputBox_Obj->Text = textbuf;
 		InputAndOutputBox_Obj->IsSelected = FALSE;
 
-		DrawStartBox(InputAndOutputBox_Obj);
+		DrawInputAndOutputBox(InputAndOutputBox_Obj);
 		InsertNode(List[INPUTANDOUTPUTBOX], NULL, InputAndOutputBox_Obj);
 
 		break;
