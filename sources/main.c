@@ -63,8 +63,6 @@ static bool isSelected = FALSE;
 
 static bool isInText = FALSE;
 
-static bool IsPaste = FALSE;
-
 char _EMPTY_CHAR_[TEXTLEN + 1];
 
 //=============================================================================================================================================//
@@ -230,7 +228,6 @@ void DrawMenu()
 			CURR_OCCUPY--;
 			CURR_OBJ = NULL;
 			CURR_OBJ_KIND = -1;
-			IsPaste = FALSE;
 		}
 		isSelected = FALSE;
 		break;
@@ -314,7 +311,6 @@ void KeyboardEventProcess(int key, int event)
 			((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
 			((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
 			isSelected = FALSE;
-			IsPaste = FALSE;
 			CURR_OBJ = NULL;
 			CURR_OBJ_KIND = -1;
 
@@ -366,7 +362,6 @@ void CharEventProcess(char c)
 	case '\r': /* 注意：回车在这里返回的字符是'\r'，不是'\n'*/
 		isSelected = FALSE;
 		isInText = FALSE;
-		IsPaste = FALSE;
 		((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
 		((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
 		CURR_OBJ = NULL;
@@ -442,7 +437,7 @@ void MouseEventProcess(int x, int y, int button, int event)
 			if (CURR_OBJ_KIND == -1)
 				break;
 
-			if (((ptr_StartBox)CURR_OBJ)->ID != PreObjID || IsPaste)
+			if (((ptr_StartBox)CURR_OBJ)->ID != PreObjID)
 			{
 				((ptr_StartBox)PreObj)->IsSelected = FALSE;
 				((ptr_StartBox)PreObj)->Color = SYSCOLOR;
@@ -458,14 +453,6 @@ void MouseEventProcess(int x, int y, int button, int event)
 				Line_Obj->IsSelected = FALSE;
 				DrawLinkLine(Line_Obj);
 				InsertNode(List[LINE], NULL, Line_Obj);
-				if (PreObj == (ptr_StartBox)TEMP)
-				{
-					IsPaste = FALSE;
-					((ptr_StartBox)TEMP)->IsSelected = FALSE;
-					((ptr_StartBox)TEMP)->Color = SYSCOLOR;
-					TEMP = NULL;
-					TEMP_KIND = -1;
-				}
 			}
 			else
 			{
@@ -668,7 +655,7 @@ void PasteObj()
 		((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
 	}
 
-	((ptr_StartBox)PastedObj)->ID = ++CURR_ID;
+	((ptr_StartBox)PastedObj)->ID = CURR_ID++;
 	((ptr_StartBox)PastedObj)->x = ((ptr_StartBox)TEMP)->x;
 	((ptr_StartBox)PastedObj)->y = ((ptr_StartBox)TEMP)->y;
 	((ptr_StartBox)PastedObj)->width = ((ptr_StartBox)TEMP)->width;
@@ -705,7 +692,6 @@ void PasteObj()
 	}
 
 	isSelected = TRUE;
-	IsPaste = TRUE;
 }
 
 #endif
