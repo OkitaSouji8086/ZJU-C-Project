@@ -13,12 +13,14 @@ void DrawAllObj()
 	TraverseLinkedList(List[STARTBOX], DrawStartBox);
 	TraverseLinkedList(List[PROCEDUREBOX], DrawProcedureBox);
 	TraverseLinkedList(List[JUDGEBOX], DrawJudgeBox);
+	TraverseLinkedList(List[INPUTANDOUTPUTBOX], DrawInputAndOutputBox);
 }
 
 void DrawLinkLine(void* Line_Obj)
 {
 	ptr_Line line = (ptr_Line)Line_Obj;
 	bool ExchangeX = FALSE;
+
 
 	double x1 = ((ptr_StartBox)line->Obj1)->x;
 	double x2 = ((ptr_StartBox)line->Obj2)->x;
@@ -42,6 +44,7 @@ void DrawLinkLine(void* Line_Obj)
 	}else{
 		DrawArray(x1 - width1/2, y1, x2 + width2/2, y2, ExchangeX);
 	}
+	
 
 	SetPenSize(pensize);
 	SetPenColor(color);
@@ -110,6 +113,7 @@ void PasteObj()
 	ptr_StartBox StartBox_Obj;
 	ptr_ProcedureBox ProcedureBox_Obj;
 	ptr_JudgeBox JudgeBox_Obj;
+	ptr_InputAndOutputBox InputAndOutputBox_Obj;
 
 	switch (TEMP_KIND)
 	{
@@ -165,6 +169,23 @@ void PasteObj()
 
 		DrawStartBox(JudgeBox_Obj);
 		InsertNode(List[JUDGEBOX], NULL, JudgeBox_Obj);
+	case INPUTANDOUTPUTBOX:
+		InputAndOutputBox_Obj = (ptr_InputAndOutputBox)GetBlock(sizeof(*InputAndOutputBox_Obj));
+
+		InputAndOutputBox_Obj->ID = CURR_ID;
+		CURR_ID ++;
+
+		InputAndOutputBox_Obj->x = ((ptr_InputAndOutputBox)CURR_OBJ)->x + ((ptr_InputAndOutputBox)CURR_OBJ)->width/3;
+		InputAndOutputBox_Obj->y = ((ptr_InputAndOutputBox)CURR_OBJ)->y - ((ptr_InputAndOutputBox)CURR_OBJ)->height/3;
+		InputAndOutputBox_Obj->width = ((ptr_InputAndOutputBox)CURR_OBJ)->width;
+		InputAndOutputBox_Obj->height = ((ptr_InputAndOutputBox)CURR_OBJ)->height;
+		InputAndOutputBox_Obj->PenSize = SYSPENSIZE;
+		InputAndOutputBox_Obj->Color = SYSCOLOR;
+
+		InputAndOutputBox_Obj->IsSelected = FALSE;
+
+		DrawStartBox(InputAndOutputBox_Obj);
+		InsertNode(List[INPUTANDOUTPUTBOX], NULL, InputAndOutputBox_Obj);
 
 		break;
 	default:

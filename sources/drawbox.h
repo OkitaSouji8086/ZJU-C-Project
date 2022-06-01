@@ -27,6 +27,7 @@ extern double MenuW;
 void DrawStartBox(void *StartBox);
 void DrawProcedureBox(void *ProcedureBox);
 void DrawJudgeBox(void *JudgeBox);
+void DrawInputAndOutputBox(void *InputAndOutputBox);
 
 /* 功能:遍历链表,找到给定 ID 对应的对象
  * 参数:对象ID

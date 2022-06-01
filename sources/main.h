@@ -13,12 +13,13 @@
 #define _DEBUG_ 1
 
 /* 对象种类 */
-#define NLIST 4
+#define NLIST 5
 #define LINE 0
 #define STARTBOX 1
 #define PROCEDUREBOX 2
 #define JUDGEBOX 3
-#define TEXT 4
+#define INPUTANDOUTPUTBOX 4
+#define TEXT 5
 
 #define TEXTLEN  100
 #define CURSOR "_"          /*光标符号*/
@@ -37,6 +38,10 @@ extern linkedlistADT List[NLIST];
 //=============================================================================================================================================//
 /* 全局变量定义 */
 //=============================================================================================================================================//
+
+/* 每种对象的个数 */
+extern int COUNT[4];
+
 
 /* 当前选中的元素,没有选中时为NULL */
 extern void* CURR_OBJ;
@@ -130,7 +135,19 @@ typedef struct JudgeBox
 	string Color; /* 颜色 */
 	string Text; /* 文本框指针 */
 	bool IsSelected; /* 是否选中 */
-} *ptr_JudgeBox;
+} *ptr_JudgeBox;\
+
+/* 输入输出框 */
+typedef struct InputAndOutputBox
+{
+	int ID; /* 唯一对象编号 */
+	double x, y; /* 中心坐标 */
+	double width, height; /* 长宽 */
+	int PenSize; /* 粗细 */
+	string Color; /* 颜色 */
+	string Text; /* 文本框指针 */
+	bool IsSelected; /* 是否选中 */
+} *ptr_InputAndOutputBox;
 
 
 
@@ -268,6 +285,7 @@ void* SearchObj(int ID);
 bool equalfunptr_PBox(void *obj1, void *obj2);
 bool equalfunptr_JBox(void *obj1, void *obj2);
 bool equalfunptr_SBox(void *obj1, void *obj2);
+bool equalfunptr_IBox(void *obj1, void *obj2);
 
 
 /* 功能:保存所有对象到save.data
@@ -292,6 +310,7 @@ void LoadAllObj();
 extern void DrawStartBox(void *StartBox);
 extern void DrawProcedureBox(void *ProcedureBox);
 extern void DrawJudgeBox(void *JudgeBox);
+extern void DrawInputAndOutputBox(void *InputAndOutputBox);
 
 extern void PickNearestObj(double mx, double my);
 

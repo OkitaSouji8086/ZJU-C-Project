@@ -24,7 +24,7 @@ void DrawTextSave(FILE *fp);
 
 
 
-void SaveAllObj()                        //����ĺ���// 
+void SaveAllObj()                        //����ĺ���?// 
 {
 	FILE *fp = fopen("save.data","wb");
 	

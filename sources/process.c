@@ -14,12 +14,19 @@ void DeleteObj(void* ptr_Obj)
 	{
 	case STARTBOX:
 		DeleteNode(List[STARTBOX], &(((ptr_StartBox)ptr_Obj)->ID), equalfunptr_SBox);
+		COUNT[0]--;
 		break;
 	case PROCEDUREBOX:
 		DeleteNode(List[PROCEDUREBOX], &(((ptr_ProcedureBox)ptr_Obj)->ID), equalfunptr_PBox);
+		COUNT[1]--;
 		break;
 	case JUDGEBOX:
 		DeleteNode(List[JUDGEBOX], &(((ptr_JudgeBox)ptr_Obj)->ID), equalfunptr_JBox);
+		COUNT[2]--;
+		break;
+	case INPUTANDOUTPUTBOX:
+		DeleteNode(List[INPUTANDOUTPUTBOX], &(((ptr_InputAndOutputBox)ptr_Obj)->ID), equalfunptr_IBox);
+		COUNT[3]--;
 		break;
 	default:
 		break;
@@ -34,7 +41,8 @@ void* SearchObj(int ID)
 	{
 		if(i == 0) ptr_SearchObj = SearchNode(List[PROCEDUREBOX], &ID, equalfunptr_PBox);
 		else if(i == 1) ptr_SearchObj = SearchNode(List[JUDGEBOX], &ID, equalfunptr_JBox);
-		else ptr_SearchObj = SearchNode(List[STARTBOX], &ID, equalfunptr_SBox);
+		else if(i == 2) ptr_SearchObj = SearchNode(List[STARTBOX], &ID, equalfunptr_SBox);
+		else ptr_SearchObj = SearchNode(List[STARTBOX], &ID, equalfunptr_IBox);
 
 		if(ptr_SearchObj != NULL) break;
 	}
@@ -69,6 +77,14 @@ bool equalfunptr_JBox(void *obj1, void *obj2)
 bool equalfunptr_SBox(void *obj1, void *obj2)
 {
 	ptr_StartBox ptr_temp = (ptr_StartBox)obj1;
+	int* id_temp = (int*)obj2;
+
+	if(ptr_temp->ID == *id_temp) return TRUE;
+	else return FALSE;
+}
+bool equalfunptr_IBox(void *obj1, void *obj2)
+{
+	ptr_InputAndOutputBox ptr_temp = (ptr_InputAndOutputBox)obj1;
 	int* id_temp = (int*)obj2;
 
 	if(ptr_temp->ID == *id_temp) return TRUE;

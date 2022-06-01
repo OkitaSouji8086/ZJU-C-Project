@@ -31,13 +31,17 @@
 
 
 /* 每个元素都是一个指向 直线/框链表 的指针 */
-linkedlistADT List[4] = {NULL, NULL, NULL, NULL};
+linkedlistADT List[5] = {NULL, NULL, NULL, NULL, NULL};
 
 
 
 //=============================================================================================================================================//
 /* 全局变量定义 */
 //=============================================================================================================================================//
+
+/* 每种对象的个数 */
+int COUNT[4] = {0, 0, 0, 0};
+
 
 /* 当前选中的元素,没有选中时为NULL */
 void* CURR_OBJ = NULL;
@@ -68,7 +72,7 @@ int MOUSE_FSM;
 static bool CURR_OCCUPY_EN = FALSE;
 
 /* 图形元素选中状态 */
-bool isSelected = FALSE;
+static bool isSelected = FALSE;
 
 static bool isInText = FALSE;
 
@@ -165,6 +169,23 @@ void DrawMenu()
 		"Help",
 		"About",
 		"Help"};
+	
+	static char * menuListisSelected[] = {
+		"isSelected"};
+
+	static char * menuListisInText[] = {
+		"isInText"};
+
+	static char * menuListStartBox[] = {
+		"StartBox"};
+
+	static char * menuListProcedureBox[] = {
+		"ProcedureBox"};
+
+	static char * menuListJudgeBox[] = {
+		"JudgeBox"};
+
+
 
 	int selection; /* 菜单选中 */
 	static char * selectedLabel = NULL;
@@ -253,7 +274,68 @@ void DrawMenu()
 		break;
 	}
 
-	drawBox(0, 0, MenuW, MenuH, 0, SYSCOLOR, 'L', SYSCOLOR);
+	double ControlInfoW = TextStringWidth(menuListFile[0])*4;
+	static char InfoBuffer[256];
+
+	drawMenuBar(0, 0, WindowW, MenuH);
+
+	if(isSelected)
+		sprintf(InfoBuffer, "Now Edited Object Info: %d", ((ptr_StartBox)CURR_OBJ)->ID + 1);
+	else
+		sprintf(InfoBuffer, "Not Selected.");
+
+	drawLabel(MenuW, GetFontHeight()/3, InfoBuffer);
+
+	// selection = menuList(GenUIID(0), 0, MenuH, ControlInfoW, wlist, MenuH, menuListisSelected, sizeof(menuListisSelected)/sizeof(menuListisSelected[0]));
+	// if(selection > 0) selectedLabel = menuListFile[selection];
+	// switch (selection)
+	// {
+	// case 1:
+	// 	if(isSelected==TRUE)printf("Yes\n");
+	// 	else printf("No\n");
+	// 	break;
+	// }
+
+	// selection = menuList(GenUIID(0), ControlInfoW, MenuH, ControlInfoW, wlist, MenuH, menuListisInText, sizeof(menuListisInText)/sizeof(menuListisInText[0]));
+	// if(selection > 0) selectedLabel = menuListFile[selection];
+	// switch (selection)
+	// {
+	// case 1:
+	// 	if(isInText==TRUE)printf("Yes\n");
+	// 	else printf("No\n");
+	// 	break;
+	// }
+
+	
+	/*selection = menuList(GenUIID(0), ControlInfoW*2, MenuH, ControlInfoW, wlist, MenuH, menuListStartBox, sizeof(menuListStartBox)/sizeof(menuListStartBox[0]));
+	if(selection > 0) selectedLabel = menuListFile[selection];
+	switch (selection)
+	{
+	case 1:
+		printf("%d",COUNT[0]);
+		break;
+	}
+
+	selection = menuList(GenUIID(0), ControlInfoW*3, MenuH, ControlInfoW, wlist, MenuH, menuList, sizeof(menuListProcedureBox)/sizeof(menuListProcedureBox[0]));
+	if(selection > 0) selectedLabel = menuListFile[selection];
+	switch (selection)
+	{
+	case 1:
+		printf("%d",COUNT[1]);
+		break;
+	}
+		
+	selection = menuList(GenUIID(0), ControlInfoW*4, MenuH, ControlInfoW, wlist, MenuH, menuList, sizeof(menuListJudgeBox)/sizeof(menuListJudgeBox[0]));
+	if(selection > 0) selectedLabel = menuListFile[selection];
+	switch (selection)
+	{
+	case 1:
+		printf("%d",COUNT[2]);
+		break;
+	}*/
+
+
+
 }
 
 void KeyboardEventProcess(int key, int event)
@@ -275,9 +357,15 @@ void KeyboardEventProcess(int key, int event)
 				case VK_F3:/*F3: 绘制执行框*/
 					CaseF3Process();
 					break;
-				case VK_F5: /* 编辑当前选中的对象的文本框 */
+
+				case VK_F4:/*F4：绘制输入输出框*/
+					CaseF4Process();
+					break;
+
+				case VK_F5:/*F5：编辑当前选中的对象的文本框 */
 					CaseF5Process();
 					break;
+
 				case VK_F10:/*F10: 退出程序*/
 					exit(1);
 					break;
@@ -533,12 +621,40 @@ void CaseF3Process()
 	InsertNode(List[JUDGEBOX], NULL, JudgeBox_Obj);
 }
 
+void CaseF4Process()
+{
+	/* 屏幕中心点坐标 */
+	double MidX = GetWindowWidth()/2;
+	double MidY = GetWindowHeight()/2; 
+
+	ptr_InputAndOutputBox InputAndOutputBox_Obj;
+	string textbuf = CopyString(_EMPTY_CHAR_);
+
+	InputAndOutputBox_Obj = (ptr_InputAndOutputBox)GetBlock(sizeof(*InputAndOutputBox_Obj));
+
+	InputAndOutputBox_Obj->ID = CURR_ID;
+	CURR_ID ++;
+
+	InputAndOutputBox_Obj->x = MidX + CURR_OCCUPY*OBJWIDTH/2;
+	InputAndOutputBox_Obj->y = MidY - CURR_OCCUPY*OBJHEIGHT/2;
+	InputAndOutputBox_Obj->width = OBJWIDTH;
+	InputAndOutputBox_Obj->height = OBJHEIGHT;
+	InputAndOutputBox_Obj->PenSize = SYSPENSIZE;
+	InputAndOutputBox_Obj->Color = SYSCOLOR;
+	InputAndOutputBox_Obj->Text = textbuf;
+	InputAndOutputBox_Obj->IsSelected = FALSE;
+
+	CURR_OCCUPY ++;
+
+	DrawInputAndOutputBox(InputAndOutputBox_Obj);
+	InsertNode(List[INPUTANDOUTPUTBOX], NULL, InputAndOutputBox_Obj);
+}
+
 void CaseF5Process()
 {
 	if(!isSelected) return;
 	
 	isInText = TRUE;
-	((ptr_StartBox)CURR_OBJ)->Color = "BLACK";
 }
 
 #endif

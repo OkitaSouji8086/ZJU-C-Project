@@ -55,6 +55,8 @@ void DrawStartBox(void *StartBox)
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
+
+    COUNT[0]++;
 }
 
 /*画执行框*/
@@ -80,6 +82,8 @@ void DrawProcedureBox(void *ProcedureBox)
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
+
+    COUNT[1]++;
 }
 
 
@@ -111,6 +115,40 @@ void DrawJudgeBox(void *JudgeBox)
 
     SetPenSize(pensize); /*恢复粗细*/
 	SetPenColor(color);/*恢复颜色*/
+
+    COUNT[2]++;
+}
+
+/*画输入输出框*/
+void DrawInputAndOutputBox(void *InputAndOutputBox)
+{
+    ptr_InputAndOutputBox box = (ptr_InputAndOutputBox)InputAndOutputBox;
+    double Width = box->width;
+    double Height = box->height;
+    double x_mid = box->x;
+    double y_mid = box->y;
+
+    int pensize = GetPenSize();/*保存当前系统笔画粗细*/
+	string color = GetPenColor();/*保存当前系统颜色*/
+    
+    SetPenSize(box->PenSize);/*设置粗细*/
+	SetPenColor(box->Color);/*设置颜色*/
+	
+
+    /*画平行四边形条件判断框*/
+    MovePen( x_mid - Width/2, y_mid);
+    DrawLine( Width/2 , Height/2 );
+    DrawLine( Width/2 , 0 );
+    DrawLine( -Width/2 , -Height/2 );
+    DrawLine( -Width/2 , 0 );
+
+    MovePen(x_mid - TextStringWidth(box->Text)/2, y_mid - GetFontHeight());
+    DrawTextString(box->Text);
+
+    SetPenSize(pensize); /*恢复粗细*/
+	SetPenColor(color);/*恢复颜色*/
+
+    COUNT[3]++;
 }
 
 
