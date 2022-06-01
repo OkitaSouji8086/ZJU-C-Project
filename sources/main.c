@@ -461,6 +461,8 @@ void MouseEventProcess(int x, int y, int button, int event)
 	double mx, my;/*当前鼠标坐标*/
 	double x1, y1, x2, y2, dx, dy;
 	ptr_Line Line_Obj = NULL;
+	int PreObjID = -1;
+	void* PreObj = NULL;
 
  	mx = ScaleXInches(x);/*pixels --> inches*/
 	my = ScaleYInches(y);/*pixels --> inches*/
@@ -488,21 +490,29 @@ void MouseEventProcess(int x, int y, int button, int event)
 			break;
 		case BUTTON_DOUBLECLICK:
 			if(isSelected){
-				Line_Obj = (ptr_Line)GetBlock(sizeof(*Line_Obj));
-				Line_Obj->Obj1 = CURR_OBJ;
-				Line_Obj->ID_1 = ((ptr_StartBox)CURR_OBJ)->ID;
-				((ptr_StartBox)CURR_OBJ)->IsSelected = FALSE;
-				((ptr_StartBox)CURR_OBJ)->Color = SYSCOLOR;
+				PreObj = CURR_OBJ;
+				PreObjID = ((ptr_StartBox)CURR_OBJ)->ID;
+
 				PickNearestObj(mx, my);
-				((ptr_StartBox)CURR_OBJ)->IsSelected = TRUE;
-				((ptr_StartBox)CURR_OBJ)->Color = "GREEN";
-				Line_Obj->Obj2 = CURR_OBJ;
-				Line_Obj->ID_2 = ((ptr_StartBox)CURR_OBJ)->ID;
-				Line_Obj->PenSize = SYSPENSIZE;
-				Line_Obj->Color = SYSCOLOR;
-				Line_Obj->IsSelected = FALSE;
-				DrawLinkLine(Line_Obj);
-				InsertNode(List[LINE], NULL, Line_Obj);
+
+				if(((ptr_StartBox)CURR_OBJ)->ID != PreObjID){
+					((ptr_StartBox)PreObj)->IsSelected = FALSE;
+					((ptr_StartBox)PreObj)->Color = SYSCOLOR;
+					((ptr_StartBox)CURR_OBJ)->IsSelected = TRUE;
+					((ptr_StartBox)CURR_OBJ)->Color = "GREEN";
+					Line_Obj = (ptr_Line)GetBlock(sizeof(*Line_Obj));
+					Line_Obj->Obj1 = PreObj;
+					Line_Obj->ID_1 = PreObjID;
+					Line_Obj->Obj2 = CURR_OBJ;
+					Line_Obj->ID_2 = ((ptr_StartBox)CURR_OBJ)->ID;
+					Line_Obj->PenSize = SYSPENSIZE;
+					Line_Obj->Color = SYSCOLOR;
+					Line_Obj->IsSelected = FALSE;
+					DrawLinkLine(Line_Obj);
+					InsertNode(List[LINE], NULL, Line_Obj);
+				}else{
+					CaseF5Process();
+				}
 			}
 			break;
 		case BUTTON_UP:
