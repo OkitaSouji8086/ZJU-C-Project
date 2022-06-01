@@ -522,7 +522,7 @@ void MouseEventProcess(int x, int y, int button, int event)
 			  	
 				else if (isChangeSize) {/*Ëõ·Å*/
 					((ptr_StartBox)CURR_OBJ)->width += dx;
-					((ptr_StartBox)CURR_OBJ)->height += dy;
+					((ptr_StartBox)CURR_OBJ)->height = ((ptr_StartBox)CURR_OBJ)->width * OBJHEIGHT / OBJWIDTH;
 				}
 				omx = mx;
 				omy = my;
