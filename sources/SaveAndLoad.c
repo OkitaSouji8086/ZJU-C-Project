@@ -231,7 +231,6 @@ void DrawLineDLoad(FILE *fp)
 		data->Color = "Blue";
 	else if (mid == 'b')
 		data->Color = "Black";
-	data->IsSelected = FALSE;
 
 	InsertNode(List[LINE], NULL, data);
 }

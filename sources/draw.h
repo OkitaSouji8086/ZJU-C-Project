@@ -5,7 +5,7 @@
 
 void DrawAllObj();
 
-void DrawLinkLine(void *Line_Obj);
+void DrawLinkLine(ptr_Line Line_Obj);
 
 void DrawAllText();
 

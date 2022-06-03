@@ -2,6 +2,7 @@
 #define _PROCESS_C_
 
 #include "process.h"
+
 void DeleteObj(void *ptr_Obj)
 {
 	linkedlistADT deletednode = NULL;
@@ -37,17 +38,16 @@ void *SearchObj(int ID)
 {
 	int i;
 	linkedlistADT ptr_SearchObj = NULL;
-	for (i = 0; i < 2; i++)
+	for (i = 0; i < NLIST; i++)
 	{
 		if (i == 0)
-			ptr_SearchObj = SearchNode(List[PROCEDUREBOX], &ID, equalfunptr_PBox);
+			ptr_SearchObj = SearchNode(List[STARTBOX], &ID, equalfunptr_PBox);
 		else if (i == 1)
-			ptr_SearchObj = SearchNode(List[JUDGEBOX], &ID, equalfunptr_JBox);
+			ptr_SearchObj = SearchNode(List[PROCEDUREBOX], &ID, equalfunptr_JBox);
 		else if (i == 2)
-			ptr_SearchObj = SearchNode(List[STARTBOX], &ID, equalfunptr_SBox);
-		else
-			ptr_SearchObj = SearchNode(List[STARTBOX], &ID, equalfunptr_IBox);
-
+			ptr_SearchObj = SearchNode(List[JUDGEBOX], &ID, equalfunptr_SBox);
+		else if (i == 3)
+			ptr_SearchObj = SearchNode(List[INPUTANDOUTPUTBOX], &ID, equalfunptr_IBox);
 		if (ptr_SearchObj != NULL)
 			break;
 	}

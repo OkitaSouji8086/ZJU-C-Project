@@ -10,7 +10,7 @@
 //=============================================================================================================================================//
 
 /* 调试模式 */
-#define _DEBUG_ 1
+#define _DEBUG_ 0
 
 /* 对象种类 */
 #define NLIST 5
@@ -54,6 +54,20 @@ extern int CURR_ID;
 /* 当前中心点被占据的个数 */
 extern int CURR_OCCUPY;
 
+/* 当前所处状态 */
+enum
+{
+	EDIT, /* 编辑 */
+	HELP, /* 显示帮助 */
+	ABOUT /* 显示关于 */
+} CurrMode;
+
+typedef enum
+{
+	HORIZ,	 /* 水平 */
+	VERTICAL /* 垂直 */
+} degree;
+
 //=============================================================================================================================================//
 /* 默认值定义 */
 //=============================================================================================================================================//
@@ -79,9 +93,8 @@ typedef struct Line
 	int ID_2; /* 终止对象编号 */
 	void *Obj1;
 	void *Obj2;
-	int PenSize;	 /* 粗细 */
-	string Color;	 /* 颜色 */
-	bool IsSelected; /* 是否选中 */
+	int PenSize;  /* 粗细 */
+	string Color; /* 颜色 */
 } * ptr_Line;
 
 /* 起始终止框 */
@@ -90,6 +103,7 @@ typedef struct StartBox
 	int ID;				  /* 唯一对象编号 */
 	double x, y;		  /* 中心坐标 */
 	double width, height; /* 长宽 */
+	degree Degree;		  /* 角度 */
 	int PenSize;		  /* 粗细 */
 	string Color;		  /* 颜色 */
 	string Text;		  /* 文本框指针 */
@@ -102,6 +116,7 @@ typedef struct ProcedureBox
 	int ID;				  /* 唯一对象编号 */
 	double x, y;		  /* 中心坐标 */
 	double width, height; /* 长宽 */
+	degree Degree;		  /* 角度 */
 	int PenSize;		  /* 粗细 */
 	string Color;		  /* 颜色 */
 	string Text;		  /* 文本框指针 */
@@ -114,6 +129,7 @@ typedef struct JudgeBox
 	int ID;				  /* 唯一对象编号 */
 	double x, y;		  /* 中心坐标 */
 	double width, height; /* 长宽 */
+	degree Degree;		  /* 角度 */
 	int PenSize;		  /* 粗细 */
 	string Color;		  /* 颜色 */
 	string Text;		  /* 文本框指针 */
@@ -126,6 +142,7 @@ typedef struct InputAndOutputBox
 	int ID;				  /* 唯一对象编号 */
 	double x, y;		  /* 中心坐标 */
 	double width, height; /* 长宽 */
+	degree Degree;		  /* 角度 */
 	int PenSize;		  /* 粗细 */
 	string Color;		  /* 颜色 */
 	string Text;		  /* 文本框指针 */
@@ -158,6 +175,9 @@ void display();
  *               Help -About -Help
  */
 void DrawMenu();
+
+void DrawHelp();
+void DrawAbout();
 
 /* 功能:绘制所有对象
  * 参数:无
@@ -282,5 +302,7 @@ extern void DrawJudgeBox(void *JudgeBox);
 extern void DrawInputAndOutputBox(void *InputAndOutputBox);
 
 extern void PickNearestObj(double mx, double my);
+
+extern void test();
 
 #endif

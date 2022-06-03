@@ -6,14 +6,6 @@
 #include "extgraph.h"
 
 //=============================================================================================================================================//
-/* 默认值定义 */
-//=============================================================================================================================================//
-
-//=============================================================================================================================================//
-/* 全局变量定义 */
-//=============================================================================================================================================//
-
-//=============================================================================================================================================//
 /* 函数实现 */
 //=============================================================================================================================================//
 
@@ -21,8 +13,8 @@
 void DrawStartBox(void *StartBox)
 {
 	ptr_StartBox box = (ptr_StartBox)StartBox;
-	double Width = box->width;
-	double Height = box->height;
+	double Width = box->Degree == HORIZ ? box->width : box->height;
+	double Height = box->Degree == HORIZ ? box->height : box->width;
 	double x_mid = box->x;
 	double y_mid = box->y;
 	double Chamfer = Height / 8;
@@ -62,8 +54,8 @@ void DrawStartBox(void *StartBox)
 void DrawProcedureBox(void *ProcedureBox)
 {
 	ptr_ProcedureBox box = (ptr_ProcedureBox)ProcedureBox;
-	double Height = box->height;
-	double Width = box->width;
+	double Width = box->Degree == HORIZ ? box->width : box->height;
+	double Height = box->Degree == HORIZ ? box->height : box->width;
 	double x_mid = box->x;
 	double y_mid = box->y;
 
@@ -94,8 +86,8 @@ void DrawProcedureBox(void *ProcedureBox)
 void DrawJudgeBox(void *JudgeBox)
 {
 	ptr_JudgeBox box = (ptr_JudgeBox)JudgeBox;
-	double Width = box->width;
-	double Height = box->height;
+	double Width = box->Degree == HORIZ ? box->width : box->height;
+	double Height = box->Degree == HORIZ ? box->height : box->width;
 	double x_mid = box->x;
 	double y_mid = box->y;
 
@@ -130,8 +122,8 @@ void DrawJudgeBox(void *JudgeBox)
 void DrawInputAndOutputBox(void *InputAndOutputBox)
 {
 	ptr_InputAndOutputBox box = (ptr_InputAndOutputBox)InputAndOutputBox;
-	double Width = box->width;
-	double Height = box->height;
+	double Width = box->Degree == HORIZ ? box->width : box->height;
+	double Height = box->Degree == HORIZ ? box->height : box->width;
 	double x_mid = box->x;
 	double y_mid = box->y;
 
