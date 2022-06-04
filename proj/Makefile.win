@@ -1,0 +1,79 @@
+# Project: Program Creater
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = ../output/exceptio.o ../output/genlib.o ../output/graphics.o ../output/linkedlist.o ../output/random.o ../output/simpio.o ../output/strlib.o ../output/imgui.o ../output/draw.o ../output/drawbox.o ../output/main.o ../output/process.o ../output/SaveAndLoad.o ../output/test.o ../output/readInfo.o ../output/menu.o ../output/event.o ../output/definition.o
+LINKOBJ  = ../output/exceptio.o ../output/genlib.o ../output/graphics.o ../output/linkedlist.o ../output/random.o ../output/simpio.o ../output/strlib.o ../output/imgui.o ../output/draw.o ../output/drawbox.o ../output/main.o ../output/process.o ../output/SaveAndLoad.o ../output/test.o ../output/readInfo.o ../output/menu.o ../output/event.o ../output/definition.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows -g3
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"..//lib//simpleGUI" -I"..//src//headers" -I"..//src//sources" -I"..//lib//libgraphics"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++" -I"..//lib//simpleGUI" -I"..//src//headers" -I"..//src//sources" -I"..//lib//libgraphics"
+BIN      = "../output/Program Creater.exe"
+CXXFLAGS = $(CXXINCS) -g3
+CFLAGS   = $(INCS) -g3
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+../output/exceptio.o: ../lib/libgraphics/exceptio.c
+	$(CC) -c ../lib/libgraphics/exceptio.c -o ../output/exceptio.o $(CFLAGS)
+
+../output/genlib.o: ../lib/libgraphics/genlib.c
+	$(CC) -c ../lib/libgraphics/genlib.c -o ../output/genlib.o $(CFLAGS)
+
+../output/graphics.o: ../lib/libgraphics/graphics.c
+	$(CC) -c ../lib/libgraphics/graphics.c -o ../output/graphics.o $(CFLAGS)
+
+../output/linkedlist.o: ../lib/libgraphics/linkedlist.c
+	$(CC) -c ../lib/libgraphics/linkedlist.c -o ../output/linkedlist.o $(CFLAGS)
+
+../output/random.o: ../lib/libgraphics/random.c
+	$(CC) -c ../lib/libgraphics/random.c -o ../output/random.o $(CFLAGS)
+
+../output/simpio.o: ../lib/libgraphics/simpio.c
+	$(CC) -c ../lib/libgraphics/simpio.c -o ../output/simpio.o $(CFLAGS)
+
+../output/strlib.o: ../lib/libgraphics/strlib.c
+	$(CC) -c ../lib/libgraphics/strlib.c -o ../output/strlib.o $(CFLAGS)
+
+../output/imgui.o: ../lib/simpleGUI/imgui.c
+	$(CC) -c ../lib/simpleGUI/imgui.c -o ../output/imgui.o $(CFLAGS)
+
+../output/draw.o: ../src/sources/draw.c
+	$(CC) -c ../src/sources/draw.c -o ../output/draw.o $(CFLAGS)
+
+../output/drawbox.o: ../src/sources/drawbox.c
+	$(CC) -c ../src/sources/drawbox.c -o ../output/drawbox.o $(CFLAGS)
+
+../output/main.o: ../src/sources/main.c
+	$(CC) -c ../src/sources/main.c -o ../output/main.o $(CFLAGS)
+
+../output/process.o: ../src/sources/process.c
+	$(CC) -c ../src/sources/process.c -o ../output/process.o $(CFLAGS)
+
+../output/SaveAndLoad.o: ../src/sources/SaveAndLoad.c
+	$(CC) -c ../src/sources/SaveAndLoad.c -o ../output/SaveAndLoad.o $(CFLAGS)
+
+../output/test.o: ../src/sources/test.c
+	$(CC) -c ../src/sources/test.c -o ../output/test.o $(CFLAGS)
+
+../output/readInfo.o: ../src/sources/readInfo.c
+	$(CC) -c ../src/sources/readInfo.c -o ../output/readInfo.o $(CFLAGS)
+
+../output/menu.o: ../src/sources/menu.c
+	$(CC) -c ../src/sources/menu.c -o ../output/menu.o $(CFLAGS)
+
+../output/event.o: ../src/sources/event.c
+	$(CC) -c ../src/sources/event.c -o ../output/event.o $(CFLAGS)
+
+../output/definition.o: ../src/sources/definition.c
+	$(CC) -c ../src/sources/definition.c -o ../output/definition.o $(CFLAGS)
