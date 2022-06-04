@@ -3,4 +3,8 @@
 
 void DrawMenu();
 
+void DrawHelp();
+
+void DrawAbout();
+
 #endif

@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=39
+UnitCount=37
 
 [VersionInfo]
 Major=1
@@ -361,26 +361,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit32]
-FileName=..\src\headers\readInfo.h
-CompileCpp=0
-Folder=src/headers
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit33]
-FileName=..\src\sources\readInfo.c
-CompileCpp=0
-Folder=src/sources
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit34]
 FileName=..\src\headers\menu.h
 CompileCpp=0
 Folder=src/headers
@@ -390,7 +370,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit35]
+[Unit33]
 FileName=..\src\sources\menu.c
 CompileCpp=0
 Folder=src/sources
@@ -400,7 +380,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit36]
+[Unit34]
 FileName=..\src\sources\event.c
 CompileCpp=0
 Folder=src/sources
@@ -410,10 +390,30 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit37]
+[Unit35]
 FileName=..\src\headers\event.h
 CompileCpp=0
 Folder=src/headers
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit36]
+FileName=..\src\headers\definition.h
+CompileCpp=0
+Folder=src/headers
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit37]
+FileName=..\src\sources\definition.c
+CompileCpp=0
+Folder=src/sources
 Compile=1
 Link=1
 Priority=1000
