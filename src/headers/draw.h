@@ -3,8 +3,16 @@
 
 #include "definition.h"
 
+/* 功能:重新绘制所有图形
+ * 参数:无
+ * 返回值:无
+ */
 void display();
 
+/* 功能:绘制所有对象
+ * 参数:无
+ * 返回值:无
+ */
 void DrawAllObj();
 
 void DrawLinkLine(ptr_Line Line_Obj);

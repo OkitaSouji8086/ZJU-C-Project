@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000001000000
-UnitCount=37
+UnitCount=36
 
 [VersionInfo]
 Major=1
@@ -51,17 +51,7 @@ AutoIncBuildNr=0
 SyncProduct=1
 
 [Unit25]
-FileName=..\src\headers\test.h
-CompileCpp=0
-Folder=src/headers
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit29]
-FileName=..\src\sources\process.c
+FileName=..\src\sources\draw.c
 CompileCpp=0
 Folder=src/sources
 Compile=1
@@ -70,7 +60,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit30]
+[Unit29]
 FileName=..\src\sources\SaveAndLoad.c
 CompileCpp=0
 Folder=src/sources
@@ -80,8 +70,18 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit30]
+FileName=..\src\sources\test.c
+CompileCpp=0
+Folder=src/sources
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
 [Unit28]
-FileName=..\src\sources\main.c
+FileName=..\src\sources\process.c
 CompileCpp=0
 Folder=src/sources
 Compile=1
@@ -110,27 +110,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit22]
-FileName=..\src\headers\main.h
-CompileCpp=0
-Folder=src/headers
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit23]
-FileName=..\src\headers\process.h
-CompileCpp=0
-Folder=src/headers
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit24]
 FileName=..\src\headers\SaveAndLoad.h
 CompileCpp=0
 Folder=src/headers
@@ -140,17 +120,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit26]
-FileName=..\src\sources\draw.c
+[Unit24]
+FileName=..\src\headers\test.h
 CompileCpp=0
-Folder=src/sources
+Folder=src/headers
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit27]
+[Unit26]
 FileName=..\src\sources\drawbox.c
 CompileCpp=0
 Folder=src/sources
@@ -160,10 +140,20 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit31]
-FileName=..\src\sources\test.c
+[Unit27]
+FileName=..\src\sources\main.c
 CompileCpp=0
 Folder=src/sources
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit31]
+FileName=..\src\headers\menu.h
+CompileCpp=0
+Folder=src/headers
 Compile=1
 Link=1
 Priority=1000
@@ -361,16 +351,6 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit32]
-FileName=..\src\headers\menu.h
-CompileCpp=0
-Folder=src/headers
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit33]
 FileName=..\src\sources\menu.c
 CompileCpp=0
 Folder=src/sources
@@ -380,7 +360,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit34]
+[Unit33]
 FileName=..\src\sources\event.c
 CompileCpp=0
 Folder=src/sources
@@ -390,7 +370,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit35]
+[Unit34]
 FileName=..\src\headers\event.h
 CompileCpp=0
 Folder=src/headers
@@ -400,10 +380,20 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit36]
+[Unit35]
 FileName=..\src\headers\definition.h
 CompileCpp=0
 Folder=src/headers
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit36]
+FileName=..\src\sources\definition.c
+CompileCpp=0
+Folder=src/sources
 Compile=1
 Link=1
 Priority=1000
@@ -434,6 +424,16 @@ BuildCmd=
 FileName=..\src\sources\definition.c
 CompileCpp=0
 Folder=src/sources
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit22]
+FileName=..\src\headers\process.h
+CompileCpp=0
+Folder=src/headers
 Compile=1
 Link=1
 Priority=1000

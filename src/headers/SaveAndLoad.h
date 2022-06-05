@@ -1,9 +1,13 @@
 #ifndef _SaveAndLoad_H_
 #define _SaveAndLoad_H_
 
-#include "main.h"
+#include "definition.h"
 
-void SaveAllObj(); //保存所有当前对象//
+/* 功能:保存所有对象到save.data
+ * 参数:无
+ * 返回值:无
+ */
+void SaveAllObj();
 
 void DrawLineDSave(FILE *fp);
 /*
@@ -25,10 +29,13 @@ void DrawStartSave(FILE *fp);
 /*
 保存起始框
 */
+
+/* 功能:从save.data读取
+ * 参数:无
+ * 返回值:无
+ */
 void LoadAllObj();
-/*
-读 save.dat 中的数据到表中
-*/
+
 void DrawLineDLoad(FILE *fp);
 /*
 读取直线
