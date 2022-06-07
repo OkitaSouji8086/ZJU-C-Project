@@ -9,11 +9,11 @@ static char l = 'l';
 static char g = 'g';
 static char b = 'b';
 
-void SaveAllObj();				  //锟斤拷锟斤拷锟斤拷锟叫碉拷前锟斤拷锟斤拷//
-void DrawLineDSave(FILE *fp);	  /*锟斤拷锟斤拷直锟斤拷*/
-void DrawProcedureSave(FILE *fp); /*锟斤拷锟斤拷执锟叫匡�?*/
-void DrawJudgeSave(FILE *fp);	  /*锟斤拷锟斤拷锟叫断匡�?*/
-void DrawStartSave(FILE *fp);	  /*锟斤拷锟斤拷锟斤拷始锟斤�?*/
+void SaveAllObj();				  
+void DrawLineDSave(FILE *fp);	 
+void DrawProcedureSave(FILE *fp);
+void DrawJudgeSave(FILE *fp);	  
+void DrawStartSave(FILE *fp);	  
 void LoadAllObj();
 void DrawLineDLoad(FILE *fp);
 void DrawProcedureLoad(FILE *fp);
@@ -22,7 +22,7 @@ void DrawStartLoad(FILE *fp);
 void DrawTextLoad(FILE *fp);
 void DrawTextSave(FILE *fp);
 
-void SaveAllObj() //锟斤拷锟斤拷暮锟斤拷�??//
+void SaveAllObj() 
 {
 	FILE *fp = fopen("save.dat", "wb");
 
@@ -33,7 +33,7 @@ void SaveAllObj() //锟斤拷锟斤拷暮锟斤拷�??//
 
 	fclose(fp);
 }
-void DrawLineDSave(FILE *fp) //锟斤�?//
+void DrawLineDSave(FILE *fp) 
 {
 
 	linkedlistADT nodeptr;
@@ -67,7 +67,7 @@ void DrawLineDSave(FILE *fp) //锟斤�?//
 	}
 }
 
-void DrawProcedureSave(FILE *fp) //锟斤拷锟斤拷执锟叫匡�?//
+void DrawProcedureSave(FILE *fp)
 {
 	linkedlistADT nodeptr;
 	unsigned int i = 1, s_len = 0;
@@ -83,7 +83,7 @@ void DrawProcedureSave(FILE *fp) //锟斤拷锟斤拷执锟叫匡�?//
 		fwrite(&data->y, sizeof(double), 1, fp);
 		fwrite(&data->width, sizeof(double), 1, fp);
 		fwrite(&data->height, sizeof(double), 1, fp);
-		// fwrite(&data->PenSize, sizeof(int), 1, fp);
+		//fwrite(&data->PenSize, sizeof(int), 1, fp);
 		/* if (!strcmp(data->Color, "Red"))
 			fwrite(&r, sizeof(char), 1, fp);
 
@@ -99,7 +99,7 @@ void DrawProcedureSave(FILE *fp) //锟斤拷锟斤拷执锟叫匡�?//
 		s_len = strlen(data->Text);
 		fwrite(&s_len, sizeof(unsigned int), 1, fp);
 		fwrite(data->Text, sizeof(char), s_len, fp);
-		fwrite(&data->Degree, sizeof(degree), 1, fp);
+		fwrite(&data->Degree,sizeof(degree),1,fp);
 		nodeptr = nodeptr->next;
 	}
 }
@@ -136,7 +136,7 @@ void DrawJudgeSave(FILE *fp)
 		s_len = strlen(data->Text);
 		fwrite(&s_len, sizeof(unsigned int), 1, fp);
 		fwrite(data->Text, sizeof(char), s_len, fp);
-		fwrite(&data->Degree, sizeof(degree), 1, fp);
+		fwrite(&data->Degree,sizeof(degree),1,fp);
 		nodeptr = nodeptr->next;
 	}
 }
@@ -173,8 +173,8 @@ void DrawStartSave(FILE *fp)
 		s_len = strlen(data->Text);
 		fwrite(&s_len, sizeof(unsigned int), 1, fp);
 		fwrite(data->Text, sizeof(char), s_len, fp);
-		fwrite(&data->Degree, sizeof(degree), 1, fp);
-
+		fwrite(&data->Degree,sizeof(degree),1,fp);
+		
 		nodeptr = nodeptr->next;
 	}
 }
@@ -215,7 +215,7 @@ void LoadAllObj()
 			break;
 		}
 	}
-
+	
 	fclose(fp);
 }
 
@@ -238,11 +238,11 @@ void DrawLineDLoad(FILE *fp)
 		data->Color = "Blue";
 	else if (mid == 'b')
 		data->Color = "Black";*/
-
+	
 	data->Color = "Red";
-	data->Obj1 = SearchObj(data->ID_1);
-	data->Obj2 = SearchObj(data->ID_2);
-
+    data->Obj1 = SearchObj(data->ID_1);
+    data->Obj2 = SearchObj(data->ID_2);
+    
 	InsertNode(List[LINE], NULL, data);
 }
 
@@ -260,7 +260,7 @@ void DrawProcedureLoad(FILE *fp)
 	fread(&data->width, sizeof(double), 1, fp);
 	fread(&data->height, sizeof(double), 1, fp);
 	data->PenSize = SYS_PENSIZE;
-
+    
 	/*fread(&mid, sizeof(char), 1, fp);
 
 	if (mid == 'r')
@@ -276,9 +276,10 @@ void DrawProcedureLoad(FILE *fp)
 	buf = CopyString("\0");
 	fread(buf, sizeof(unsigned char), s_len, fp);
 	data->Text = buf;
-
-	fread(&data->Degree, sizeof(degree), 1, fp);
-
+	
+	fread(&data->Degree,sizeof(degree),1,fp);
+	
+    
 	data->IsSelected = FALSE;
 	InsertNode(List[PROCEDUREBOX], NULL, data);
 }
@@ -298,24 +299,24 @@ void DrawJudgeLoad(FILE *fp)
 	fread(&data->height, sizeof(double), 1, fp);
 	data->PenSize = SYS_PENSIZE;
 
-	/*	fread(&mid, sizeof(char), 1, fp);
+/*	fread(&mid, sizeof(char), 1, fp);
 
-		if (mid == 'r')
-			data->Color = "Red";
-		else if (mid == 'g')
-			data->Color = "Green";
-		else if (mid == 'l')
-			data->Color = "Blue";
-		else if (mid == 'b')
-			data->Color = "Black";*/
-	data->Color = "Red";
+	if (mid == 'r')
+		data->Color = "Red";
+	else if (mid == 'g')
+		data->Color = "Green";
+	else if (mid == 'l')
+		data->Color = "Blue";
+	else if (mid == 'b')
+		data->Color = "Black";*/
+    data->Color = "Red";
 	fread(&s_len, sizeof(unsigned int), 1, fp);
 	buf = CopyString("\0");
 	fread(buf, sizeof(unsigned char), s_len, fp);
 	data->Text = buf;
 	data->IsSelected = FALSE;
 
-	fread(&data->Degree, sizeof(degree), 1, fp);
+	fread(&data->Degree,sizeof(degree),1,fp);
 
 	InsertNode(List[JUDGEBOX], NULL, data);
 }
@@ -335,23 +336,24 @@ void DrawStartLoad(FILE *fp)
 	fread(&data->height, sizeof(double), 1, fp);
 	data->PenSize = SYS_PENSIZE;
 
-	/*	fread(&mid, sizeof(char), 1, fp);
+/*	fread(&mid, sizeof(char), 1, fp);
 
-		if (mid == 'r')
-			data->Color = "Red";
-		else if (mid == 'g')
-			data->Color = "Green";
-		else if (mid == 'l')
-			data->Color = "Blue";
-		else if (mid == 'b')
-			data->Color = "Black";*/
-	data->Color = "Red";
+	if (mid == 'r')
+		data->Color = "Red";
+	else if (mid == 'g')
+		data->Color = "Green";
+	else if (mid == 'l')
+		data->Color = "Blue";
+	else if (mid == 'b')
+		data->Color = "Black";*/
+    data->Color = "Red";
 	fread(&s_len, sizeof(unsigned int), 1, fp);
 	buf = CopyString("\0");
 	fread(buf, sizeof(unsigned char), s_len, fp);
 	data->Text = buf;
-
-	fread(&data->Degree, sizeof(degree), 1, fp);
+	
+	
+	fread(&data->Degree,sizeof(degree),1,fp);
 
 	data->IsSelected = FALSE;
 	InsertNode(List[STARTBOX], NULL, data);

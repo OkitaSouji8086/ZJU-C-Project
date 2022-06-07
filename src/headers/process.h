@@ -42,6 +42,8 @@ void EnLargeStartBox(double Times, void *ptr_Obj);
  */
 void DeleteObj(void *ptr_Obj);
 
+void DeleteAllObj();
+
 /* 功能:遍历链表,找到给定 ID 对应的对象
  * 参数:对象ID
  * 返回值:找到的对象指针
