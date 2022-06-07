@@ -243,12 +243,12 @@ void DeleteAllObj()
 {
 
 	int i;
-	
+
 	FreeLinkedList(List[LINE]);
 	FreeLinkedList(List[PROCEDUREBOX]);
 	FreeLinkedList(List[JUDGEBOX]);
 	FreeLinkedList(List[STARTBOX]);
-	for (i = 0; i < NLIST; i++) List[i] = NewLinkedList();
-
+	for (i = 0; i < NLIST; i++)
+		List[i] = NewLinkedList();
 }
 #endif
