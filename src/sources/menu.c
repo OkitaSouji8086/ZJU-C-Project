@@ -56,6 +56,7 @@ void DrawMenu()
 			break;
 		case 2:
 			printf("Open clicked\n");
+			LoadAllObj();
 			break;
 		case 3:
 			printf("Save clicked\n");
