@@ -9,11 +9,11 @@ static char l = 'l';
 static char g = 'g';
 static char b = 'b';
 
-void SaveAllObj();				  
-void DrawLineDSave(FILE *fp);	 
-void DrawProcedureSave(FILE *fp);
-void DrawJudgeSave(FILE *fp);	  
-void DrawStartSave(FILE *fp);	  
+void SaveAllObj();				  //锟斤拷锟斤拷锟斤拷锟叫碉拷前锟斤拷锟斤拷//
+void DrawLineDSave(FILE *fp);	  /*锟斤拷锟斤拷直锟斤拷*/
+void DrawProcedureSave(FILE *fp); /*锟斤拷锟斤拷执锟叫匡拷*/
+void DrawJudgeSave(FILE *fp);	  /*锟斤拷锟斤拷锟叫断匡拷*/
+void DrawStartSave(FILE *fp);	  /*锟斤拷锟斤拷锟斤拷始锟斤拷*/
 void LoadAllObj();
 void DrawLineDLoad(FILE *fp);
 void DrawProcedureLoad(FILE *fp);
@@ -22,7 +22,7 @@ void DrawStartLoad(FILE *fp);
 void DrawTextLoad(FILE *fp);
 void DrawTextSave(FILE *fp);
 
-void SaveAllObj() 
+void SaveAllObj() //锟斤拷锟斤拷暮锟斤拷锟?//
 {
 	FILE *fp = fopen("save.dat", "wb");
 
@@ -33,7 +33,7 @@ void SaveAllObj()
 
 	fclose(fp);
 }
-void DrawLineDSave(FILE *fp) 
+void DrawLineDSave(FILE *fp) //锟斤拷//
 {
 
 	linkedlistADT nodeptr;
@@ -67,7 +67,7 @@ void DrawLineDSave(FILE *fp)
 	}
 }
 
-void DrawProcedureSave(FILE *fp)
+void DrawProcedureSave(FILE *fp) //锟斤拷锟斤拷执锟叫匡拷//
 {
 	linkedlistADT nodeptr;
 	unsigned int i = 1, s_len = 0;
