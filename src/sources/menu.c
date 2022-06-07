@@ -183,12 +183,12 @@ void DrawHelp()
 	SetEraseMode(TRUE);
 	drawRectangle(WindowW / 4, WindowH / 4, WindowW / 2, WindowH / 2, TRUE);
 	SetEraseMode(FALSE);
-	drawRectangle(WindowW / 100, WindowH / 6, WindowW *20 /21, WindowH *2 /3 , FALSE);
-	drawRectangle(WindowW / 100 + ButtonW * 0.1, WindowH / 6 + ButtonW * 0.1, WindowW *20 / 21 - ButtonW * 0.2, WindowH *2 /3 - ButtonW * 0.2, FALSE);
+	drawRectangle(WindowW / 100, WindowH / 6, WindowW * 20 / 21, WindowH * 2 / 3, FALSE);
+	drawRectangle(WindowW / 100 + ButtonW * 0.1, WindowH / 6 + ButtonW * 0.1, WindowW * 20 / 21 - ButtonW * 0.2, WindowH * 2 / 3 - ButtonW * 0.2, FALSE);
 
 	for (line = 0; line < CntLine; line++)
 	{
-		MovePen(WindowW / 3 - TextStringWidth(HelpWords[0]) / 2, WindowH * 5 / 6- LineSpace * (line + 3));
+		MovePen(WindowW / 3 - TextStringWidth(HelpWords[0]) / 2, WindowH * 5 / 6 - LineSpace * (line + 3));
 		DrawTextString(HelpWords[line]);
 	}
 
@@ -238,7 +238,7 @@ void DrawAbout()
 		DrawTextString(AboutWords[line]);
 	}
 
-	if (button(GenUIID(0), WindowW / 8 * 6 - ButtonW * 1.5, WindowH / 8 * 2 + ButtonH / 2, ButtonW/2, ButtonH/2, "OK"))
+	if (button(GenUIID(0), WindowW / 8 * 6 - ButtonW * 1.5, WindowH / 8 * 2 + ButtonH / 2, ButtonW / 2, ButtonH / 2, "OK"))
 		CURR_MODE = EDIT;
 	SetPenColor(color);
 }

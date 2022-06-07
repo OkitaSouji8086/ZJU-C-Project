@@ -52,4 +52,12 @@ void DrawStartLoad(FILE *fp);
 /*
 读取开始框
 */
+void DrawInputAndOutputBoxLoad(FILE *fp);
+/*
+读取输入输出
+*/
+void DrawInputAndOutputBoxSave(FILE *fp);
+/*
+保存输入输出
+*/
 #endif
