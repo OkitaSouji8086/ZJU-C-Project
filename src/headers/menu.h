@@ -15,4 +15,5 @@ void DrawHelp();
 
 void DrawAbout();
 
+void DeleteAllObj();
 #endif

@@ -39,11 +39,11 @@ void DrawMenu()
 		"About",
 		"Help"};
 
-	int selection; /* 鑿滃崟閫変腑 */
+	int selection; /* 菜单选中 */
 
-	double MenuH = GetFontHeight() * 1.5;				   /* 鑿滃崟楂樺害 */
-	double MenuW = TextStringWidth(menuListFile[0]) * 2;   /* 鑿滃崟鏍囬瀹藉害 */
-	double wlist = TextStringWidth(menuListEdit[1]) * 1.2; /* 鑿滃崟鏉＄洰瀹藉害 */
+	double MenuH = GetFontHeight() * 1.5;				   /* 菜单高度 */
+	double MenuW = TextStringWidth(menuListFile[0]) * 2;   /* 菜单标题宽度 */
+	double wlist = TextStringWidth(menuListEdit[1]) * 1.2; /* 菜单条目宽度 */
 
 	drawMenuBar(0, WindowH - MenuH, WindowW, MenuH);
 
@@ -53,9 +53,12 @@ void DrawMenu()
 		{
 		case 1:
 			printf("New clicked\n");
+			DisplayClear();
+			DeleteAllObj();
 			break;
 		case 2:
 			printf("Open clicked\n");
+			LoadAllObj();
 			break;
 		case 3:
 			printf("Save clicked\n");
@@ -152,8 +155,6 @@ void DrawMenu()
 
 void DrawHelp()
 {
-	string color = GetPenColor();
-	SetPenColor("black");
 	double WindowW = WINDOW_X / GetXResolution(), WindowH = WINDOW_Y / GetYResolution();
 	double ButtonW = 1.0, ButtonH = 0.4;
 	double LineSpace = GetFontAscent() * 1.5;
@@ -183,24 +184,21 @@ void DrawHelp()
 	SetEraseMode(TRUE);
 	drawRectangle(WindowW / 4, WindowH / 4, WindowW / 2, WindowH / 2, TRUE);
 	SetEraseMode(FALSE);
-	drawRectangle(WindowW / 100, WindowH / 6, WindowW *20 /21, WindowH *2 /3 , FALSE);
-	drawRectangle(WindowW / 100 + ButtonW * 0.1, WindowH / 6 + ButtonW * 0.1, WindowW *20 / 21 - ButtonW * 0.2, WindowH *2 /3 - ButtonW * 0.2, FALSE);
+	drawRectangle(WindowW / 4, WindowH / 4, WindowW / 2, WindowH / 2, FALSE);
+	drawRectangle(WindowW / 4 + ButtonW * 0.1, WindowH / 4 + ButtonW * 0.1, WindowW / 2 - ButtonW * 0.2, WindowH / 2 - ButtonW * 0.2, FALSE);
 
 	for (line = 0; line < CntLine; line++)
 	{
-		MovePen(WindowW / 3 - TextStringWidth(HelpWords[0]) / 2, WindowH * 5 / 6- LineSpace * (line + 3));
+		MovePen(WindowW / 2 - TextStringWidth(HelpWords[0]) / 2, WindowH * 3 / 4 - LineSpace * (line + 3));
 		DrawTextString(HelpWords[line]);
 	}
 
-	if (button(GenUIID(0), WindowW / 51 * 50 - ButtonW * 1.5, WindowH / 6 + ButtonH / 2, ButtonW, ButtonH, "OK"))
+	if (button(GenUIID(0), WindowW / 4 * 3 - ButtonW * 1.5, WindowH / 4 + ButtonH / 2, ButtonW, ButtonH, "OK"))
 		CURR_MODE = EDIT;
-	SetPenColor(color);
 }
 
 void DrawAbout()
 {
-	string color = GetPenColor();
-	SetPenColor("black");
 	double WindowW = WINDOW_X / GetXResolution(), WindowH = WINDOW_Y / GetYResolution();
 	double ButtonW = 1.0, ButtonH = 0.4;
 	double LineSpace = GetFontAscent() * 1.5;
@@ -238,9 +236,19 @@ void DrawAbout()
 		DrawTextString(AboutWords[line]);
 	}
 
-	if (button(GenUIID(0), WindowW / 8 * 6 - ButtonW * 1.5, WindowH / 8 * 2 + ButtonH / 2, ButtonW/2, ButtonH/2, "OK"))
+	if (button(GenUIID(0), WindowW / 8 * 5 - ButtonW * 1.5, WindowH / 8 * 3 + ButtonH / 2, ButtonW, ButtonH, "OK"))
 		CURR_MODE = EDIT;
-	SetPenColor(color);
 }
+void DeleteAllObj()
+{
 
+	int i;
+	
+	FreeLinkedList(List[LINE]);
+	FreeLinkedList(List[PROCEDUREBOX]);
+	FreeLinkedList(List[JUDGEBOX]);
+	FreeLinkedList(List[STARTBOX]);
+	for (i = 0; i < NLIST; i++) List[i] = NewLinkedList();
+
+}
 #endif
