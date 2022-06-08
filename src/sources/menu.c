@@ -39,12 +39,12 @@ void DrawMenu()
 		"About",
 		"Help"};
 
-	int selection; /* 鑿滃崟閫変腑 */
+	int selection; /* 菜单选中 */
 
-	double MenuH = GetFontHeight() * 1.5;				   /* 鑿滃崟楂樺害 */
-	double MenuW = TextStringWidth(menuListFile[0]) * 2;   /* 鑿滃崟鏍囬瀹藉害 */
-	double wlist = TextStringWidth(menuListEdit[1]) * 1.2; /* 鑿滃崟鏉＄洰瀹藉害 */
-	double DrawWlist = TextStringWidth(menuListDraw[4]) * 1.2; /* 鑿滃崟鏉＄洰瀹藉害 */
+	double MenuH = GetFontHeight() * 1.5;				   /* 菜单高度 */
+	double MenuW = TextStringWidth(menuListFile[0]) * 2;   /* 菜单标题宽度 */
+	double wlist = TextStringWidth(menuListEdit[1]) * 1.2; /* 菜单条目宽度 */
+	double DrawWlist = TextStringWidth(menuListDraw[4]) * 1.2; /* 菜单条目宽度 */
 
 	drawMenuBar(0, WindowH - MenuH, WindowW, MenuH);
 
