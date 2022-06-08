@@ -39,12 +39,12 @@ void DrawMenu()
 		"About",
 		"Help"};
 
-	int selection; /* 菜单选中 */
+	int selection; /* 鑿滃崟閫変腑 */
 
-	double MenuH = GetFontHeight() * 1.5;				   /* 菜单高度 */
-	double MenuW = TextStringWidth(menuListFile[0]) * 2;   /* 菜单标题宽度 */
-	double wlist = TextStringWidth(menuListEdit[1]) * 1.2; /* 菜单条目宽度 */
-	double DrawWlist = TextStringWidth(menuListDraw[4]) * 1.2; /* 菜单条目宽度 */
+	double MenuH = GetFontHeight() * 1.5;				   /* 鑿滃崟楂樺害 */
+	double MenuW = TextStringWidth(menuListFile[0]) * 2;   /* 鑿滃崟鏍囬瀹藉害 */
+	double wlist = TextStringWidth(menuListEdit[1]) * 1.2; /* 鑿滃崟鏉＄洰瀹藉害 */
+	double DrawWlist = TextStringWidth(menuListDraw[4]) * 1.2; /* 鑿滃崟鏉＄洰瀹藉害 */
 
 	drawMenuBar(0, WindowH - MenuH, WindowW, MenuH);
 
@@ -182,7 +182,7 @@ void DrawHelp()
 	HaveRead = TRUE;
 
 	SetEraseMode(TRUE);
-	drawRectangle(WindowW / 4, WindowH / 4, WindowW / 2, WindowH / 2, TRUE);
+	drawRectangle(WindowW / 100, WindowH / 6, WindowW * 20 / 21, WindowH * 2 / 3, TRUE);
 	SetEraseMode(FALSE);
 	drawRectangle(WindowW / 100, WindowH / 6, WindowW * 20 / 21, WindowH * 2 / 3, FALSE);
 	drawRectangle(WindowW / 100 + ButtonW * 0.1, WindowH / 6 + ButtonW * 0.1, WindowW * 20 / 21 - ButtonW * 0.2, WindowH * 2 / 3 - ButtonW * 0.2, FALSE);
