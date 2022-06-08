@@ -10,7 +10,7 @@ void DrawMenu()
 	double ButtonW = 1.0, ButtonH = 0.4;
 
 	if (IS_SELECTED)
-		if (button(GenUIID(0), WindowW - ButtonW * 1.5, ButtonH / 2, ButtonW, ButtonH, "Rorate"))
+		if (button(GenUIID(0), WindowW - ButtonW * 1.5, ButtonH / 2, ButtonW, ButtonH, "Rotate"))
 			((ptr_StartBox)CURR_OBJ)->Degree = !((ptr_StartBox)CURR_OBJ)->Degree;
 
 	static char *menuListFile[] = {
@@ -22,16 +22,16 @@ void DrawMenu()
 
 	static char *menuListDraw[] = {
 		"Draw",
-		"1 | F1",
-		"2 | F2",
-		"3 | F3",
-		"4 | F4"};
+		"StartBox                  | F1",
+		"ProcedureBox         | F2",
+		"JudgeBox                | F3",
+		"InputAndOutputBox | F4"};
 
 	static char *menuListEdit[] = {
 		"Edit",
 		"Copy    | Ctrl-C",
 		"Paste   | Ctrl-V",
-		"Rorate  | Ctrl-R",
+		"Rotate  | Ctrl-R",
 		"Delete  | Del"};
 
 	static char *menuListHelp[] = {
@@ -44,6 +44,7 @@ void DrawMenu()
 	double MenuH = GetFontHeight() * 1.5;				   /* 菜单高度 */
 	double MenuW = TextStringWidth(menuListFile[0]) * 2;   /* 菜单标题宽度 */
 	double wlist = TextStringWidth(menuListEdit[1]) * 1.2; /* 菜单条目宽度 */
+	double DrawWlist = TextStringWidth(menuListDraw[4]) * 1.2; /* 菜单条目宽度 */
 
 	drawMenuBar(0, WindowH - MenuH, WindowW, MenuH);
 
@@ -68,7 +69,7 @@ void DrawMenu()
 			break;
 		}
 
-	selection = menuList(GenUIID(0), MenuW, WindowH - MenuH, MenuW, wlist, MenuH, menuListDraw, sizeof(menuListDraw) / sizeof(menuListDraw[0]));
+	selection = menuList(GenUIID(0), MenuW, WindowH - MenuH, MenuW, DrawWlist, MenuH, menuListDraw, sizeof(menuListDraw) / sizeof(menuListDraw[0]));
 	if (CURR_MODE == EDIT)
 		switch (selection)
 		{

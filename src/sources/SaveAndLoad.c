@@ -9,22 +9,21 @@ static char l = 'l';
 static char g = 'g';
 static char b = 'b';
 
-void SaveAllObj();				  //锟斤拷锟斤拷锟斤拷锟叫碉拷前锟斤拷锟斤拷//
-void DrawLineDSave(FILE *fp);	  /*锟斤拷锟斤拷直锟斤拷*/
-void DrawProcedureSave(FILE *fp); /*锟斤拷锟斤拷执锟叫匡拷*/
-void DrawJudgeSave(FILE *fp);	  /*锟斤拷锟斤拷锟叫断匡拷*/
-void DrawStartSave(FILE *fp);	  /*锟斤拷锟斤拷锟斤拷始锟斤拷*/
+void SaveAllObj();				  //保存所有对象，链表，到“save.data"，fp是相应的文件指针//
+void DrawLineDSave(FILE *fp);	  /*保存直线*/
+void DrawProcedureSave(FILE *fp); /*保存执行框*/
+void DrawJudgeSave(FILE *fp);	  /*保存判断框*/
+void DrawStartSave(FILE *fp);	  /*保存起始框*/
 void LoadAllObj();
-void DrawLineDLoad(FILE *fp);
-void DrawProcedureLoad(FILE *fp);
-void DrawJudgeLoad(FILE *fp);
-void DrawStartLoad(FILE *fp);
-void DrawTextLoad(FILE *fp);
-void DrawTextSave(FILE *fp);
-void DrawInputAndOutputBoxLoad(FILE *fp);
-void DrawInputAndOutputBoxSave(FILE *fp);
+void DrawLineDLoad(FILE *fp);			  /*读取线*/
+void DrawProcedureLoad(FILE *fp);		  /*读取执行框*/
+void DrawJudgeLoad(FILE *fp);			  /*读取判断框*/
+void DrawStartLoad(FILE *fp);			  /*读取起始框*/
+void DrawInputAndOutputBoxLoad(FILE *fp); /*读取输入输出框*/
+void DrawInputAndOutputBoxSave(FILE *fp); /*保存输入输出框*/
 
-void SaveAllObj() //锟斤拷锟斤拷暮锟斤拷锟??//
+void SaveAllObj()
+//保存所有对象//
 {
 	FILE *fp = fopen("save.dat", "wb");
 
@@ -36,7 +35,8 @@ void SaveAllObj() //锟斤拷锟斤拷暮锟斤拷锟??//
 
 	fclose(fp);
 }
-void DrawLineDSave(FILE *fp) //锟斤拷//
+void DrawLineDSave(FILE *fp)
+//保存直线//
 {
 
 	linkedlistADT nodeptr;
@@ -58,7 +58,8 @@ void DrawLineDSave(FILE *fp) //锟斤拷//
 	}
 }
 
-void DrawProcedureSave(FILE *fp) //锟斤拷锟斤拷执锟叫匡拷//
+void DrawProcedureSave(FILE *fp)
+//保存执行框//
 {
 	linkedlistADT nodeptr;
 	unsigned int i = 1, s_len = 0;
@@ -84,6 +85,7 @@ void DrawProcedureSave(FILE *fp) //锟斤拷锟斤拷执锟叫匡拷//
 }
 
 void DrawJudgeSave(FILE *fp)
+//保存判断框//
 {
 	linkedlistADT nodeptr;
 	unsigned int i = 2, s_len = 0;
@@ -109,6 +111,7 @@ void DrawJudgeSave(FILE *fp)
 }
 
 void DrawStartSave(FILE *fp)
+//保存起始框//
 {
 	linkedlistADT nodeptr;
 	unsigned int i = 3, s_len = 0;
@@ -135,6 +138,7 @@ void DrawStartSave(FILE *fp)
 }
 
 void LoadAllObj()
+//读取所有对象，因为保存的时候按照对象，在第一个元素设置了一个“标识符”ObjKind，所以可以通过循环和条件语句进行读取//
 {
 	FILE *fp = fopen("save.dat", "rb");
 	unsigned int ObjKind;
@@ -175,6 +179,8 @@ void LoadAllObj()
 }
 
 void DrawLineDLoad(FILE *fp)
+//读取直线//
+
 {
 	char mid;
 	ptr_Line data = (ptr_Line)malloc(sizeof(*data));
@@ -184,13 +190,18 @@ void DrawLineDLoad(FILE *fp)
 	fread(&data->PenSize, sizeof(int), 1, fp);
 
 	data->Color = "Red";
+
 	data->Obj1 = SearchObj(data->ID_1);
+
+	//特色区域，保存用ID，读取出来用函数SearchObj将ID转换为指针//
+
 	data->Obj2 = SearchObj(data->ID_2);
 
 	InsertNode(List[LINE], NULL, data);
 }
 
 void DrawProcedureLoad(FILE *fp)
+//读取执行框//
 {
 	unsigned int s_len;
 	string buf;
@@ -218,6 +229,7 @@ void DrawProcedureLoad(FILE *fp)
 }
 
 void DrawJudgeLoad(FILE *fp)
+//读取判断框//
 {
 	unsigned int s_len;
 	string buf;
@@ -245,6 +257,7 @@ void DrawJudgeLoad(FILE *fp)
 }
 
 void DrawStartLoad(FILE *fp)
+//读取起始框//
 {
 	unsigned int s_len;
 	string buf;
@@ -272,6 +285,7 @@ void DrawStartLoad(FILE *fp)
 }
 
 void DrawInputAndOutputBoxSave(FILE *fp)
+//保存输入输出框//
 {
 	linkedlistADT nodeptr;
 	unsigned int i = 4, s_len = 0;
@@ -297,6 +311,7 @@ void DrawInputAndOutputBoxSave(FILE *fp)
 }
 
 void DrawInputAndOutputBoxLoad(FILE *fp)
+//读取输入输出框//
 {
 	unsigned int s_len;
 	string buf;
